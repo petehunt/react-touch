@@ -7,6 +7,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": "",
+  "devDependencies": {
+    "browserify": "*",
+    "reactify": "*",
+    "watchify": "*"
+  },
+  "scripts": {
+    "start": "mkdir -p build/ ; node_modules/.bin/watchify -t reactify -o build/main.js src/main.js"
+  },
   "author": "Pete Hunt",
   "license": "Apache 2"
 }
