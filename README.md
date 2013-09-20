@@ -41,9 +41,9 @@ That means you didn't run `npm install` or `npm start`.
 
 That means you didn't edit `src/main.js` to include your Parse JavaScript API key.
 
-### I'm on Windows and something is broken
+### It's messed up on Windows
 
-I didn't test this on Windows, but it should work. Email me!
+On Windows `npm` sometimes does not work correctly. Make sure you install `git` and use the git `bash` shell to run the commands. If `npm start` still doesn't work, try running `node_modules/.bin/watchify -t reactify -o build/main.js src/main.js` manually from `bash`.
 
 ## Future work
 
