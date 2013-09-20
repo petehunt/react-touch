@@ -2,6 +2,10 @@
 
 Build apps quickly using [React](http://facebook.github.io/react), [Bootstrap](http://getbootstrap.com/), [Parse / Backbone](http://parse.com/) and [Browserify](http://browserify.org/).
 
+## What is this?
+
+It's a simple app that lets you create Wiki-like pages using markdown and URL routing. It's easy to delete this functionality and start building your app.
+
 ## Getting started
 
 Make sure you have [npm](http://npmjs.org/).
