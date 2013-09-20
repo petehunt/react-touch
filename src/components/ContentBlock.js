@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 var Button = require('./Button');
-var Content = require('../model/Content');
+var Content = require('../data/Content');
 var Markdown = require('./Markdown');
 var FetchingMixin = require('../framework/FetchingMixin');
 var Spinner = require('../components/Spinner');

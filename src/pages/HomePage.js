@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 var Button = require('../components/Button');
-var Content = require('../model/Content');
+var Content = require('../data/Content');
 var Layout = require('../layout/Layout');
 var NewPageModal = require('../components/NewPageModal');
 var FetchingMixin = require('../framework/FetchingMixin');
