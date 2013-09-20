@@ -19,7 +19,7 @@ Make sure you have [npm](http://npmjs.org/).
 
 ## Find your way around
 
-* `src/main.js` - your routes and Parse configuration
+* `src/main.js` - your routes and Parse API key
 * `src/layout` - general page layout components
 * `src/pages` - full-page components
 * `src/data` - Parse / Backbone Models and Collections
