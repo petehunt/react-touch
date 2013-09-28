@@ -1,10 +1,12 @@
 /** @jsx React.DOM */
 
+var container = document.getElementById('react-root');
+
 function handleRouteChange(component) {
   var routeParams = Array.prototype.slice.call(arguments, 1);
   React.renderComponent(
     <component routeParams={routeParams} />,
-    document.body
+    container
   );
 }
 
@@ -35,7 +37,7 @@ var ReactHack = {
     // Set up default (error) route
     backboneRoutes['*default'] = 'fourohfour';
     backboneMethods['fourohfour'] = function() {
-      React.renderComponent(<h1>ReactHack route not found.</h1>, document.body);
+      React.renderComponent(<h1>ReactHack route not found.</h1>, container);
     };
 
     backboneMethods.routes = backboneRoutes;
