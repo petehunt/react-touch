@@ -1,5 +1,7 @@
 /** @jsx React.DOM */
 
+var React = require('React');
+
 var Button = React.createClass({
   getDefaultProps: function() {
     return {href: 'javascript:;'};

@@ -3,13 +3,16 @@
   "version": "0.0.1",
   "description": "Get started with building React apps",
   "repository": "",
+  "dependencies": {
+    "React": "petehunt/react-core"
+  },
   "devDependencies": {
     "browserify": "~2.31.0",
     "reactify": "~0.3.1",
     "watchify": "~0.1.0"
   },
   "scripts": {
-    "start": "node_modules/.bin/watchify -t reactify -o build/main.js src/main.js"
+    "start": "node_modules/.bin/watchify -t reactify -o build/main.js -d src/main.js"
   },
   "author": "Pete Hunt",
   "license": "Apache 2"

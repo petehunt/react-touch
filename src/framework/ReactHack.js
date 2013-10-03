@@ -1,5 +1,7 @@
 /** @jsx React.DOM */
 
+var React = require('React');
+
 var container = document.getElementById('react-root');
 
 function handleRouteChange(component) {

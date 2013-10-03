@@ -1,5 +1,7 @@
 /** @jsx React.DOM */
 
+var React = require('React');
+
 var NavBar = React.createClass({
   render: function() {
     return this.transferPropsTo(

@@ -1,5 +1,7 @@
 /** @jsx React.DOM */
 
+var React = require('React');
+
 var Modal = React.createClass({
   render: function() {
     var actionButton = null;

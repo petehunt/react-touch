@@ -21,7 +21,8 @@ var FetchingMixin = {
   },
 
   _isModel: function(model) {
-    return (model && model instanceof Fetching.Object || model instanceof Fetching.Collection);
+    var ModelClass = Fetching.Object || Fetching.Model; // Support Backbone and Parse
+    return (model && model instanceof ModelClass || model instanceof Fetching.Collection);
   },
 
   _subscribe: function(model) {

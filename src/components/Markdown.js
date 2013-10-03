@@ -1,5 +1,7 @@
 /** @jsx React.DOM */
 
+var React = require('React');
+
 var converter = new Showdown.converter();
 
 var Markdown = React.createClass({

@@ -1,5 +1,7 @@
 /** @jsx React.DOM */
 
+var React = require('React');
+
 var NavBar = require('./NavBar');
 
 var Layout = React.createClass({

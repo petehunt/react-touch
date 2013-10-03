@@ -1,5 +1,7 @@
 /** @jsx React.DOM */
 
+var React = require('React');
+
 var Modal = require('../components/Modal');
 
 var NewPageModal = React.createClass({

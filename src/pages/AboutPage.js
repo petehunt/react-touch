@@ -1,5 +1,7 @@
 /** @jsx React.DOM */
 
+var React = require('React');
+
 var Layout = require('../layout/Layout.js');
 
 var AboutPage = React.createClass({

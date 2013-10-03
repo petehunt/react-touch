@@ -1,5 +1,7 @@
 /** @jsx React.DOM */
 
+var React = require('React');
+
 var Button = require('./Button');
 var Content = require('../data/Content');
 var Markdown = require('./Markdown');
