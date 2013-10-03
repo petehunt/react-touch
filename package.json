@@ -4,7 +4,8 @@
   "description": "Get started with building React apps",
   "repository": "",
   "dependencies": {
-    "React": "petehunt/react-core"
+    "React": "petehunt/react-core",
+    "showdown": "petehunt/showdown"
   },
   "devDependencies": {
     "browserify": "~2.31.0",
