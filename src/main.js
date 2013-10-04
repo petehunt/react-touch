@@ -1,3 +1,5 @@
+var Parse = require('parse').Parse;
+
 var AboutPage = require('./pages/AboutPage');
 var ContentPage = require('./pages/ContentPage');
 var HomePage = require('./pages/HomePage');
