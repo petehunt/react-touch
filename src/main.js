@@ -3,7 +3,7 @@ var Parse = require('parse').Parse;
 var AboutPage = require('./pages/AboutPage');
 var ContentPage = require('./pages/ContentPage');
 var HomePage = require('./pages/HomePage');
-var ReactHack = require('./framework/ReactHack');
+var ReactHack = require('ReactHack');
 
 Parse.initialize('APPLICATION_ID', 'JAVASCRIPT_KEY');
 

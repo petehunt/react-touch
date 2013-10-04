@@ -1,16 +1,16 @@
 /** @jsx React.DOM */
 
 var React = require('React');
+var ReactHack = require('ReactHack');
 var Parse = require('parse').Parse;
 
 var Button = require('./Button');
 var Content = require('../data/Content');
 var Markdown = require('./Markdown');
-var FetchingMixin = require('../framework/FetchingMixin');
 var Spinner = require('../components/Spinner');
 
 var ContentBlock = React.createClass({
-  mixins: [FetchingMixin],
+  mixins: [ReactHack.FetchingMixin],
 
   modelState: ['content'],
 

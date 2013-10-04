@@ -1,16 +1,16 @@
 /** @jsx React.DOM */
 
 var React = require('React');
+var ReactHack = require('ReactHack');
 
 var Button = require('../components/Button');
 var Content = require('../data/Content');
 var Layout = require('../layout/Layout');
 var NewPageModal = require('../components/NewPageModal');
-var FetchingMixin = require('../framework/FetchingMixin');
 var Spinner = require('../components/Spinner');
 
 var HomePage = React.createClass({
-  mixins: [FetchingMixin],
+  mixins: [ReactHack.FetchingMixin],
 
   modelState: ['pages'],
   fetchPollInterval: 60000,

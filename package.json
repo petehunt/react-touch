@@ -6,6 +6,7 @@
   "dependencies": {
     "parse": "petehunt/parsesdk-isomorphic",
     "React": "petehunt/react-core",
+    "ReactHack": "petehunt/reacthack-core",
     "showdown": "petehunt/showdown"
   },
   "devDependencies": {
