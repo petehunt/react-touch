@@ -1,3 +1,5 @@
+var Parse = require('parse').Parse;
+
 var Content = Parse.Object.extend('Content', {}, {
   create: function(pageName) {
     var instance = new Content();

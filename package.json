@@ -4,6 +4,7 @@
   "description": "Get started with building React apps",
   "repository": "",
   "dependencies": {
+    "parse": "petehunt/parsesdk-isomorphic",
     "React": "petehunt/react-core",
     "showdown": "petehunt/showdown"
   },

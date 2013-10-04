@@ -1,3 +1,5 @@
+var Parse = require('parse').Parse;
+
 var Fetching;
 
 if (typeof Parse !== 'undefined') {

@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('React');
+var Parse = require('parse').Parse;
 
 var container = document.getElementById('react-root');
 

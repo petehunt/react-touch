@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('React');
+var Parse = require('parse').Parse;
 
 var Button = require('./Button');
 var Content = require('../data/Content');
