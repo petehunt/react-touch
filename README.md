@@ -42,7 +42,7 @@ That means you didn't edit `src/main.js` to include your Parse JavaScript API ke
 
 ### It's messed up on Windows
 
-On Windows `npm` sometimes does not work correctly. Make sure you install `git` and use the git `bash` shell to run the commands. If `npm start` still doesn't work, try running `node_modules/.bin/watchify -t reactify -o build/main.js src/main.js` manually from `bash`.
+On Windows `npm` sometimes does not work correctly. Make sure you install `git` and use the git `bash` shell to run the commands. If `npm start` still doesn't work, try running `node_modules/.bin/watchify -t staticify -t reactify -o build/main.js src/main.js` manually from `bash`.
 
 ### What!? I can `require()` CSS files!?
 
