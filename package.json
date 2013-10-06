@@ -12,10 +12,11 @@
   "devDependencies": {
     "browserify": "~2.31.0",
     "reactify": "~0.3.1",
+    "staticify": "petehunt/staticify",
     "watchify": "~0.1.0"
   },
   "scripts": {
-    "start": "node_modules/.bin/watchify -t reactify -o build/main.js -d src/main.js"
+    "start": "node_modules/.bin/watchify -t staticify -t reactify -o build/main.js -d src/main.js"
   },
   "author": "Pete Hunt",
   "license": "Apache 2"

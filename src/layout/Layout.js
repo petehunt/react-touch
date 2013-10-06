@@ -4,6 +4,8 @@ var React = require('React');
 
 var NavBar = require('./NavBar');
 
+require('./Layout.css');
+
 var Layout = React.createClass({
   render: function() {
     return this.transferPropsTo(

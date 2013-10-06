@@ -2,9 +2,11 @@
 
 var React = require('React');
 
+require('./Spinner.css');
+
 var Spinner = React.createClass({
   render: function() {
-    return <img src="./static/spinner.gif" alt="Loading..." />;
+    return <div className="Spinner" />;
   }
 });
 
