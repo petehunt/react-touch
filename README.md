@@ -24,7 +24,6 @@ Make sure you have [npm](http://npmjs.org/).
 * `src/pages` - full-page components
 * `src/data` - Parse / Backbone Models and Collections
 * `src/components` - all other UI components
-* `static/style.css` - your stylesheet
 
 ### Things you don't need to worry about
 * `src/framework` - the ReactHack code
@@ -45,12 +44,20 @@ That means you didn't edit `src/main.js` to include your Parse JavaScript API ke
 
 On Windows `npm` sometimes does not work correctly. Make sure you install `git` and use the git `bash` shell to run the commands. If `npm start` still doesn't work, try running `node_modules/.bin/watchify -t reactify -o build/main.js src/main.js` manually from `bash`.
 
+### What!? I can `require()` CSS files!?
+
+Yes. Within your CSS files you can also `require()` images like so:
+
+```css
+body {
+  background-image: require('./myImage.jpg');
+}
+```
+
 ## Future work
 
-- Requirable CSS and images per CommonJS asset spec
 - Multiple browserify bundles
 - Full-page rendering
-- Server rendering
+- Server rendering (sort of works today)
 - Testing integration
-- Use `require()` for React and Parse and other APIs
 - All Bootstrap-specific React components (specifically grids)
