@@ -50,14 +50,13 @@ Yes. Within your CSS files you can also `require()` images like so:
 
 ```css
 body {
-  background-image: require('./myImage.jpg');
+  background-image: url('./myImage.jpg');
 }
 ```
 
 ## Future work
 
-- Multiple browserify bundles
 - Full-page rendering
-- Server rendering (sort of works today)
+- Server rendering
 - Testing integration
 - All Bootstrap-specific React components (specifically grids)
