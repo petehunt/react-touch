@@ -12,11 +12,12 @@
   "devDependencies": {
     "jsx-loader": "petehunt/jsx-loader",
     "webpack": "~0.11.0",
-    "css-loader": "0.6.2",
-    "style-loader": "0.6.0"
+    "url-loader": "~0.5.1",
+    "css-loader": "~0.6.2",
+    "style-loader": "~0.6.0"
   },
   "scripts": {
-    "start": "node_modules/.bin/webpack --watch --debug src/main.js build/main.js"
+    "start": "webpack --watch --debug src/main.js build/main.js"
   },
   "author": "Pete Hunt",
   "license": "Apache 2"

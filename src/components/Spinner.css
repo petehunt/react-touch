@@ -1,5 +1,5 @@
 .Spinner {
-  background-image: require('./Spinner.gif');
+  background-image: url('spinner.gif');
   height: 16px;
   width: 16px;
 }
