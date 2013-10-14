@@ -1,6 +1,6 @@
 {
   "name": "ReactHack",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Get started with building React apps",
   "repository": "",
   "dependencies": {
@@ -10,13 +10,14 @@
     "showdown": "petehunt/showdown"
   },
   "devDependencies": {
-    "browserify": "~2.31.0",
-    "reactify": "~0.3.1",
-    "staticify": "petehunt/staticify",
-    "watchify": "~0.1.0"
+    "jsx-loader": "petehunt/jsx-loader",
+    "webpack": "~0.11.0",
+    "url-loader": "~0.5.1",
+    "css-loader": "~0.6.2",
+    "style-loader": "~0.6.0"
   },
   "scripts": {
-    "start": "node_modules/.bin/watchify -t staticify -t reactify -o build/main.js -d src/main.js"
+    "start": "webpack --watch --debug src/main.js build/main.js"
   },
   "author": "Pete Hunt",
   "license": "Apache 2"
