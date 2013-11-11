@@ -1,8 +1,20 @@
 /** @jsx React.DOM */
 
 var React = require('React');
-var Spinner = require('../components/Spinner');
 var Viewer = require('../components/Viewer');
+
+var STYLE_LOADING = {
+  bottom: 0,
+  color: 'gray',
+  fontFamily: 'sans-serif',
+  fontSize: '16px',
+  left: 0,
+  marginTop: -8,
+  position: 'absolute',
+  right: 0,
+  textAlign: 'center',
+  top: '50%'
+};
 
 var ViewerPage = React.createClass({
   getInitialState: function() {
@@ -29,7 +41,7 @@ var ViewerPage = React.createClass({
 
   render: function() {
     if (!this.state.data) {
-      return <Spinner />;
+      return <span style={STYLE_LOADING}>Loading...</span>;
     }
 
     return (

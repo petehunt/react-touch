@@ -7,7 +7,7 @@ var STYLE_LOADING = {
   fontFamily: 'sans-serif',
   fontSize: '12px',
   left: 0,
-  marginTop: '-6px',
+  marginTop: -6,
   position: 'absolute',
   right: 0,
   textAlign: 'center',
