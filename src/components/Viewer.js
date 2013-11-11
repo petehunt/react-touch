@@ -53,20 +53,12 @@ var Viewer = React.createClass({
       }
 
       // Find the highest resolution image
-      var maxWidth = -1;
-      var url;
-      image.images.forEach(function(candidateImage) {
-        if (candidateImage.width > maxWidth) {
-          url = candidateImage.source;
-          maxWidth = candidateImage.width;
-        }
-      });
       return (
         <ImageCardContainer
           left={this.state.left}
           key={i}
           index={i}
-          url={url}
+          url={image.source}
           width={this.props.width}
           height={this.props.height}
           caption={image.name || 'Amazing Justin Bieber photo #' + (i + 1)}

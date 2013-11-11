@@ -75,9 +75,9 @@
 	  bottom: 0,
 	  color: 'gray',
 	  fontFamily: 'sans-serif',
-	  fontSize: '16px',
+	  fontSize: '12px',
 	  left: 0,
-	  marginTop: -8,
+	  marginTop: -6,
 	  position: 'absolute',
 	  right: 0,
 	  textAlign: 'center',
@@ -108,7 +108,7 @@
 	    });
 
 	    $.getJSON(
-	      'http://graph.facebook.com/' + this.getUsername() + '/photos?fields=images&limit=100',
+	      'http://graph.facebook.com/' + this.getUsername() + '/photos?fields=name,source&limit=100',
 	      function(data) {
 	        this.setState({data: data.data.slice(START_INDEX, START_INDEX + NUM_IMAGES)});
 	      }.bind(this)
@@ -289,20 +289,12 @@
 	      }
 
 	      // Find the highest resolution image
-	      var maxWidth = -1;
-	      var url;
-	      image.images.forEach(function(candidateImage) {
-	        if (candidateImage.width > maxWidth) {
-	          url = candidateImage.source;
-	          maxWidth = candidateImage.width;
-	        }
-	      });
 	      return (
 	        ImageCardContainer(
 	          {left:this.state.left,
 	          key:i,
 	          index:i,
-	          url:url,
+	          url:image.source,
 	          width:this.props.width,
 	          height:this.props.height,
 	          caption:image.name || 'Amazing Justin Bieber photo #' + (i + 1)}
