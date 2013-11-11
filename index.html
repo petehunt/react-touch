@@ -8,8 +8,26 @@
 
     <!-- We include jQuery only for the Parse SDK and Bootstrap; it's not needed for React. -->
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"></script>
-    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+
+    <!-- Zynga Scroller -->
+    <script type="text/javascript" src="http://zynga.github.io/scroller/src/Animate.js"></script>
+    <script type="text/javascript" src="http://zynga.github.io/scroller/src/Scroller.js"></script>
+    <style type="text/css">
+      html,
+      body {
+        background: black;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        padding: 0;
+        width: 100%;
+      }
+
+      #react-root {
+        height: 100%;
+        width: 100%;
+      }
+    </style>
   </head>
 
   <body>

@@ -1,15 +1,10 @@
-var Parse = require('parse').Parse;
-
-var AboutPage = require('./pages/AboutPage');
-var ContentPage = require('./pages/ContentPage');
-var HomePage = require('./pages/HomePage');
+var React = require('React');
 var ReactHack = require('ReactHack');
+var ViewerPage = require('./pages/ViewerPage');
 
-Parse.initialize('APPLICATION_ID', 'JAVASCRIPT_KEY');
+React.initializeTouchEvents(true);
 
 ReactHack.start({
-  '': HomePage,
-  'pages/:name': ContentPage,
-  'pages/:name/:mode': ContentPage,
-  'about': AboutPage
+  '': ViewerPage,
+  ':username': ViewerPage
 });
