@@ -10,7 +10,7 @@ It's a simple app that lets you create Wiki-like pages using markdown and URL ro
 
 Make sure you have [npm](http://npmjs.org/).
 
-1. Clone this repo
+1. `git clone https://github.com/petehunt/ReactHack.git`
 2. `npm install`
 3. Edit `src/main.js` to include your Parse API key.
 4. `npm start`
