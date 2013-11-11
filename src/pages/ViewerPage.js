@@ -3,7 +3,7 @@
 var React = require('React');
 var Viewer = require('../components/Viewer');
 
-var STYLE_LOADING = {
+var STYLE_MESSAGE = {
   bottom: 0,
   color: 'gray',
   fontFamily: 'sans-serif',
@@ -40,8 +40,19 @@ var ViewerPage = React.createClass({
   },
 
   render: function() {
+    if ((screen.availWidth !== 320 || navigator.userAgent.indexOf('iPhone OS') === -1)) {
+      return (
+        <div style={STYLE_MESSAGE}>
+          This demo is currently only available on an iPhone 5 as it is the
+          only phone I have tested extensively. Android is harder because
+          browser performance on image-intensive demos depends a lot on the
+          amount of texture memory on the device.
+        </div>
+      );
+    }
+
     if (!this.state.data) {
-      return <span style={STYLE_LOADING}>Loading...</span>;
+      return <div style={STYLE_MESSAGE}>Loading...</div>;
     }
 
     return (

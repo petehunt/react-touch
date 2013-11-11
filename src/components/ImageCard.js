@@ -50,6 +50,12 @@ var ImageCard = React.createClass({
       position: 'relative',
       width: this.props.width
     };
+
+    // The loading text is composited behind the image so it's hidden
+    // when the image is loaded. Normally you'd use Image.onload, but
+    // that only tells you when the bytes are ready, not when the paint
+    // is done.
+
     return (
       <div style={outerStyle}>
         <div style={STYLE_LOADING}>Loading...</div>
