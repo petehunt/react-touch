@@ -69,6 +69,8 @@
 	var React = require(2);
 	var Viewer = require(4);
 
+	var NUM_IMAGES = 10;
+
 	var STYLE_MESSAGE = {
 	  bottom: 0,
 	  color: 'gray',
@@ -81,6 +83,14 @@
 	  textAlign: 'center',
 	  top: '50%'
 	};
+
+	var IS_IPHONE_5 = Math.max(
+	  window.screen.height,
+	  window.screen.width
+	) * window.devicePixelRatio === 1136 &&
+	  window.navigator.userAgent.indexOf('iPhone OS 7') > -1;
+
+	var START_INDEX = 5;
 
 	var ViewerPage = React.createClass({displayName: 'ViewerPage',
 	  getInitialState: function() {
@@ -100,12 +110,19 @@
 	    $.getJSON(
 	      'http://graph.facebook.com/' + this.getUsername() + '/photos?fields=images&limit=100',
 	      function(data) {
-	        this.setState({data: data.data});
+	        this.setState({data: data.data.slice(START_INDEX, START_INDEX + NUM_IMAGES)});
 	      }.bind(this)
 	    );
 	  },
 
 	  render: function() {
+	    if (!IS_IPHONE_5) {
+	      return (
+	        React.DOM.div( {style:STYLE_MESSAGE}, 
+	" This demo is only available for iPhone 5. Sorry! "        )
+	      );
+	    }
+
 	    if (!this.state.data) {
 	      return React.DOM.div( {style:STYLE_MESSAGE}, "Loading...");
 	    }
