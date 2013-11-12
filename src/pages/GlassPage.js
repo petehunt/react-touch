@@ -53,7 +53,7 @@ var GlassPage = React.createClass({
       children.push(<li key={i}>Item {i}</li>);
     }
     var style = {
-      WebkitTransform: 'translate3d(0, -' + this.state.scrollTop + 'px, 0)'
+      WebkitTransform: 'translate3d(0, ' + (-this.state.scrollTop) + 'px, 0)'
     };
 
     var maxHeight = document.body.clientHeight;

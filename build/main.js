@@ -121,7 +121,7 @@
 	      children.push(React.DOM.li( {key:i}, "Item ", i));
 	    }
 	    var style = {
-	      WebkitTransform: 'translate3d(0, -' + this.state.scrollTop + 'px, 0)'
+	      WebkitTransform: 'translate3d(0, ' + (-this.state.scrollTop) + 'px, 0)'
 	    };
 
 	    var maxHeight = document.body.clientHeight;
@@ -4394,6 +4394,8 @@
 
 	    var glassStyle = this.props.glassStyle || {};
 	    glassStyle.position = 'absolute';
+	    // TODO: this won't animate well. Not sure if compositing will
+	    // make things better or worse...
 	    glassStyle.left = -this.props.left;
 	    glassStyle.top = -this.props.top;
 

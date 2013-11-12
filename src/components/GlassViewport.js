@@ -19,6 +19,8 @@ var GlassViewport = React.createClass({
 
     var glassStyle = this.props.glassStyle || {};
     glassStyle.position = 'absolute';
+    // TODO: this won't animate well. Not sure if compositing will
+    // make things better or worse...
     glassStyle.left = -this.props.left;
     glassStyle.top = -this.props.top;
 
