@@ -57,7 +57,7 @@ var GlassPage = React.createClass({
 
   render: function() {
     if (!IS_IPHONE_5) {
-      return <Message>This demo is only available on iPhone 5. Sorry!</Message>;
+      return <Message>This demo is only available for iPhone 5 and iOS 7. Sorry!</Message>;
     }
 
     var children = [];

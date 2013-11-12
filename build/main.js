@@ -126,7 +126,7 @@
 
 	  render: function() {
 	    if (!IS_IPHONE_5) {
-	      return Message(null, "This demo is only available on iPhone 5. Sorry!");
+	      return Message(null, "This demo is only available for iPhone 5 and iOS 7. Sorry!");
 	    }
 
 	    var children = [];
@@ -264,7 +264,7 @@
 	    if (!IS_IPHONE_5) {
 	      return (
 	        Message(null, 
-	" This demo is only available for iPhone 5. Sorry! "        )
+	" This demo is only available for iPhone 5 and iOS 7. Sorry! "        )
 	      );
 	    }
 

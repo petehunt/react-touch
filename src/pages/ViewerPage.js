@@ -39,7 +39,7 @@ var ViewerPage = React.createClass({
     if (!IS_IPHONE_5) {
       return (
         <Message>
-          This demo is only available for iPhone 5. Sorry!
+          This demo is only available for iPhone 5 and iOS 7. Sorry!
         </Message>
       );
     }
