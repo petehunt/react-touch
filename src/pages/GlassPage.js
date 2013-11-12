@@ -64,7 +64,7 @@ var GlassPage = React.createClass({
     for (var i = 0; i < 100; i++) {
       children.push(
         <li key={i} style={{color: COLORS[i % COLORS.length]}}>
-          Item {i}
+          Item {i}!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         </li>
       );
     }
