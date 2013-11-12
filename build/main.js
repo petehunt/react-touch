@@ -73,9 +73,14 @@
 	// Implicit require of Scroller from Zynga
 
 	var GlassContainer = require(5);
+	var Message = require(134);
 	var StaticContainer = require(6);
 
 	require(8);
+
+	var isIPhone5 = require(133);
+
+	var IS_IPHONE_5 = isIPhone5();
 
 	var COLORS = ['red', 'green', 'blue'];
 	var HEADER_HEIGHT = 40; // keep in sync w/ GlassPage.css
@@ -119,6 +124,10 @@
 	  },
 
 	  render: function() {
+	    if (!IS_IPHONE_5) {
+	      return Message(null, "This demo is only available on iPhone 5. Sorry!");
+	    }
+
 	    var children = [];
 	    for (var i = 0; i < 100; i++) {
 	      children.push(
@@ -191,28 +200,14 @@
 	/** @jsx React.DOM */
 
 	var React = require(4);
+	var Message = require(134);
 	var Viewer = require(7);
 
+	var isIPhone5 = require(133);
+
+	var IS_IPHONE_5 = isIPhone5();
+
 	var NUM_IMAGES = 10;
-
-	var STYLE_MESSAGE = {
-	  bottom: 0,
-	  color: 'gray',
-	  fontFamily: 'sans-serif',
-	  fontSize: '12px',
-	  left: 0,
-	  marginTop: -6,
-	  position: 'absolute',
-	  right: 0,
-	  textAlign: 'center',
-	  top: '50%'
-	};
-
-	var IS_IPHONE_5 = Math.max(
-	  window.screen.height,
-	  window.screen.width
-	) * window.devicePixelRatio === 1136 &&
-	  window.navigator.userAgent.indexOf('iPhone OS 7') > -1;
 
 	var START_INDEX = 5;
 
@@ -242,13 +237,13 @@
 	  render: function() {
 	    if (!IS_IPHONE_5) {
 	      return (
-	        React.DOM.div( {style:STYLE_MESSAGE}, 
+	        Message(null, 
 	" This demo is only available for iPhone 5. Sorry! "        )
 	      );
 	    }
 
 	    if (!this.state.data) {
-	      return React.DOM.div( {style:STYLE_MESSAGE}, "Loading...");
+	      return Message(null, "Loading...");
 	    }
 
 	    return (
@@ -22945,6 +22940,67 @@
 
 	module.exports = Danger;
 
+
+/***/ },
+
+/***/ 133:
+/***/ function(module, exports, require) {
+
+	// In the future if we use server rendering we'll need to defer this to the
+	// function call or something since it references window.
+
+	var IS_IPHONE_5 = Math.max(
+	  window.screen.height,
+	  window.screen.width
+	) * window.devicePixelRatio === 1136 &&
+	  window.navigator.userAgent.indexOf('iPhone OS 7') > -1;
+
+	function isIPhone5() {
+	  return IS_IPHONE_5;
+	}
+
+	module.exports = isIPhone5;
+
+/***/ },
+
+/***/ 134:
+/***/ function(module, exports, require) {
+
+	/** @jsx React.DOM */
+
+	var React = require(4);
+
+	require(135);
+
+	var Message = React.createClass({displayName: 'Message',
+	  render: function() {
+	    return React.DOM.div( {className:"Message"}, this.props.children);
+	  }
+	});
+
+	module.exports = Message;
+
+/***/ },
+
+/***/ 135:
+/***/ function(module, exports, require) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	var dispose = require(27)
+		// The css code:
+		(require(136))
+	if(false) {
+		module.hot.accept();
+		module.hot.dispose(dispose);
+	}
+
+/***/ },
+
+/***/ 136:
+/***/ function(module, exports, require) {
+
+	module.exports =
+		".Message {\n  bottom: 0;\n  color: gray;\n  font-family: sans-serif;\n  font-size: 12px;\n  left: 0;\n  margin-top: -6px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 50%;\n}";
 
 /***/ }
 /******/ })

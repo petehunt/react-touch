@@ -5,9 +5,14 @@ var React = require('React');
 // Implicit require of Scroller from Zynga
 
 var GlassContainer = require('../components/GlassContainer');
+var Message = require('../components/Message');
 var StaticContainer = require('../components/StaticContainer');
 
 require('./GlassPage.css');
+
+var isIPhone5 = require('../environment/isIPhone5');
+
+var IS_IPHONE_5 = isIPhone5();
 
 var COLORS = ['red', 'green', 'blue'];
 var HEADER_HEIGHT = 40; // keep in sync w/ GlassPage.css
@@ -51,6 +56,10 @@ var GlassPage = React.createClass({
   },
 
   render: function() {
+    if (!IS_IPHONE_5) {
+      return <Message>This demo is only available on iPhone 5. Sorry!</Message>;
+    }
+
     var children = [];
     for (var i = 0; i < 100; i++) {
       children.push(

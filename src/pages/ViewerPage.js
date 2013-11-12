@@ -1,28 +1,14 @@
 /** @jsx React.DOM */
 
 var React = require('React');
+var Message = require('../components/Message');
 var Viewer = require('../components/Viewer');
 
+var isIPhone5 = require('../environment/isIPhone5');
+
+var IS_IPHONE_5 = isIPhone5();
+
 var NUM_IMAGES = 10;
-
-var STYLE_MESSAGE = {
-  bottom: 0,
-  color: 'gray',
-  fontFamily: 'sans-serif',
-  fontSize: '12px',
-  left: 0,
-  marginTop: -6,
-  position: 'absolute',
-  right: 0,
-  textAlign: 'center',
-  top: '50%'
-};
-
-var IS_IPHONE_5 = Math.max(
-  window.screen.height,
-  window.screen.width
-) * window.devicePixelRatio === 1136 &&
-  window.navigator.userAgent.indexOf('iPhone OS 7') > -1;
 
 var START_INDEX = 5;
 
@@ -52,14 +38,14 @@ var ViewerPage = React.createClass({
   render: function() {
     if (!IS_IPHONE_5) {
       return (
-        <div style={STYLE_MESSAGE}>
+        <Message>
           This demo is only available for iPhone 5. Sorry!
-        </div>
+        </Message>
       );
     }
 
     if (!this.state.data) {
-      return <div style={STYLE_MESSAGE}>Loading...</div>;
+      return <Message>Loading...</Message>;
     }
 
     return (
