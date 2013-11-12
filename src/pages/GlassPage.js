@@ -9,6 +9,9 @@ var StaticContainer = require('../components/StaticContainer');
 
 require('./GlassPage.css');
 
+var COLORS = ['red', 'green', 'blue'];
+var HEADER_HEIGHT = 40; // keep in sync w/ GlassPage.css
+
 var GlassPage = React.createClass({
   getInitialState: function() {
     return {scrollTop: 0};
@@ -50,12 +53,19 @@ var GlassPage = React.createClass({
   render: function() {
     var children = [];
     for (var i = 0; i < 100; i++) {
-      children.push(<li key={i}>Item {i}</li>);
+      children.push(
+        <li key={i} style={{color: COLORS[i % COLORS.length]}}>
+          Item {i}
+        </li>
+      );
     }
     var style = {
       WebkitTransform: 'translate3d(0, ' + (-this.state.scrollTop) + 'px, 0)'
     };
 
+    // TODO: we can make this positioning significantly less lame
+    // by measuring the DOM but I'm not sure we want to rely that
+    // staying up-to-date, so for now make it explicit.
     var maxHeight = document.body.clientHeight;
 
     var overlays = {
@@ -63,31 +73,31 @@ var GlassPage = React.createClass({
         left: 0,
         top: 0,
         width: '100%',
-        height: 40,
+        height: HEADER_HEIGHT,
         style: {borderBottom: '1px solid rgba(10, 10, 10, 0.1)'},
-        children: <span>This is the header</span>
+        children: <div className="GlassPage-header">This is the header</div>
       },
       footer: {
         left: 0,
-        top: maxHeight - 40,
+        top: maxHeight - HEADER_HEIGHT,
         width: '100%',
-        height: 40,
+        height: HEADER_HEIGHT,
         style: {borderTop: '1px solid rgba(10, 10, 10, 0.1)'},
-        children: <span>This is the footer</span>
+        children: <div className="GlassPage-footer">This is the footer</div>
       }
     };
 
     var contentBox = {
       left: 0,
-      top: 40,
+      top: HEADER_HEIGHT,
       width: '100%',
-      height: maxHeight - 2 * 40,
+      height: maxHeight - 2 * HEADER_HEIGHT,
       style: {backgroundColor: '#fcfcfc'}
     };
 
     return (
       <GlassContainer
-        style={{background: 'white', border: '1px solid rgba(10, 10, 10, 0.1)', width: '100%', height: 400}}
+        style={{background: 'white', border: '1px solid rgba(10, 10, 10, 0.1)', width: '100%', height: maxHeight}}
         overlays={overlays}
         content={contentBox}
         onTouchStart={this.handleTouchStart}

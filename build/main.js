@@ -77,6 +77,9 @@
 
 	require(8);
 
+	var COLORS = ['red', 'green', 'blue'];
+	var HEADER_HEIGHT = 40; // keep in sync w/ GlassPage.css
+
 	var GlassPage = React.createClass({displayName: 'GlassPage',
 	  getInitialState: function() {
 	    return {scrollTop: 0};
@@ -118,12 +121,19 @@
 	  render: function() {
 	    var children = [];
 	    for (var i = 0; i < 100; i++) {
-	      children.push(React.DOM.li( {key:i}, "Item ", i));
+	      children.push(
+	        React.DOM.li( {key:i, style:{color: COLORS[i % COLORS.length]}}, 
+	" Item ", i
+	        )
+	      );
 	    }
 	    var style = {
 	      WebkitTransform: 'translate3d(0, ' + (-this.state.scrollTop) + 'px, 0)'
 	    };
 
+	    // TODO: we can make this positioning significantly less lame
+	    // by measuring the DOM but I'm not sure we want to rely that
+	    // staying up-to-date, so for now make it explicit.
 	    var maxHeight = document.body.clientHeight;
 
 	    var overlays = {
@@ -131,31 +141,31 @@
 	        left: 0,
 	        top: 0,
 	        width: '100%',
-	        height: 40,
+	        height: HEADER_HEIGHT,
 	        style: {borderBottom: '1px solid rgba(10, 10, 10, 0.1)'},
-	        children: React.DOM.span(null, "This is the header")
+	        children: React.DOM.div( {className:"GlassPage-header"}, "This is the header")
 	      },
 	      footer: {
 	        left: 0,
-	        top: maxHeight - 40,
+	        top: maxHeight - HEADER_HEIGHT,
 	        width: '100%',
-	        height: 40,
+	        height: HEADER_HEIGHT,
 	        style: {borderTop: '1px solid rgba(10, 10, 10, 0.1)'},
-	        children: React.DOM.span(null, "This is the footer")
+	        children: React.DOM.div( {className:"GlassPage-footer"}, "This is the footer")
 	      }
 	    };
 
 	    var contentBox = {
 	      left: 0,
-	      top: 40,
+	      top: HEADER_HEIGHT,
 	      width: '100%',
-	      height: maxHeight - 2 * 40,
+	      height: maxHeight - 2 * HEADER_HEIGHT,
 	      style: {backgroundColor: '#fcfcfc'}
 	    };
 
 	    return (
 	      GlassContainer(
-	        {style:{background: 'white', border: '1px solid rgba(10, 10, 10, 0.1)', width: '100%', height: 400},
+	        {style:{background: 'white', border: '1px solid rgba(10, 10, 10, 0.1)', width: '100%', height: maxHeight},
 	        overlays:overlays,
 	        content:contentBox,
 	        onTouchStart:this.handleTouchStart,
@@ -575,7 +585,7 @@
 /***/ function(module, exports, require) {
 
 	module.exports =
-		"* {\n  box-sizing: border-box;\n}";
+		"* {\n  box-sizing: border-box;\n}\n\n.GlassPage-header,\n.GlassPage-footer {\n  font-family: sans-serif;\n  font-size: 16px;\n  font-weight: bold;\n  line-height: 40px;\n  text-align: center;\n}";
 
 /***/ },
 
