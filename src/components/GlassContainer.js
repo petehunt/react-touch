@@ -47,25 +47,36 @@ function cloneComponent(component) {
   return newInstance;
 }
 
+var GLASS_STYLE = {
+  WebkitFilter: 'blur(5px)'
+};
+
 var GlassContainer = React.createClass({
   getDefaultProps: function() {
     return {style: {}, overlays: {}};
   },
 
   render: function() {
-    var viewports = [];
-    var clonedChildren = false;
+    var viewports = [
+      <GlassViewport
+        key="content"
+        glassContent={this.props.children}
+        left={this.props.content.left}
+        top={this.props.content.top}
+        width={this.props.content.width}
+        height={this.props.content.height}
+        style={this.props.content.style}
+      />
+    ];
 
     for (var key in this.props.overlays) {
       var overlay = this.props.overlays[key];
-      var children = clonedChildren ? cloneChildren(this.props.children) : this.props.children;
-      clonedChildren = true;
 
       viewports.push(
         <GlassViewport
           key={key}
-          glassContent={children}
-          glassStyle={overlay.glassStyle}
+          glassContent={cloneChildren(this.props.children)}
+          glassStyle={GLASS_STYLE}
           left={overlay.left}
           top={overlay.top}
           width={overlay.width}

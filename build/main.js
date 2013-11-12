@@ -124,6 +124,8 @@
 	      WebkitTransform: 'translate3d(0, -' + this.state.scrollTop + 'px, 0)'
 	    };
 
+	    var maxHeight = document.body.clientHeight;
+
 	    var overlays = {
 	      header: {
 	        left: 0,
@@ -131,35 +133,34 @@
 	        width: '100%',
 	        height: 40,
 	        style: {borderBottom: '1px solid rgba(10, 10, 10, 0.1)'},
-	        glassStyle: {WebkitFilter: 'blur(5px)'},
 	        children: React.DOM.span(null, "This is the header")
-	      },
-	      content: {
-	        left: 0,
-	        top: 40,
-	        width: '100%',
-	        height: 320,
-	        style: {backgroundColor: '#fcfcfc'}
 	      },
 	      footer: {
 	        left: 0,
-	        top: 360,
+	        top: maxHeight - 40,
 	        width: '100%',
 	        height: 40,
 	        style: {borderTop: '1px solid rgba(10, 10, 10, 0.1)'},
-	        glassStyle: {WebkitFilter: 'blur(5px)'},
 	        children: React.DOM.span(null, "This is the footer")
 	      }
+	    };
+
+	    var contentBox = {
+	      left: 0,
+	      top: 40,
+	      width: '100%',
+	      height: maxHeight - 2 * 40,
+	      style: {backgroundColor: '#fcfcfc'}
 	    };
 
 	    return (
 	      GlassContainer(
 	        {style:{background: 'white', border: '1px solid rgba(10, 10, 10, 0.1)', width: '100%', height: 400},
 	        overlays:overlays,
+	        content:contentBox,
 	        onTouchStart:this.handleTouchStart,
 	        onTouchMove:this.handleTouchMove,
 	        onTouchEnd:this.handleTouchEnd}, 
-
 	        React.DOM.div( {style:style, ref:"content"}, 
 	          StaticContainer(null, 
 	            React.DOM.ul(null, children)
@@ -396,25 +397,36 @@
 	  return newInstance;
 	}
 
+	var GLASS_STYLE = {
+	  WebkitFilter: 'blur(5px)'
+	};
+
 	var GlassContainer = React.createClass({displayName: 'GlassContainer',
 	  getDefaultProps: function() {
 	    return {style: {}, overlays: {}};
 	  },
 
 	  render: function() {
-	    var viewports = [];
-	    var clonedChildren = false;
+	    var viewports = [
+	      GlassViewport(
+	        {key:"content",
+	        glassContent:this.props.children,
+	        left:this.props.content.left,
+	        top:this.props.content.top,
+	        width:this.props.content.width,
+	        height:this.props.content.height,
+	        style:this.props.content.style}
+	      )
+	    ];
 
 	    for (var key in this.props.overlays) {
 	      var overlay = this.props.overlays[key];
-	      var children = clonedChildren ? cloneChildren(this.props.children) : this.props.children;
-	      clonedChildren = true;
 
 	      viewports.push(
 	        GlassViewport(
 	          {key:key,
-	          glassContent:children,
-	          glassStyle:overlay.glassStyle,
+	          glassContent:cloneChildren(this.props.children),
+	          glassStyle:GLASS_STYLE,
 	          left:overlay.left,
 	          top:overlay.top,
 	          width:overlay.width,

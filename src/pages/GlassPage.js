@@ -56,6 +56,8 @@ var GlassPage = React.createClass({
       WebkitTransform: 'translate3d(0, -' + this.state.scrollTop + 'px, 0)'
     };
 
+    var maxHeight = document.body.clientHeight;
+
     var overlays = {
       header: {
         left: 0,
@@ -63,31 +65,31 @@ var GlassPage = React.createClass({
         width: '100%',
         height: 40,
         style: {borderBottom: '1px solid rgba(10, 10, 10, 0.1)'},
-        glassStyle: {WebkitFilter: 'blur(5px)'},
         children: <span>This is the header</span>
-      },
-      content: {
-        left: 0,
-        top: 40,
-        width: '100%',
-        height: 320,
-        style: {backgroundColor: '#fcfcfc'}
       },
       footer: {
         left: 0,
-        top: 360,
+        top: maxHeight - 40,
         width: '100%',
         height: 40,
         style: {borderTop: '1px solid rgba(10, 10, 10, 0.1)'},
-        glassStyle: {WebkitFilter: 'blur(5px)'},
         children: <span>This is the footer</span>
       }
+    };
+
+    var contentBox = {
+      left: 0,
+      top: 40,
+      width: '100%',
+      height: maxHeight - 2 * 40,
+      style: {backgroundColor: '#fcfcfc'}
     };
 
     return (
       <GlassContainer
         style={{background: 'white', border: '1px solid rgba(10, 10, 10, 0.1)', width: '100%', height: 400}}
         overlays={overlays}
+        content={contentBox}
         onTouchStart={this.handleTouchStart}
         onTouchMove={this.handleTouchMove}
         onTouchEnd={this.handleTouchEnd}>
