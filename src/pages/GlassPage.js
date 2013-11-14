@@ -19,7 +19,11 @@ var HEADER_HEIGHT = 40; // keep in sync w/ GlassPage.css
 
 var GlassPage = React.createClass({
   getInitialState: function() {
-    return {scrollTop: 0};
+    return {scrollTop: 0, force: false};
+  },
+
+  handleClick: function() {
+    this.setState({force: true});
   },
 
   componentWillMount: function() {
@@ -56,8 +60,13 @@ var GlassPage = React.createClass({
   },
 
   render: function() {
-    if (!IS_IPHONE_5) {
-      return <Message>This demo is only available for iPhone 5 and iOS 7. Sorry!</Message>;
+    if (!IS_IPHONE_5 && !this.state.force) {
+      return (
+        <Message>
+          This demo is designed for iPhone 5 and iOS 7.<br />
+          <a href="javascript:;" onClick={this.handleClick}>Click here to live dangerously</a>.
+        </Message>
+      );
     }
 
     var children = [];

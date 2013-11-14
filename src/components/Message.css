@@ -1,6 +1,5 @@
 .Message {
   bottom: 0;
-  color: gray;
   font-family: sans-serif;
   font-size: 12px;
   left: 0;
@@ -9,4 +8,9 @@
   right: 0;
   text-align: center;
   top: 50%;
+}
+
+.Message,
+.Message a {
+  color: gray;
 }

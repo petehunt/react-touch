@@ -14,7 +14,11 @@ var START_INDEX = 5;
 
 var ViewerPage = React.createClass({
   getInitialState: function() {
-    return {data: null, width: 0, height: 0};
+    return {data: null, width: 0, height: 0, force: false};
+  },
+
+  handleClick: function() {
+    this.setState({force: true});
   },
 
   getUsername: function() {
@@ -36,10 +40,11 @@ var ViewerPage = React.createClass({
   },
 
   render: function() {
-    if (!IS_IPHONE_5) {
+    if (!IS_IPHONE_5 && !this.state.force) {
       return (
         <Message>
-          This demo is only available for iPhone 5 and iOS 7. Sorry!
+          This demo is designed for iPhone 5 and iOS 7.<br />
+          <a href="javascript:;" onClick={this.handleClick}>Click here to live dangerously</a>.
         </Message>
       );
     }

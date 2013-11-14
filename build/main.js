@@ -88,7 +88,11 @@
 
 	var GlassPage = React.createClass({displayName: 'GlassPage',
 	  getInitialState: function() {
-	    return {scrollTop: 0};
+	    return {scrollTop: 0, force: false};
+	  },
+
+	  handleClick: function() {
+	    this.setState({force: true});
 	  },
 
 	  componentWillMount: function() {
@@ -125,8 +129,12 @@
 	  },
 
 	  render: function() {
-	    if (!IS_IPHONE_5) {
-	      return Message(null, "This demo is only available for iPhone 5 and iOS 7. Sorry!");
+	    if (!IS_IPHONE_5 && !this.state.force) {
+	      return (
+	        Message(null, 
+	" This demo is designed for iPhone 5 and iOS 7.",React.DOM.br(null ),
+	          React.DOM.a( {href:"javascript:;", onClick:this.handleClick}, "Click here to live dangerously"),". "        )
+	      );
 	    }
 
 	    var children = [];
@@ -238,7 +246,11 @@
 
 	var ViewerPage = React.createClass({displayName: 'ViewerPage',
 	  getInitialState: function() {
-	    return {data: null, width: 0, height: 0};
+	    return {data: null, width: 0, height: 0, force: false};
+	  },
+
+	  handleClick: function() {
+	    this.setState({force: true});
 	  },
 
 	  getUsername: function() {
@@ -260,10 +272,11 @@
 	  },
 
 	  render: function() {
-	    if (!IS_IPHONE_5) {
+	    if (!IS_IPHONE_5 && !this.state.force) {
 	      return (
 	        Message(null, 
-	" This demo is only available for iPhone 5 and iOS 7. Sorry! "        )
+	" This demo is designed for iPhone 5 and iOS 7.",React.DOM.br(null ),
+	          React.DOM.a( {href:"javascript:;", onClick:this.handleClick}, "Click here to live dangerously"),". "        )
 	      );
 	    }
 
@@ -382,7 +395,7 @@
 
 	var React = require(4);
 
-	var GlassViewport = require(33);
+	var GlassViewport = require(31);
 
 	function shallowCopy(x) {
 	  var y = {};
@@ -488,7 +501,7 @@
 
 	var React = require(4);
 
-	require(31);
+	require(32);
 
 	var Message = React.createClass({displayName: 'Message',
 	  render: function() {
@@ -4651,28 +4664,6 @@
 /***/ 31:
 /***/ function(module, exports, require) {
 
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	var dispose = require(30)
-		// The css code:
-		(require(32))
-	if(false) {
-		module.hot.accept();
-		module.hot.dispose(dispose);
-	}
-
-/***/ },
-
-/***/ 32:
-/***/ function(module, exports, require) {
-
-	module.exports =
-		".Message {\n  bottom: 0;\n  color: gray;\n  font-family: sans-serif;\n  font-size: 12px;\n  left: 0;\n  margin-top: -6px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 50%;\n}";
-
-/***/ },
-
-/***/ 33:
-/***/ function(module, exports, require) {
-
 	/** @jsx React.DOM */
 
 	var React = require(4);
@@ -4724,13 +4715,35 @@
 
 /***/ },
 
+/***/ 32:
+/***/ function(module, exports, require) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	var dispose = require(30)
+		// The css code:
+		(require(33))
+	if(false) {
+		module.hot.accept();
+		module.hot.dispose(dispose);
+	}
+
+/***/ },
+
+/***/ 33:
+/***/ function(module, exports, require) {
+
+	module.exports =
+		".Message {\n  bottom: 0;\n  font-family: sans-serif;\n  font-size: 12px;\n  left: 0;\n  margin-top: -6px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 50%;\n}\n\n.Message,\n.Message a {\n  color: gray;\n}";
+
+/***/ },
+
 /***/ 34:
 /***/ function(module, exports, require) {
 
 	/** @jsx React.DOM */
 
-	var EasingFunctions = require(79);
-	var ImageCard = require(80);
+	var EasingFunctions = require(80);
+	var ImageCard = require(79);
 	var React = require(4);
 
 	require(81);
@@ -8437,11 +8450,11 @@
 	var ExecutionEnvironment = require(93);
 	var SyntheticEvent = require(100);
 
-	var getActiveElement = require(111);
+	var getActiveElement = require(117);
 	var isEventSupported = require(96);
 	var isTextInputElement = require(101);
 	var keyOf = require(53);
-	var shallowEqual = require(112);
+	var shallowEqual = require(118);
 
 	var topLevelTypes = EventConstants.topLevelTypes;
 
@@ -8659,14 +8672,14 @@
 
 	var EventConstants = require(91);
 	var EventPropagators = require(99);
-	var SyntheticClipboardEvent = require(113);
+	var SyntheticClipboardEvent = require(111);
 	var SyntheticEvent = require(100);
-	var SyntheticFocusEvent = require(114);
-	var SyntheticKeyboardEvent = require(115);
+	var SyntheticFocusEvent = require(112);
+	var SyntheticKeyboardEvent = require(113);
 	var SyntheticMouseEvent = require(105);
-	var SyntheticTouchEvent = require(116);
-	var SyntheticUIEvent = require(117);
-	var SyntheticWheelEvent = require(118);
+	var SyntheticTouchEvent = require(114);
+	var SyntheticUIEvent = require(115);
+	var SyntheticWheelEvent = require(116);
 
 	var invariant = require(40);
 	var keyOf = require(53);
@@ -9615,51 +9628,6 @@
 /***/ 79:
 /***/ function(module, exports, require) {
 
-	/*
-	 * Easing Functions - inspired from http://gizma.com/easing/
-	 * only considering the t value for the range [0, 1] => [0, 1]
-	 *
-	 * Taken from: https://gist.github.com/gre/1650294
-	 *
-	 * No license attached to gist; assumed MIT based on
-	 * http://greweb.me/2012/02/bezier-curve-based-easing-functions-from-concept-to-implementation/
-	 */
-	var EasingFunctions = {
-	  // no easing, no acceleration
-	  linear: function (t) { return t },
-	  // accelerating from zero velocity
-	  easeInQuad: function (t) { return t*t },
-	  // decelerating to zero velocity
-	  easeOutQuad: function (t) { return t*(2-t) },
-	  // acceleration until halfway, then deceleration
-	  easeInOutQuad: function (t) { return t<.5 ? 2*t*t : -1+(4-2*t)*t },
-	  // accelerating from zero velocity
-	  easeInCubic: function (t) { return t*t*t },
-	  // decelerating to zero velocity
-	  easeOutCubic: function (t) { return (--t)*t*t+1 },
-	  // acceleration until halfway, then deceleration
-	  easeInOutCubic: function (t) { return t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1 },
-	  // accelerating from zero velocity
-	  easeInQuart: function (t) { return t*t*t*t },
-	  // decelerating to zero velocity
-	  easeOutQuart: function (t) { return 1-(--t)*t*t*t },
-	  // acceleration until halfway, then deceleration
-	  easeInOutQuart: function (t) { return t<.5 ? 8*t*t*t*t : 1-8*(--t)*t*t*t },
-	  // accelerating from zero velocity
-	  easeInQuint: function (t) { return t*t*t*t*t },
-	  // decelerating to zero velocity
-	  easeOutQuint: function (t) { return 1+(--t)*t*t*t*t },
-	  // acceleration until halfway, then deceleration
-	  easeInOutQuint: function (t) { return t<.5 ? 16*t*t*t*t*t : 1+16*(--t)*t*t*t*t }
-	};
-
-	module.exports = EasingFunctions;
-
-/***/ },
-
-/***/ 80:
-/***/ function(module, exports, require) {
-
 	/** @jsx React.DOM */
 
 	var React = require(4);
@@ -9730,6 +9698,51 @@
 	});
 
 	module.exports = ImageCard;
+
+/***/ },
+
+/***/ 80:
+/***/ function(module, exports, require) {
+
+	/*
+	 * Easing Functions - inspired from http://gizma.com/easing/
+	 * only considering the t value for the range [0, 1] => [0, 1]
+	 *
+	 * Taken from: https://gist.github.com/gre/1650294
+	 *
+	 * No license attached to gist; assumed MIT based on
+	 * http://greweb.me/2012/02/bezier-curve-based-easing-functions-from-concept-to-implementation/
+	 */
+	var EasingFunctions = {
+	  // no easing, no acceleration
+	  linear: function (t) { return t },
+	  // accelerating from zero velocity
+	  easeInQuad: function (t) { return t*t },
+	  // decelerating to zero velocity
+	  easeOutQuad: function (t) { return t*(2-t) },
+	  // acceleration until halfway, then deceleration
+	  easeInOutQuad: function (t) { return t<.5 ? 2*t*t : -1+(4-2*t)*t },
+	  // accelerating from zero velocity
+	  easeInCubic: function (t) { return t*t*t },
+	  // decelerating to zero velocity
+	  easeOutCubic: function (t) { return (--t)*t*t+1 },
+	  // acceleration until halfway, then deceleration
+	  easeInOutCubic: function (t) { return t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1 },
+	  // accelerating from zero velocity
+	  easeInQuart: function (t) { return t*t*t*t },
+	  // decelerating to zero velocity
+	  easeOutQuart: function (t) { return 1-(--t)*t*t*t },
+	  // acceleration until halfway, then deceleration
+	  easeInOutQuart: function (t) { return t<.5 ? 8*t*t*t*t : 1-8*(--t)*t*t*t },
+	  // accelerating from zero velocity
+	  easeInQuint: function (t) { return t*t*t*t*t },
+	  // decelerating to zero velocity
+	  easeOutQuint: function (t) { return 1+(--t)*t*t*t*t },
+	  // acceleration until halfway, then deceleration
+	  easeInOutQuint: function (t) { return t<.5 ? 16*t*t*t*t*t : 1+16*(--t)*t*t*t*t }
+	};
+
+	module.exports = EasingFunctions;
 
 /***/ },
 
@@ -11295,7 +11308,7 @@
 
 	var ReactDOMSelection = require(131);
 
-	var getActiveElement = require(111);
+	var getActiveElement = require(117);
 	var nodeContains = require(73);
 
 	function isInDocument(node) {
@@ -11546,7 +11559,7 @@
 
 	"use strict";
 
-	var SyntheticUIEvent = require(117);
+	var SyntheticUIEvent = require(115);
 	var ViewportMetrics = require(95);
 
 	/**
@@ -12219,102 +12232,6 @@
 	 * See the License for the specific language governing permissions and
 	 * limitations under the License.
 	 *
-	 * @providesModule getActiveElement
-	 * @typechecks
-	 */
-
-	/**
-	 * Same as document.activeElement but wraps in a try-catch block. In IE it is
-	 * not safe to call document.activeElement if there is nothing focused.
-	 */
-	function getActiveElement() /*?DOMElement*/ {
-	  try {
-	    return document.activeElement;
-	  } catch (e) {
-	    return null;
-	  }
-	}
-
-	module.exports = getActiveElement;
-
-
-
-/***/ },
-
-/***/ 112:
-/***/ function(module, exports, require) {
-
-	/**
-	 * Copyright 2013 Facebook, Inc.
-	 *
-	 * Licensed under the Apache License, Version 2.0 (the "License");
-	 * you may not use this file except in compliance with the License.
-	 * You may obtain a copy of the License at
-	 *
-	 * http://www.apache.org/licenses/LICENSE-2.0
-	 *
-	 * Unless required by applicable law or agreed to in writing, software
-	 * distributed under the License is distributed on an "AS IS" BASIS,
-	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	 * See the License for the specific language governing permissions and
-	 * limitations under the License.
-	 *
-	 * @providesModule shallowEqual
-	 */
-
-	"use strict";
-
-	/**
-	 * Performs equality by iterating through keys on an object and returning
-	 * false when any key has values which are not strictly equal between
-	 * objA and objB. Returns true when the values of all keys are strictly equal.
-	 *
-	 * @return {boolean}
-	 */
-	function shallowEqual(objA, objB) {
-	  if (objA === objB) {
-	    return true;
-	  }
-	  var key;
-	  // Test for A's keys different from B.
-	  for (key in objA) {
-	    if (objA.hasOwnProperty(key) &&
-	        (!objB.hasOwnProperty(key) || objA[key] !== objB[key])) {
-	      return false;
-	    }
-	  }
-	  // Test for B'a keys missing from A.
-	  for (key in objB) {
-	    if (objB.hasOwnProperty(key) && !objA.hasOwnProperty(key)) {
-	      return false;
-	    }
-	  }
-	  return true;
-	}
-
-	module.exports = shallowEqual;
-
-
-/***/ },
-
-/***/ 113:
-/***/ function(module, exports, require) {
-
-	/**
-	 * Copyright 2013 Facebook, Inc.
-	 *
-	 * Licensed under the Apache License, Version 2.0 (the "License");
-	 * you may not use this file except in compliance with the License.
-	 * You may obtain a copy of the License at
-	 *
-	 * http://www.apache.org/licenses/LICENSE-2.0
-	 *
-	 * Unless required by applicable law or agreed to in writing, software
-	 * distributed under the License is distributed on an "AS IS" BASIS,
-	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	 * See the License for the specific language governing permissions and
-	 * limitations under the License.
-	 *
 	 * @providesModule SyntheticClipboardEvent
 	 * @typechecks static-only
 	 */
@@ -12349,7 +12266,7 @@
 
 /***/ },
 
-/***/ 114:
+/***/ 112:
 /***/ function(module, exports, require) {
 
 	/**
@@ -12373,7 +12290,7 @@
 
 	"use strict";
 
-	var SyntheticUIEvent = require(117);
+	var SyntheticUIEvent = require(115);
 
 	/**
 	 * @interface FocusEvent
@@ -12400,7 +12317,7 @@
 
 /***/ },
 
-/***/ 115:
+/***/ 113:
 /***/ function(module, exports, require) {
 
 	/**
@@ -12424,7 +12341,7 @@
 
 	"use strict";
 
-	var SyntheticUIEvent = require(117);
+	var SyntheticUIEvent = require(115);
 
 	/**
 	 * @interface KeyboardEvent
@@ -12463,7 +12380,7 @@
 
 /***/ },
 
-/***/ 116:
+/***/ 114:
 /***/ function(module, exports, require) {
 
 	/**
@@ -12487,7 +12404,7 @@
 
 	"use strict";
 
-	var SyntheticUIEvent = require(117);
+	var SyntheticUIEvent = require(115);
 
 	/**
 	 * @interface TouchEvent
@@ -12520,7 +12437,7 @@
 
 /***/ },
 
-/***/ 117:
+/***/ 115:
 /***/ function(module, exports, require) {
 
 	/**
@@ -12572,7 +12489,7 @@
 
 /***/ },
 
-/***/ 118:
+/***/ 116:
 /***/ function(module, exports, require) {
 
 	/**
@@ -12638,6 +12555,102 @@
 	SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 
 	module.exports = SyntheticWheelEvent;
+
+
+/***/ },
+
+/***/ 117:
+/***/ function(module, exports, require) {
+
+	/**
+	 * Copyright 2013 Facebook, Inc.
+	 *
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 * http://www.apache.org/licenses/LICENSE-2.0
+	 *
+	 * Unless required by applicable law or agreed to in writing, software
+	 * distributed under the License is distributed on an "AS IS" BASIS,
+	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 * See the License for the specific language governing permissions and
+	 * limitations under the License.
+	 *
+	 * @providesModule getActiveElement
+	 * @typechecks
+	 */
+
+	/**
+	 * Same as document.activeElement but wraps in a try-catch block. In IE it is
+	 * not safe to call document.activeElement if there is nothing focused.
+	 */
+	function getActiveElement() /*?DOMElement*/ {
+	  try {
+	    return document.activeElement;
+	  } catch (e) {
+	    return null;
+	  }
+	}
+
+	module.exports = getActiveElement;
+
+
+
+/***/ },
+
+/***/ 118:
+/***/ function(module, exports, require) {
+
+	/**
+	 * Copyright 2013 Facebook, Inc.
+	 *
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 * http://www.apache.org/licenses/LICENSE-2.0
+	 *
+	 * Unless required by applicable law or agreed to in writing, software
+	 * distributed under the License is distributed on an "AS IS" BASIS,
+	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 * See the License for the specific language governing permissions and
+	 * limitations under the License.
+	 *
+	 * @providesModule shallowEqual
+	 */
+
+	"use strict";
+
+	/**
+	 * Performs equality by iterating through keys on an object and returning
+	 * false when any key has values which are not strictly equal between
+	 * objA and objB. Returns true when the values of all keys are strictly equal.
+	 *
+	 * @return {boolean}
+	 */
+	function shallowEqual(objA, objB) {
+	  if (objA === objB) {
+	    return true;
+	  }
+	  var key;
+	  // Test for A's keys different from B.
+	  for (key in objA) {
+	    if (objA.hasOwnProperty(key) &&
+	        (!objB.hasOwnProperty(key) || objA[key] !== objB[key])) {
+	      return false;
+	    }
+	  }
+	  // Test for B'a keys missing from A.
+	  for (key in objB) {
+	    if (objB.hasOwnProperty(key) && !objA.hasOwnProperty(key)) {
+	      return false;
+	    }
+	  }
+	  return true;
+	}
+
+	module.exports = shallowEqual;
 
 
 /***/ },
@@ -22319,7 +22332,7 @@
 
 	"use strict";
 
-	var Danger = require(137);
+	var Danger = require(139);
 	var ReactMultiChildUpdateTypes = require(74);
 
 	var getTextContentAccessor = require(104);
@@ -22463,8 +22476,8 @@
 
 	var ExecutionEnvironment = require(93);
 
-	var createArrayFrom = require(138);
-	var getMarkupWrap = require(139);
+	var createArrayFrom = require(137);
+	var getMarkupWrap = require(138);
 	var invariant = require(40);
 
 	/**
@@ -22691,6 +22704,222 @@
 	 * See the License for the specific language governing permissions and
 	 * limitations under the License.
 	 *
+	 * @providesModule createArrayFrom
+	 * @typechecks
+	 */
+
+	/**
+	 * NOTE: if you are a previous user of this function, it has been considered
+	 * unsafe because it's inconsistent across browsers for some inputs.
+	 * Instead use `Array.isArray()`.
+	 *
+	 * Perform a heuristic test to determine if an object is "array-like".
+	 *
+	 *   A monk asked Joshu, a Zen master, "Has a dog Buddha nature?"
+	 *   Joshu replied: "Mu."
+	 *
+	 * This function determines if its argument has "array nature": it returns
+	 * true if the argument is an actual array, an `arguments' object, or an
+	 * HTMLCollection (e.g. node.childNodes or node.getElementsByTagName()).
+	 *
+	 * @param {*} obj
+	 * @return {boolean}
+	 */
+	function hasArrayNature(obj) {
+	  return (
+	    // not null/false
+	    !!obj &&
+	    // arrays are objects, NodeLists are functions in Safari
+	    (typeof obj == 'object' || typeof obj == 'function') &&
+	    // quacks like an array
+	    ('length' in obj) &&
+	    // not window
+	    !('setInterval' in obj) &&
+	    // no DOM node should be considered an array-like
+	    // a 'select' element has 'length' and 'item' properties on IE8
+	    (typeof obj.nodeType != 'number') &&
+	    (
+	      // a real array
+	      (// HTMLCollection/NodeList
+	      (Array.isArray(obj) ||
+	      // arguments
+	      ('callee' in obj) || 'item' in obj))
+	    )
+	  );
+	}
+
+	/**
+	 * Ensure that the argument is an array by wrapping it in an array if it is not.
+	 * Creates a copy of the argument if it is already an array.
+	 *
+	 * This is mostly useful idiomatically:
+	 *
+	 *   var createArrayFrom = require('createArrayFrom');
+	 *
+	 *   function takesOneOrMoreThings(things) {
+	 *     things = createArrayFrom(things);
+	 *     ...
+	 *   }
+	 *
+	 * This allows you to treat `things' as an array, but accept scalars in the API.
+	 *
+	 * This is also good for converting certain pseudo-arrays, like `arguments` or
+	 * HTMLCollections, into arrays.
+	 *
+	 * @param {*} obj
+	 * @return {array}
+	 */
+	function createArrayFrom(obj) {
+	  if (!hasArrayNature(obj)) {
+	    return [obj];
+	  }
+	  if (obj.item) {
+	    // IE does not support Array#slice on HTMLCollections
+	    var l = obj.length, ret = new Array(l);
+	    while (l--) { ret[l] = obj[l]; }
+	    return ret;
+	  }
+	  return Array.prototype.slice.call(obj);
+	}
+
+	module.exports = createArrayFrom;
+
+
+/***/ },
+
+/***/ 138:
+/***/ function(module, exports, require) {
+
+	/**
+	 * Copyright 2013 Facebook, Inc.
+	 *
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 * http://www.apache.org/licenses/LICENSE-2.0
+	 *
+	 * Unless required by applicable law or agreed to in writing, software
+	 * distributed under the License is distributed on an "AS IS" BASIS,
+	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 * See the License for the specific language governing permissions and
+	 * limitations under the License.
+	 *
+	 * @providesModule getMarkupWrap
+	 */
+
+	var ExecutionEnvironment = require(93);
+
+	var invariant = require(40);
+
+	/**
+	 * Dummy container used to detect which wraps are necessary.
+	 */
+	var dummyNode =
+	  ExecutionEnvironment.canUseDOM ? document.createElement('div') : null;
+
+	/**
+	 * Some browsers cannot use `innerHTML` to render certain elements standalone,
+	 * so we wrap them, render the wrapped nodes, then extract the desired node.
+	 *
+	 * In IE8, certain elements cannot render alone, so wrap all elements ('*').
+	 */
+	var shouldWrap = {
+	  // Force wrapping for SVG elements because if they get created inside a <div>,
+	  // they will be initialized in the wrong namespace (and will not display).
+	  'circle': true,
+	  'g': true,
+	  'line': true,
+	  'path': true,
+	  'polyline': true,
+	  'rect': true,
+	  'text': true
+	};
+
+	var selectWrap = [1, '<select multiple="true">', '</select>'];
+	var tableWrap = [1, '<table>', '</table>'];
+	var trWrap = [3, '<table><tbody><tr>', '</tr></tbody></table>'];
+
+	var svgWrap = [1, '<svg>', '</svg>'];
+
+	var markupWrap = {
+	  '*': [1, '?<div>', '</div>'],
+
+	  'area': [1, '<map>', '</map>'],
+	  'col': [2, '<table><tbody></tbody><colgroup>', '</colgroup></table>'],
+	  'legend': [1, '<fieldset>', '</fieldset>'],
+	  'param': [1, '<object>', '</object>'],
+	  'tr': [2, '<table><tbody>', '</tbody></table>'],
+
+	  'optgroup': selectWrap,
+	  'option': selectWrap,
+
+	  'caption': tableWrap,
+	  'colgroup': tableWrap,
+	  'tbody': tableWrap,
+	  'tfoot': tableWrap,
+	  'thead': tableWrap,
+
+	  'td': trWrap,
+	  'th': trWrap,
+
+	  'circle': svgWrap,
+	  'g': svgWrap,
+	  'line': svgWrap,
+	  'path': svgWrap,
+	  'polyline': svgWrap,
+	  'rect': svgWrap,
+	  'text': svgWrap
+	};
+
+	/**
+	 * Gets the markup wrap configuration for the supplied `nodeName`.
+	 *
+	 * NOTE: This lazily detects which wraps are necessary for the current browser.
+	 *
+	 * @param {string} nodeName Lowercase `nodeName`.
+	 * @return {?array} Markup wrap configuration, if applicable.
+	 */
+	function getMarkupWrap(nodeName) {
+	  invariant(!!dummyNode);
+	  if (!markupWrap.hasOwnProperty(nodeName)) {
+	    nodeName = '*';
+	  }
+	  if (!shouldWrap.hasOwnProperty(nodeName)) {
+	    if (nodeName === '*') {
+	      dummyNode.innerHTML = '<link />';
+	    } else {
+	      dummyNode.innerHTML = '<' + nodeName + '></' + nodeName + '>';
+	    }
+	    shouldWrap[nodeName] = !dummyNode.firstChild;
+	  }
+	  return shouldWrap[nodeName] ? markupWrap[nodeName] : null;
+	}
+
+
+	module.exports = getMarkupWrap;
+
+
+/***/ },
+
+/***/ 139:
+/***/ function(module, exports, require) {
+
+	/**
+	 * Copyright 2013 Facebook, Inc.
+	 *
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 * http://www.apache.org/licenses/LICENSE-2.0
+	 *
+	 * Unless required by applicable law or agreed to in writing, software
+	 * distributed under the License is distributed on an "AS IS" BASIS,
+	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 * See the License for the specific language governing permissions and
+	 * limitations under the License.
+	 *
 	 * @providesModule Danger
 	 * @typechecks static-only
 	 */
@@ -22703,7 +22932,7 @@
 
 	var createNodesFromMarkup = require(134);
 	var emptyFunction = require(84);
-	var getMarkupWrap = require(139);
+	var getMarkupWrap = require(138);
 	var invariant = require(40);
 	var mutateHTMLNodeWithMarkup = require(129);
 
@@ -22833,222 +23062,6 @@
 	};
 
 	module.exports = Danger;
-
-
-/***/ },
-
-/***/ 138:
-/***/ function(module, exports, require) {
-
-	/**
-	 * Copyright 2013 Facebook, Inc.
-	 *
-	 * Licensed under the Apache License, Version 2.0 (the "License");
-	 * you may not use this file except in compliance with the License.
-	 * You may obtain a copy of the License at
-	 *
-	 * http://www.apache.org/licenses/LICENSE-2.0
-	 *
-	 * Unless required by applicable law or agreed to in writing, software
-	 * distributed under the License is distributed on an "AS IS" BASIS,
-	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	 * See the License for the specific language governing permissions and
-	 * limitations under the License.
-	 *
-	 * @providesModule createArrayFrom
-	 * @typechecks
-	 */
-
-	/**
-	 * NOTE: if you are a previous user of this function, it has been considered
-	 * unsafe because it's inconsistent across browsers for some inputs.
-	 * Instead use `Array.isArray()`.
-	 *
-	 * Perform a heuristic test to determine if an object is "array-like".
-	 *
-	 *   A monk asked Joshu, a Zen master, "Has a dog Buddha nature?"
-	 *   Joshu replied: "Mu."
-	 *
-	 * This function determines if its argument has "array nature": it returns
-	 * true if the argument is an actual array, an `arguments' object, or an
-	 * HTMLCollection (e.g. node.childNodes or node.getElementsByTagName()).
-	 *
-	 * @param {*} obj
-	 * @return {boolean}
-	 */
-	function hasArrayNature(obj) {
-	  return (
-	    // not null/false
-	    !!obj &&
-	    // arrays are objects, NodeLists are functions in Safari
-	    (typeof obj == 'object' || typeof obj == 'function') &&
-	    // quacks like an array
-	    ('length' in obj) &&
-	    // not window
-	    !('setInterval' in obj) &&
-	    // no DOM node should be considered an array-like
-	    // a 'select' element has 'length' and 'item' properties on IE8
-	    (typeof obj.nodeType != 'number') &&
-	    (
-	      // a real array
-	      (// HTMLCollection/NodeList
-	      (Array.isArray(obj) ||
-	      // arguments
-	      ('callee' in obj) || 'item' in obj))
-	    )
-	  );
-	}
-
-	/**
-	 * Ensure that the argument is an array by wrapping it in an array if it is not.
-	 * Creates a copy of the argument if it is already an array.
-	 *
-	 * This is mostly useful idiomatically:
-	 *
-	 *   var createArrayFrom = require('createArrayFrom');
-	 *
-	 *   function takesOneOrMoreThings(things) {
-	 *     things = createArrayFrom(things);
-	 *     ...
-	 *   }
-	 *
-	 * This allows you to treat `things' as an array, but accept scalars in the API.
-	 *
-	 * This is also good for converting certain pseudo-arrays, like `arguments` or
-	 * HTMLCollections, into arrays.
-	 *
-	 * @param {*} obj
-	 * @return {array}
-	 */
-	function createArrayFrom(obj) {
-	  if (!hasArrayNature(obj)) {
-	    return [obj];
-	  }
-	  if (obj.item) {
-	    // IE does not support Array#slice on HTMLCollections
-	    var l = obj.length, ret = new Array(l);
-	    while (l--) { ret[l] = obj[l]; }
-	    return ret;
-	  }
-	  return Array.prototype.slice.call(obj);
-	}
-
-	module.exports = createArrayFrom;
-
-
-/***/ },
-
-/***/ 139:
-/***/ function(module, exports, require) {
-
-	/**
-	 * Copyright 2013 Facebook, Inc.
-	 *
-	 * Licensed under the Apache License, Version 2.0 (the "License");
-	 * you may not use this file except in compliance with the License.
-	 * You may obtain a copy of the License at
-	 *
-	 * http://www.apache.org/licenses/LICENSE-2.0
-	 *
-	 * Unless required by applicable law or agreed to in writing, software
-	 * distributed under the License is distributed on an "AS IS" BASIS,
-	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	 * See the License for the specific language governing permissions and
-	 * limitations under the License.
-	 *
-	 * @providesModule getMarkupWrap
-	 */
-
-	var ExecutionEnvironment = require(93);
-
-	var invariant = require(40);
-
-	/**
-	 * Dummy container used to detect which wraps are necessary.
-	 */
-	var dummyNode =
-	  ExecutionEnvironment.canUseDOM ? document.createElement('div') : null;
-
-	/**
-	 * Some browsers cannot use `innerHTML` to render certain elements standalone,
-	 * so we wrap them, render the wrapped nodes, then extract the desired node.
-	 *
-	 * In IE8, certain elements cannot render alone, so wrap all elements ('*').
-	 */
-	var shouldWrap = {
-	  // Force wrapping for SVG elements because if they get created inside a <div>,
-	  // they will be initialized in the wrong namespace (and will not display).
-	  'circle': true,
-	  'g': true,
-	  'line': true,
-	  'path': true,
-	  'polyline': true,
-	  'rect': true,
-	  'text': true
-	};
-
-	var selectWrap = [1, '<select multiple="true">', '</select>'];
-	var tableWrap = [1, '<table>', '</table>'];
-	var trWrap = [3, '<table><tbody><tr>', '</tr></tbody></table>'];
-
-	var svgWrap = [1, '<svg>', '</svg>'];
-
-	var markupWrap = {
-	  '*': [1, '?<div>', '</div>'],
-
-	  'area': [1, '<map>', '</map>'],
-	  'col': [2, '<table><tbody></tbody><colgroup>', '</colgroup></table>'],
-	  'legend': [1, '<fieldset>', '</fieldset>'],
-	  'param': [1, '<object>', '</object>'],
-	  'tr': [2, '<table><tbody>', '</tbody></table>'],
-
-	  'optgroup': selectWrap,
-	  'option': selectWrap,
-
-	  'caption': tableWrap,
-	  'colgroup': tableWrap,
-	  'tbody': tableWrap,
-	  'tfoot': tableWrap,
-	  'thead': tableWrap,
-
-	  'td': trWrap,
-	  'th': trWrap,
-
-	  'circle': svgWrap,
-	  'g': svgWrap,
-	  'line': svgWrap,
-	  'path': svgWrap,
-	  'polyline': svgWrap,
-	  'rect': svgWrap,
-	  'text': svgWrap
-	};
-
-	/**
-	 * Gets the markup wrap configuration for the supplied `nodeName`.
-	 *
-	 * NOTE: This lazily detects which wraps are necessary for the current browser.
-	 *
-	 * @param {string} nodeName Lowercase `nodeName`.
-	 * @return {?array} Markup wrap configuration, if applicable.
-	 */
-	function getMarkupWrap(nodeName) {
-	  invariant(!!dummyNode);
-	  if (!markupWrap.hasOwnProperty(nodeName)) {
-	    nodeName = '*';
-	  }
-	  if (!shouldWrap.hasOwnProperty(nodeName)) {
-	    if (nodeName === '*') {
-	      dummyNode.innerHTML = '<link />';
-	    } else {
-	      dummyNode.innerHTML = '<' + nodeName + '></' + nodeName + '>';
-	    }
-	    shouldWrap[nodeName] = !dummyNode.firstChild;
-	  }
-	  return shouldWrap[nodeName] ? markupWrap[nodeName] : null;
-	}
-
-
-	module.exports = getMarkupWrap;
 
 
 /***/ }
