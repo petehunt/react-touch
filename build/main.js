@@ -74,8 +74,8 @@
 	// Implicit require of Scroller from Zynga
 
 	var GlassContainer = require(6);
+	var GlassContent = require(143);
 	var Message = require(7);
-	var StaticContainer = require(8);
 	var StyleKeys = require(140);
 
 	require(24);
@@ -151,14 +151,6 @@
 	      );
 	    }
 
-	    var children = [];
-	    for (var i = 0; i < 100; i++) {
-	      children.push(
-	        React.DOM.li( {key:i, style:{color: COLORS[i % COLORS.length]}}, 
-	" Item ", i,"!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "        )
-	      );
-	    }
-
 	    var style = {};
 	    style[StyleKeys.TRANSFORM] = 'translate3d(0, ' + (-this.state.scrollTop) + 'px, 0)';
 
@@ -188,20 +180,14 @@
 
 	    return (
 	      GlassContainer(
-	        {style:{background: 'white', border: '1px solid rgba(10, 10, 10, 0.1)', width: '100%', height: maxHeight},
+	        {style:{height: maxHeight},
 	        overlays:overlays,
 	        content:contentBox,
 	        onTouchStart:this.handleTouchStart,
 	        onTouchMove:this.handleTouchMove,
 	        onTouchEnd:this.handleTouchEnd}, 
 	        React.DOM.div( {style:style, ref:"content"}, 
-	          StaticContainer(null, 
-	            React.DOM.div( {style:{padding: 10}}, 
-	              React.DOM.p(null, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean malesuada ligula erat, non dignissim neque tempus facilisis. Praesent eleifend metus arcu, a lacinia justo mattis condimentum. Vivamus a dui metus. Pellentesque id neque adipiscing, aliquet leo ac, luctus ipsum. Etiam vitae posuere ante. Mauris malesuada mattis tortor. Ut in massa vitae metus lacinia mollis at at enim. Nam pretium mollis felis, et euismod augue accumsan id. Nam sed elementum diam. Nunc sollicitudin consequat sagittis."),
-	              React.DOM.p(null, React.DOM.img( {src:"http://www.finishingsolutionsnetwork.com/wp-content/uploads/2013/04/bay-bridge-2.jpg", width:"298", height:"199"} )),
-	              React.DOM.p(null, "Etiam sed adipiscing massa. Nulla pulvinar erat sit amet nisi posuere, nec hendrerit libero sollicitudin. Aliquam blandit metus nec iaculis mattis. Quisque orci nulla, viverra non ullamcorper vel, semper sed mauris. In hac habitasse platea dictumst. Cras et tortor ullamcorper, imperdiet leo eget, tempor est. Suspendisse faucibus sit amet odio in cursus. Morbi eleifend felis quis augue rutrum pulvinar. Nunc sem urna, dapibus non fringilla id, ullamcorper vitae augue. Nullam non risus lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed lobortis, justo in volutpat gravida, metus eros mattis risus, sit amet mattis sapien augue in felis.")
-	            )
-	          )
+	          GlassContent(null )
 	        )
 	      )
 	    );
@@ -408,6 +394,8 @@
 	var GlassViewport = require(31);
 	var StyleKeys = require(140);
 
+	require(141);
+
 	function shallowCopy(x) {
 	  var y = {};
 	  for (var z in x) {
@@ -494,7 +482,7 @@
 	    }
 
 	    return this.transferPropsTo(
-	      React.DOM.div( {style:{position: 'relative', overflow: 'hidden'}}, 
+	      React.DOM.div( {className:"GlassContainer"}, 
 	        viewports
 	      )
 	    );
@@ -521,26 +509,6 @@
 	});
 
 	module.exports = Message;
-
-/***/ },
-
-/***/ 8:
-/***/ function(module, exports, require) {
-
-	/** @jsx React.DOM */
-
-	var React = require(4);
-
-	var StaticContainer = React.createClass({displayName: 'StaticContainer',
-	  shouldComponentUpdate: function() {
-	    return false;
-	  },
-	  render: function() {
-	    return this.props.children;
-	  }
-	});
-
-	module.exports = StaticContainer;
 
 /***/ },
 
@@ -23086,6 +23054,78 @@
 	  TRANSFORM: TRANSFORM_KEY,
 	  FILTER: FILTER_KEY
 	};
+
+/***/ },
+
+/***/ 141:
+/***/ function(module, exports, require) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	var dispose = require(30)
+		// The css code:
+		(require(142))
+	if(false) {
+		module.hot.accept();
+		module.hot.dispose(dispose);
+	}
+
+/***/ },
+
+/***/ 142:
+/***/ function(module, exports, require) {
+
+	module.exports =
+		".GlassContainer {\n  background: white;\n  border: 1px solid rgba(10, 10, 10, 0.1);\n  overflow: hidden;\n  position: relative;\n  width: 100%;\n}";
+
+/***/ },
+
+/***/ 143:
+/***/ function(module, exports, require) {
+
+	/** @jsx React.DOM */
+
+	var React = require(4);
+
+	require(144);
+
+	var GlassContent = React.createClass({displayName: 'GlassContent',
+	  shouldComponentUpdate: function() {
+	    return false;
+	  },
+	  render: function() {
+	    return (
+	      React.DOM.div( {className:"GlassContent"}, 
+	        React.DOM.p(null, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean malesuada ligula erat, non dignissim neque tempus facilisis. Praesent eleifend metus arcu, a lacinia justo mattis condimentum. Vivamus a dui metus. Pellentesque id neque adipiscing, aliquet leo ac, luctus ipsum. Etiam vitae posuere ante. Mauris malesuada mattis tortor. Ut in massa vitae metus lacinia mollis at at enim. Nam pretium mollis felis, et euismod augue accumsan id. Nam sed elementum diam. Nunc sollicitudin consequat sagittis."),
+	        React.DOM.p(null, React.DOM.img( {src:"http://www.finishingsolutionsnetwork.com/wp-content/uploads/2013/04/bay-bridge-2.jpg", width:"298", height:"199"} )),
+	        React.DOM.p(null, "Etiam sed adipiscing massa. Nulla pulvinar erat sit amet nisi posuere, nec hendrerit libero sollicitudin. Aliquam blandit metus nec iaculis mattis. Quisque orci nulla, viverra non ullamcorper vel, semper sed mauris. In hac habitasse platea dictumst. Cras et tortor ullamcorper, imperdiet leo eget, tempor est. Suspendisse faucibus sit amet odio in cursus. Morbi eleifend felis quis augue rutrum pulvinar. Nunc sem urna, dapibus non fringilla id, ullamcorper vitae augue. Nullam non risus lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed lobortis, justo in volutpat gravida, metus eros mattis risus, sit amet mattis sapien augue in felis.")
+	      )
+	    );
+	  }
+	});
+
+	module.exports = GlassContent;
+
+/***/ },
+
+/***/ 144:
+/***/ function(module, exports, require) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	var dispose = require(30)
+		// The css code:
+		(require(145))
+	if(false) {
+		module.hot.accept();
+		module.hot.dispose(dispose);
+	}
+
+/***/ },
+
+/***/ 145:
+/***/ function(module, exports, require) {
+
+	module.exports =
+		".GlassContent {\n  padding: 10px;\n}";
 
 /***/ }
 /******/ })

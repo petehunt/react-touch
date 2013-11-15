@@ -5,6 +5,8 @@ var React = require('React');
 var GlassViewport = require('./GlassViewport');
 var StyleKeys = require('../environment/StyleKeys');
 
+require('./GlassContainer.css');
+
 function shallowCopy(x) {
   var y = {};
   for (var z in x) {
@@ -91,7 +93,7 @@ var GlassContainer = React.createClass({
     }
 
     return this.transferPropsTo(
-      <div style={{position: 'relative', overflow: 'hidden'}}>
+      <div className="GlassContainer">
         {viewports}
       </div>
     );

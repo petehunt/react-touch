@@ -5,8 +5,8 @@ var React = require('React');
 // Implicit require of Scroller from Zynga
 
 var GlassContainer = require('../components/GlassContainer');
+var GlassContent = require('../components/GlassContent');
 var Message = require('../components/Message');
-var StaticContainer = require('../components/StaticContainer');
 var StyleKeys = require('../environment/StyleKeys');
 
 require('./GlassPage.css');
@@ -83,15 +83,6 @@ var GlassPage = React.createClass({
       );
     }
 
-    var children = [];
-    for (var i = 0; i < 100; i++) {
-      children.push(
-        <li key={i} style={{color: COLORS[i % COLORS.length]}}>
-          Item {i}!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        </li>
-      );
-    }
-
     var style = {};
     style[StyleKeys.TRANSFORM] = 'translate3d(0, ' + (-this.state.scrollTop) + 'px, 0)';
 
@@ -121,20 +112,14 @@ var GlassPage = React.createClass({
 
     return (
       <GlassContainer
-        style={{background: 'white', border: '1px solid rgba(10, 10, 10, 0.1)', width: '100%', height: maxHeight}}
+        style={{height: maxHeight}}
         overlays={overlays}
         content={contentBox}
         onTouchStart={this.handleTouchStart}
         onTouchMove={this.handleTouchMove}
         onTouchEnd={this.handleTouchEnd}>
         <div style={style} ref="content">
-          <StaticContainer>
-            <div style={{padding: 10}}>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean malesuada ligula erat, non dignissim neque tempus facilisis. Praesent eleifend metus arcu, a lacinia justo mattis condimentum. Vivamus a dui metus. Pellentesque id neque adipiscing, aliquet leo ac, luctus ipsum. Etiam vitae posuere ante. Mauris malesuada mattis tortor. Ut in massa vitae metus lacinia mollis at at enim. Nam pretium mollis felis, et euismod augue accumsan id. Nam sed elementum diam. Nunc sollicitudin consequat sagittis.</p>
-              <p><img src="http://www.finishingsolutionsnetwork.com/wp-content/uploads/2013/04/bay-bridge-2.jpg" width="298" height="199" /></p>
-              <p>Etiam sed adipiscing massa. Nulla pulvinar erat sit amet nisi posuere, nec hendrerit libero sollicitudin. Aliquam blandit metus nec iaculis mattis. Quisque orci nulla, viverra non ullamcorper vel, semper sed mauris. In hac habitasse platea dictumst. Cras et tortor ullamcorper, imperdiet leo eget, tempor est. Suspendisse faucibus sit amet odio in cursus. Morbi eleifend felis quis augue rutrum pulvinar. Nunc sem urna, dapibus non fringilla id, ullamcorper vitae augue. Nullam non risus lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed lobortis, justo in volutpat gravida, metus eros mattis risus, sit amet mattis sapien augue in felis.</p>
-            </div>
-          </StaticContainer>
+          <GlassContent />
         </div>
       </GlassContainer>
     );
