@@ -146,7 +146,7 @@
 	    if (!IS_IPHONE_5 && !this.state.force) {
 	      return (
 	        Message(null, 
-	" This demo peforms best on at last an iPhone 5 and iOS 7.",React.DOM.br(null ),
+	" This demo peforms best on at least an iPhone 5 and iOS 7.",React.DOM.br(null ),
 	          React.DOM.a( {href:"javascript:;", onClick:this.handleClick}, "Click here to live dangerously"),". "        )
 	      );
 	    }
@@ -289,7 +289,7 @@
 	    if (!IS_IPHONE_5 && !this.state.force) {
 	      return (
 	        Message(null, 
-	" This demo peforms best on at last an iPhone 5 and iOS 7.",React.DOM.br(null ),
+	" This demo peforms best on at least an iPhone 5 and iOS 7.",React.DOM.br(null ),
 	          React.DOM.a( {href:"javascript:;", onClick:this.handleClick}, "Click here to live dangerously"),". "        )
 	      );
 	    }

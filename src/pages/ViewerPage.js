@@ -43,7 +43,7 @@ var ViewerPage = React.createClass({
     if (!IS_IPHONE_5 && !this.state.force) {
       return (
         <Message>
-          This demo peforms best on at last an iPhone 5 and iOS 7.<br />
+          This demo peforms best on at least an iPhone 5 and iOS 7.<br />
           <a href="javascript:;" onClick={this.handleClick}>Click here to live dangerously</a>.
         </Message>
       );
