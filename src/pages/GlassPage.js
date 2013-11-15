@@ -7,6 +7,7 @@ var React = require('React');
 var GlassContainer = require('../components/GlassContainer');
 var Message = require('../components/Message');
 var StaticContainer = require('../components/StaticContainer');
+var StyleKeys = require('../environment/StyleKeys');
 
 require('./GlassPage.css');
 
@@ -28,9 +29,22 @@ var GlassPage = React.createClass({
 
   componentWillMount: function() {
     this.scroller = new Scroller(this.handleScroll);
+    this.configured = false;
   },
 
   componentDidMount: function() {
+    this.configure();
+  },
+
+  componentDidUpdate: function() {
+    this.configure();
+  },
+
+  configure: function() {
+    if (this.configured || (!IS_IPHONE_5 && !this.state.force)) {
+      return;
+    }
+    this.configured = true;
     var node = this.refs.content.getDOMNode();
     this.scroller.setDimensions(
       this.getDOMNode().clientWidth,
@@ -77,9 +91,9 @@ var GlassPage = React.createClass({
         </li>
       );
     }
-    var style = {
-      WebkitTransform: 'translate3d(0, ' + (-this.state.scrollTop) + 'px, 0)'
-    };
+
+    var style = {};
+    style[StyleKeys.TRANSFORM] = 'translate3d(0, ' + (-this.state.scrollTop) + 'px, 0)';
 
     // TODO: we can make this positioning significantly less lame
     // by measuring the DOM but I'm not sure we want to rely that

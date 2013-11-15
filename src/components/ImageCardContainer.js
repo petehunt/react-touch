@@ -3,10 +3,9 @@
 var EasingFunctions = require('../math/EasingFunctions');
 var ImageCard = require('./ImageCard');
 var React = require('React');
+var StyleKeys = require('../environment/StyleKeys');
 
 require('./ImageCardContainer.css');
-
-var TRANSFORM_KEY = typeof document.body.style.MozTransform !== 'undefined' ? 'MozTransform' : 'WebkitTransform';
 
 var ImageCardContainer = React.createClass({
   render: function() {
@@ -22,7 +21,7 @@ var ImageCardContainer = React.createClass({
       opacity: EasingFunctions.easeOutCubic(1 - Math.abs(pct))
     };
 
-    style[TRANSFORM_KEY] = 'translate3d(' + x + 'px, ' + y + 'px, ' + z + 'px) rotate3d(0, ' + yAxis + ', 0, ' + deg + 'deg)';
+    style[StyleKeys.TRANSFORM] = 'translate3d(' + x + 'px, ' + y + 'px, ' + z + 'px) rotate3d(0, ' + yAxis + ', 0, ' + deg + 'deg)';
     return <div style={style} className="ImageCardContainer">{card}</div>;
   }
 });

@@ -76,6 +76,7 @@
 	var GlassContainer = require(6);
 	var Message = require(7);
 	var StaticContainer = require(8);
+	var StyleKeys = require(140);
 
 	require(24);
 
@@ -97,9 +98,22 @@
 
 	  componentWillMount: function() {
 	    this.scroller = new Scroller(this.handleScroll);
+	    this.configured = false;
 	  },
 
 	  componentDidMount: function() {
+	    this.configure();
+	  },
+
+	  componentDidUpdate: function() {
+	    this.configure();
+	  },
+
+	  configure: function() {
+	    if (this.configured || (!IS_IPHONE_5 && !this.state.force)) {
+	      return;
+	    }
+	    this.configured = true;
 	    var node = this.refs.content.getDOMNode();
 	    this.scroller.setDimensions(
 	      this.getDOMNode().clientWidth,
@@ -144,9 +158,9 @@
 	" Item ", i,"!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "        )
 	      );
 	    }
-	    var style = {
-	      WebkitTransform: 'translate3d(0, ' + (-this.state.scrollTop) + 'px, 0)'
-	    };
+
+	    var style = {};
+	    style[StyleKeys.TRANSFORM] = 'translate3d(0, ' + (-this.state.scrollTop) + 'px, 0)';
 
 	    // TODO: we can make this positioning significantly less lame
 	    // by measuring the DOM but I'm not sure we want to rely that
@@ -396,6 +410,8 @@
 	var React = require(4);
 
 	var GlassViewport = require(31);
+	var StyleKeys = require(140);
+
 
 	function shallowCopy(x) {
 	  var y = {};
@@ -466,7 +482,7 @@
 
 	      clonedChildren.props = shallowCopy(clonedChildren.props);
 	      clonedChildren.props.style = shallowCopy(clonedChildren.props.style || {});
-	      clonedChildren.props.style.WebkitFilter = 'blur(5px)';
+	      clonedChildren.props.style[StyleKeys.FILTER] = 'blur(5px)';
 
 	      viewports.push(
 	        GlassViewport(
@@ -4745,10 +4761,9 @@
 	var EasingFunctions = require(80);
 	var ImageCard = require(79);
 	var React = require(4);
+	var StyleKeys = require(140);
 
 	require(81);
-
-	var TRANSFORM_KEY = typeof document.body.style.MozTransform !== 'undefined' ? 'MozTransform' : 'WebkitTransform';
 
 	var ImageCardContainer = React.createClass({displayName: 'ImageCardContainer',
 	  render: function() {
@@ -4764,7 +4779,7 @@
 	      opacity: EasingFunctions.easeOutCubic(1 - Math.abs(pct))
 	    };
 
-	    style[TRANSFORM_KEY] = 'translate3d(' + x + 'px, ' + y + 'px, ' + z + 'px) rotate3d(0, ' + yAxis + ', 0, ' + deg + 'deg)';
+	    style[StyleKeys.TRANSFORM] = 'translate3d(' + x + 'px, ' + y + 'px, ' + z + 'px) rotate3d(0, ' + yAxis + ', 0, ' + deg + 'deg)';
 	    return React.DOM.div( {style:style, className:"ImageCardContainer"}, card);
 	  }
 	});
@@ -23063,6 +23078,19 @@
 
 	module.exports = Danger;
 
+
+/***/ },
+
+/***/ 140:
+/***/ function(module, exports, require) {
+
+	var TRANSFORM_KEY = typeof document.body.style.MozTransform !== 'undefined' ? 'MozTransform' : 'WebkitTransform';
+	var FILTER_KEY = typeof document.body.style.MozFilter !== 'undefined' ? 'MozFilter' : 'WebkitFilter';
+
+	module.exports = {
+	  TRANSFORM: TRANSFORM_KEY,
+	  FILTER: FILTER_KEY
+	};
 
 /***/ }
 /******/ })

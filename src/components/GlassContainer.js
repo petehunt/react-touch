@@ -3,6 +3,7 @@
 var React = require('React');
 
 var GlassViewport = require('./GlassViewport');
+var StyleKeys = require('../environment/StyleKeys');
 
 function shallowCopy(x) {
   var y = {};
@@ -73,7 +74,7 @@ var GlassContainer = React.createClass({
 
       clonedChildren.props = shallowCopy(clonedChildren.props);
       clonedChildren.props.style = shallowCopy(clonedChildren.props.style || {});
-      clonedChildren.props.style.WebkitFilter = 'blur(5px)';
+      clonedChildren.props.style[StyleKeys.FILTER] = 'blur(5px)';
 
       viewports.push(
         <GlassViewport
