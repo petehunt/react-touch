@@ -10,3 +10,7 @@
   line-height: 40px;
   text-align: center;
 }
+
+.GlassPage-header {
+  background: rgba(257, 257, 257, 0.3);
+}
