@@ -36,16 +36,14 @@
   top: 40px;
 }
 
-/* 128 + 256px = 384px for intertia padding */
 .Layout-nav {
   background: #ccc;
   border-bottom: rgba(100, 100, 100, 0.3);
   bottom: 0;
-  left: -385px;
-  padding-left: 256px;
+  left: -128px;
   position: absolute;
   top: 0;
-  width: 384px;
+  width: 128px;
 }
 
 .Layout-scroller {

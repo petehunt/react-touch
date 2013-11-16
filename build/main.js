@@ -930,6 +930,7 @@
 
 	var Header = require(10);
 	var StaticContainer = require(57);
+	var StyleKeys = require(12);
 
 	require(58);
 
@@ -940,6 +941,9 @@
 	var Layout = React.createClass({displayName: 'Layout',
 	  componentWillMount: function() {
 	    this.scroller = new Scroller(this.handleScroll, {
+	      bouncing: false,
+	      scrollingX: true,
+	      scrollingY: false,
 	      snapping: true
 	    });
 	  },
@@ -953,6 +957,7 @@
 	      node.clientHeight
 	    );
 	    this.scroller.setSnapSize(SIDEBAR_WIDTH, node.clientHeight);
+	    this.scroller.scrollTo(SIDEBAR_WIDTH, 0);
 	  },
 
 	  handleScroll: function(left, top, zoom) {
@@ -974,23 +979,50 @@
 	    e.preventDefault();
 	  },
 
+	  handleContentTouchStart: function(e) {
+	    if (!this.isNavOpen()) {
+	      return;
+	    }
+	    this.scroller.doTouchStart(e.touches, e.timeStamp);
+	    e.preventDefault();
+	  },
+
+	  handleContentTouchMove: function(e) {
+	    if (!this.isNavOpen()) {
+	      return;
+	    }
+	    this.scroller.doTouchMove(e.touches, e.timeStamp, e.scale);
+	    e.preventDefault();
+	  },
+
+	  handleContentTouchEnd: function(e) {
+	    if (!this.isNavOpen()) {
+	      return;
+	    }
+	    this.scroller.doTouchEnd(e.timeStamp);
+	    e.preventDefault();
+	  },
+
 	  getInitialState: function() {
 	    return {scrollLeft: 0};
 	  },
 
 	  handleTap: function() {
-	    // TODO: animate scrolling etc
-	    if (this.state.scrollLeft === 0) {
+	    if (this.isNavOpen()) {
 	      this.scroller.scrollTo(SIDEBAR_WIDTH, 0, true);
 	    } else {
 	      this.scroller.scrollTo(0, 0, true);
 	    }
 	  },
 
+	  isNavOpen: function() {
+	    return this.state.scrollLeft !== SIDEBAR_WIDTH;
+	  },
+
 	  render: function() {
-	    var style = {
-	      WebkitTransform: 'translate3d(' + (128 - this.state.scrollLeft) + 'px, 0, 0)'
-	    };
+	    var style = {};
+	    style[StyleKeys.TRANSFORM] =  'translate3d(' + (SIDEBAR_WIDTH - this.state.scrollLeft) + 'px, 0, 0)';
+
 	    return this.transferPropsTo(
 	      React.DOM.div( {className:"Layout"}, 
 	        React.DOM.div( {className:"Layout-scroller", style:style}, 
@@ -1006,7 +1038,11 @@
 	                ),
 	                Header(null, "React mobile playground")
 	              ),
-	              React.DOM.div( {className:"Layout-content"}, 
+	              React.DOM.div(
+	                {className:"Layout-content",
+	                onTouchStart:this.handleContentTouchStart,
+	                onTouchMove:this.handleContentTouchMove,
+	                onTouchEnd:this.handleContentTouchEnd}, 
 	                this.props.children
 	              ),
 	              React.DOM.div( {className:"Layout-nav"}, 
@@ -6346,7 +6382,7 @@
 /***/ function(module, exports, require) {
 
 	module.exports =
-		".Layout {\n  bottom: 0;\n  left: 0;\n  overflow: hidden;\n  position: fixed;\n  right: 0;\n  top: 0;\n}\n\n.Layout-topBar {\n  border-bottom: 1px solid black;\n  left: 0;\n  line-height: 40px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 0;\n}\n\n.Layout-hamburger {\n  font-size: 20px;\n  left: 0;\n  line-height: 40px;\n  padding: 0 12px;\n  position: absolute;\n}\n\n.Layout-content {\n  background: #f0f0f0;\n  bottom: 0;\n  left: 0;\n  overflow: scroll;\n  padding: 10px;\n  position: absolute;\n  right: 0;\n  top: 40px;\n}\n\n/* 128 + 256px = 384px for intertia padding */\n.Layout-nav {\n  background: #ccc;\n  border-bottom: rgba(100, 100, 100, 0.3);\n  bottom: 0;\n  left: -385px;\n  padding-left: 256px;\n  position: absolute;\n  top: 0;\n  width: 384px;\n}\n\n.Layout-scroller {\n  height: 100%;\n  width: 100%;\n}";
+		".Layout {\n  bottom: 0;\n  left: 0;\n  overflow: hidden;\n  position: fixed;\n  right: 0;\n  top: 0;\n}\n\n.Layout-topBar {\n  border-bottom: 1px solid black;\n  left: 0;\n  line-height: 40px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 0;\n}\n\n.Layout-hamburger {\n  font-size: 20px;\n  left: 0;\n  line-height: 40px;\n  padding: 0 12px;\n  position: absolute;\n}\n\n.Layout-content {\n  background: #f0f0f0;\n  bottom: 0;\n  left: 0;\n  overflow: scroll;\n  padding: 10px;\n  position: absolute;\n  right: 0;\n  top: 40px;\n}\n\n.Layout-nav {\n  background: #ccc;\n  border-bottom: rgba(100, 100, 100, 0.3);\n  bottom: 0;\n  left: -128px;\n  position: absolute;\n  top: 0;\n  width: 128px;\n}\n\n.Layout-scroller {\n  height: 100%;\n  width: 100%;\n}";
 
 /***/ },
 

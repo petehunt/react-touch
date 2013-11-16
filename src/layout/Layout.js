@@ -4,6 +4,7 @@ var React = require('React');
 
 var Header = require('../components/Header');
 var StaticContainer = require('../components/StaticContainer');
+var StyleKeys = require('../environment/StyleKeys');
 
 require('./Layout.css');
 
@@ -14,6 +15,9 @@ var SIDEBAR_WIDTH = 128;
 var Layout = React.createClass({
   componentWillMount: function() {
     this.scroller = new Scroller(this.handleScroll, {
+      bouncing: false,
+      scrollingX: true,
+      scrollingY: false,
       snapping: true
     });
   },
@@ -27,6 +31,7 @@ var Layout = React.createClass({
       node.clientHeight
     );
     this.scroller.setSnapSize(SIDEBAR_WIDTH, node.clientHeight);
+    this.scroller.scrollTo(SIDEBAR_WIDTH, 0);
   },
 
   handleScroll: function(left, top, zoom) {
@@ -48,23 +53,50 @@ var Layout = React.createClass({
     e.preventDefault();
   },
 
+  handleContentTouchStart: function(e) {
+    if (!this.isNavOpen()) {
+      return;
+    }
+    this.scroller.doTouchStart(e.touches, e.timeStamp);
+    e.preventDefault();
+  },
+
+  handleContentTouchMove: function(e) {
+    if (!this.isNavOpen()) {
+      return;
+    }
+    this.scroller.doTouchMove(e.touches, e.timeStamp, e.scale);
+    e.preventDefault();
+  },
+
+  handleContentTouchEnd: function(e) {
+    if (!this.isNavOpen()) {
+      return;
+    }
+    this.scroller.doTouchEnd(e.timeStamp);
+    e.preventDefault();
+  },
+
   getInitialState: function() {
     return {scrollLeft: 0};
   },
 
   handleTap: function() {
-    // TODO: animate scrolling etc
-    if (this.state.scrollLeft === 0) {
+    if (this.isNavOpen()) {
       this.scroller.scrollTo(SIDEBAR_WIDTH, 0, true);
     } else {
       this.scroller.scrollTo(0, 0, true);
     }
   },
 
+  isNavOpen: function() {
+    return this.state.scrollLeft !== SIDEBAR_WIDTH;
+  },
+
   render: function() {
-    var style = {
-      WebkitTransform: 'translate3d(' + (128 - this.state.scrollLeft) + 'px, 0, 0)'
-    };
+    var style = {};
+    style[StyleKeys.TRANSFORM] =  'translate3d(' + (SIDEBAR_WIDTH - this.state.scrollLeft) + 'px, 0, 0)';
+
     return this.transferPropsTo(
       <div className="Layout">
         <div className="Layout-scroller" style={style}>
@@ -80,7 +112,11 @@ var Layout = React.createClass({
                 />
                 <Header>React mobile playground</Header>
               </div>
-              <div className="Layout-content">
+              <div
+                className="Layout-content"
+                onTouchStart={this.handleContentTouchStart}
+                onTouchMove={this.handleContentTouchMove}
+                onTouchEnd={this.handleContentTouchEnd}>
                 {this.props.children}
               </div>
               <div className="Layout-nav">
