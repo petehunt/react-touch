@@ -1,7 +1,52 @@
 .Layout {
   bottom: 0;
   left: 0;
+  overflow: hidden;
   position: fixed;
   right: 0;
   top: 0;
+}
+
+.Layout-topBar {
+  border-bottom: 1px solid black;
+  left: 0;
+  line-height: 40px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+}
+
+.Layout-hamburger {
+  font-size: 20px;
+  left: 0;
+  line-height: 40px;
+  padding: 0 12px;
+  position: absolute;
+}
+
+.Layout-content {
+  background: #f0f0f0;
+  bottom: 0;
+  left: 0;
+  overflow: scroll;
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  top: 40px;
+}
+
+.Layout-nav {
+  background: #ccc;
+  border-bottom: rgba(100, 100, 100, 0.3);
+  bottom: 0;
+  left: -128px;
+  position: absolute;
+  top: 0;
+  width: 128px;
+}
+
+.Layout-scroller {
+  height: 100%;
+  width: 100%;
 }

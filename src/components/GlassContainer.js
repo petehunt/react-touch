@@ -71,7 +71,9 @@ var GlassContainer = React.createClass({
     for (var key in this.props.overlays) {
       var overlay = this.props.overlays[key];
 
-      // TODO: this is a hack!
+      // TODO: this is somewhat of an anti-pattern: cloneChildren() should create the
+      // children with the correct props. But I'm too lazy to build the correct deep
+      // merger. And this isn't that bad since this component owns the props anyway.
       var clonedChildren = cloneChildren(this.props.children);
 
       clonedChildren.props = shallowCopy(clonedChildren.props);
