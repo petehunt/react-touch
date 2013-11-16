@@ -929,6 +929,7 @@
 	var React = require(6);
 
 	var Header = require(10);
+	var PreventBrowserSwipe = require(155);
 	var StaticContainer = require(57);
 	var StyleKeys = require(12);
 
@@ -1024,7 +1025,7 @@
 	    style[StyleKeys.TRANSFORM] =  'translate3d(' + (SIDEBAR_WIDTH - this.state.scrollLeft) + 'px, 0, 0)';
 
 	    return this.transferPropsTo(
-	      React.DOM.div( {className:"Layout"}, 
+	      PreventBrowserSwipe( {className:"Layout"}, 
 	        React.DOM.div( {className:"Layout-scroller", style:style}, 
 	          StaticContainer(null, 
 	            React.DOM.div(null, 
@@ -6382,7 +6383,7 @@
 /***/ function(module, exports, require) {
 
 	module.exports =
-		".Layout {\n  bottom: 0;\n  left: 0;\n  overflow: hidden;\n  position: fixed;\n  right: 0;\n  top: 0;\n}\n\n.Layout-topBar {\n  border-bottom: 1px solid black;\n  left: 0;\n  line-height: 40px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 0;\n}\n\n.Layout-hamburger {\n  font-size: 20px;\n  left: 0;\n  line-height: 40px;\n  padding: 0 12px;\n  position: absolute;\n}\n\n.Layout-content {\n  background: #f0f0f0;\n  bottom: 0;\n  left: 0;\n  overflow: scroll;\n  padding: 10px;\n  position: absolute;\n  right: 0;\n  top: 40px;\n}\n\n.Layout-nav {\n  background: #ccc;\n  border-bottom: rgba(100, 100, 100, 0.3);\n  bottom: 0;\n  left: -128px;\n  position: absolute;\n  top: 0;\n  width: 128px;\n}\n\n.Layout-scroller {\n  height: 100%;\n  width: 100%;\n}";
+		".Layout {\n  bottom: 0;\n  left: 0;\n  overflow: hidden;\n  position: fixed;\n  right: 0;\n  top: 0;\n}\n\n.Layout-topBar {\n  border-bottom: 1px solid black;\n  left: 0;\n  line-height: 40px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 0;\n}\n\n.Layout-hamburger {\n  font-size: 20px;\n  left: 0;\n  line-height: 40px;\n  padding: 0 12px;\n  position: absolute;\n}\n\n.Layout-content {\n  background: #f0f0f0;\n  bottom: 0;\n  left: 0;\n  overflow: scroll;\n  padding: 10px;\n  position: absolute;\n  right: 0;\n  top: 40px;\n}\n\n.Layout-nav {\n  background: #ccc;\n  border-bottom: rgba(100, 100, 100, 0.3);\n  bottom: 0;\n  left: -128px;\n  padding: 10px;\n  position: absolute;\n  top: 0;\n  width: 128px;\n}\n\n.Layout-scroller {\n  height: 100%;\n  width: 100%;\n}";
 
 /***/ },
 
@@ -23553,6 +23554,32 @@
 
 	module.exports = getMarkupWrap;
 
+
+/***/ },
+
+/***/ 155:
+/***/ function(module, exports, require) {
+
+	/** @jsx React.DOM */
+
+	var React = require(6);
+
+	// Some browsers will do a weird bounce thing. This disables it.
+	var PreventBrowserSwipe = React.createClass({displayName: 'PreventBrowserSwipe',
+	  handleTouch: function(e) {
+	    e.preventDefault();
+	  },
+
+	  render: function() {
+	    return this.transferPropsTo(
+	      React.DOM.div( {onTouchMove:this.handleTouch}, 
+	        this.props.children
+	      )
+	    );
+	  }
+	});
+
+	module.exports = PreventBrowserSwipe;
 
 /***/ }
 /******/ })

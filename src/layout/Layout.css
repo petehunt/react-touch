@@ -41,6 +41,7 @@
   border-bottom: rgba(100, 100, 100, 0.3);
   bottom: 0;
   left: -128px;
+  padding: 10px;
   position: absolute;
   top: 0;
   width: 128px;

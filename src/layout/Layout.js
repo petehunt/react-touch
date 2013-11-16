@@ -3,6 +3,7 @@
 var React = require('React');
 
 var Header = require('../components/Header');
+var PreventBrowserSwipe = require('../components/PreventBrowserSwipe');
 var StaticContainer = require('../components/StaticContainer');
 var StyleKeys = require('../environment/StyleKeys');
 
@@ -98,7 +99,7 @@ var Layout = React.createClass({
     style[StyleKeys.TRANSFORM] =  'translate3d(' + (SIDEBAR_WIDTH - this.state.scrollLeft) + 'px, 0, 0)';
 
     return this.transferPropsTo(
-      <div className="Layout">
+      <PreventBrowserSwipe className="Layout">
         <div className="Layout-scroller" style={style}>
           <StaticContainer>
             <div>
@@ -125,7 +126,7 @@ var Layout = React.createClass({
             </div>
           </StaticContainer>
         </div>
-      </div>
+      </PreventBrowserSwipe>
     );
   }
 });
