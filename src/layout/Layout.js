@@ -111,7 +111,7 @@ var Layout = React.createClass({
                   onTouchMove={this.handleTouchMove}
                   onTouchEnd={this.handleTouchEnd}
                 />
-                <Header>React mobile playground</Header>
+                <Header>Left nav header</Header>
               </div>
               <div
                 className="Layout-content"
@@ -121,7 +121,7 @@ var Layout = React.createClass({
                 {this.props.children}
               </div>
               <div className="Layout-nav">
-                navs on navs
+                I bet you expected something cooler here.
               </div>
             </div>
           </StaticContainer>

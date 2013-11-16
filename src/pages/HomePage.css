@@ -1,4 +1,11 @@
 .HomePage {
   background: rgb(250, 250, 250);
+  bottom: 0;
   font-family: sans-serif;
+  left: 0;
+  overflow: hidden;
+  padding: 10px;
+  position: fixed;
+  right: 0;
+  top: 0;
 }
