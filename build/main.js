@@ -938,23 +938,58 @@
 	var SIDEBAR_WIDTH = 128;
 
 	var Layout = React.createClass({displayName: 'Layout',
+	  componentWillMount: function() {
+	    this.scroller = new Scroller(this.handleScroll, {
+	      snapping: true
+	    });
+	  },
+
+	  componentDidMount: function() {
+	    var node = this.getDOMNode();
+	    this.scroller.setDimensions(
+	      node.clientWidth,
+	      node.clientHeight,
+	      node.clientWidth + SIDEBAR_WIDTH,
+	      node.clientHeight
+	    );
+	    this.scroller.setSnapSize(SIDEBAR_WIDTH, node.clientHeight);
+	  },
+
+	  handleScroll: function(left, top, zoom) {
+	    this.setState({scrollLeft: left});
+	  },
+
+	  handleTouchStart: function(e) {
+	    this.scroller.doTouchStart(e.touches, e.timeStamp);
+	    e.preventDefault();
+	  },
+
+	  handleTouchMove: function(e) {
+	    this.scroller.doTouchMove(e.touches, e.timeStamp, e.scale);
+	    e.preventDefault();
+	  },
+
+	  handleTouchEnd: function(e) {
+	    this.scroller.doTouchEnd(e.timeStamp);
+	    e.preventDefault();
+	  },
+
 	  getInitialState: function() {
-	    return {scrollLeft: 128};
+	    return {scrollLeft: 0};
 	  },
 
 	  handleTap: function() {
 	    // TODO: animate scrolling etc
 	    if (this.state.scrollLeft === 0) {
-	      this.setState({scrollLeft: SIDEBAR_WIDTH});
+	      this.scroller.scrollTo(SIDEBAR_WIDTH, 0, true);
 	    } else {
-	      this.setState({scrollLeft: 0});
+	      this.scroller.scrollTo(0, 0, true);
 	    }
 	  },
 
 	  render: function() {
 	    var style = {
-	      WebkitTransform: 'translate3d(' + this.state.scrollLeft + 'px, 0, 0)'
-	      //marginLeft: this.state.scrollLeft
+	      WebkitTransform: 'translate3d(' + (128 - this.state.scrollLeft) + 'px, 0, 0)'
 	    };
 	    return this.transferPropsTo(
 	      React.DOM.div( {className:"Layout"}, 
@@ -962,7 +997,13 @@
 	          StaticContainer(null, 
 	            React.DOM.div(null, 
 	              React.DOM.div( {className:"Layout-topBar"}, 
-	                React.DOM.div( {className:"Layout-hamburger fa fa-bars", onTouchTap:this.handleTap} ),
+	                React.DOM.div(
+	                  {className:"Layout-hamburger fa fa-bars",
+	                  onTouchTap:this.handleTap,
+	                  onTouchStart:this.handleTouchStart,
+	                  onTouchMove:this.handleTouchMove,
+	                  onTouchEnd:this.handleTouchEnd}
+	                ),
 	                Header(null, "React mobile playground")
 	              ),
 	              React.DOM.div( {className:"Layout-content"}, 
@@ -6305,7 +6346,7 @@
 /***/ function(module, exports, require) {
 
 	module.exports =
-		".Layout {\n  bottom: 0;\n  left: 0;\n  overflow: hidden;\n  position: fixed;\n  right: 0;\n  top: 0;\n}\n\n.Layout-topBar {\n  border-bottom: 1px solid black;\n  left: 0;\n  line-height: 40px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 0;\n}\n\n.Layout-hamburger {\n  font-size: 20px;\n  left: 0;\n  line-height: 40px;\n  padding: 0 12px;\n  position: absolute;\n}\n\n.Layout-content {\n  background: #f0f0f0;\n  bottom: 0;\n  left: 0;\n  overflow: scroll;\n  padding: 10px;\n  position: absolute;\n  right: 0;\n  top: 40px;\n}\n\n.Layout-nav {\n  background: #ccc;\n  border-bottom: rgba(100, 100, 100, 0.3);\n  bottom: 0;\n  left: -128px;\n  position: absolute;\n  top: 0;\n  width: 128px;\n}\n\n.Layout-scroller {\n  height: 100%;\n  width: 100%;\n}";
+		".Layout {\n  bottom: 0;\n  left: 0;\n  overflow: hidden;\n  position: fixed;\n  right: 0;\n  top: 0;\n}\n\n.Layout-topBar {\n  border-bottom: 1px solid black;\n  left: 0;\n  line-height: 40px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 0;\n}\n\n.Layout-hamburger {\n  font-size: 20px;\n  left: 0;\n  line-height: 40px;\n  padding: 0 12px;\n  position: absolute;\n}\n\n.Layout-content {\n  background: #f0f0f0;\n  bottom: 0;\n  left: 0;\n  overflow: scroll;\n  padding: 10px;\n  position: absolute;\n  right: 0;\n  top: 40px;\n}\n\n/* 128 + 256px = 384px for intertia padding */\n.Layout-nav {\n  background: #ccc;\n  border-bottom: rgba(100, 100, 100, 0.3);\n  bottom: 0;\n  left: -385px;\n  padding-left: 256px;\n  position: absolute;\n  top: 0;\n  width: 384px;\n}\n\n.Layout-scroller {\n  height: 100%;\n  width: 100%;\n}";
 
 /***/ },
 
