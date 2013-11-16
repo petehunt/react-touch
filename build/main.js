@@ -48,8 +48,8 @@
 /***/ 0:
 /***/ function(module, exports, require) {
 
-	var React = require(7);
-	var ReactHack = require(8);
+	var React = require(8);
+	var ReactHack = require(7);
 
 	var GlassPage = require(1);
 	var LeftNavPage = require(2);
@@ -81,7 +81,7 @@
 
 	/** @jsx React.DOM */
 
-	var React = require(7);
+	var React = require(8);
 
 	// Implicit require of Scroller from Zynga
 
@@ -216,7 +216,7 @@
 
 	/** @jsx React.DOM */
 
-	var React = require(7);
+	var React = require(8);
 
 	var Layout = require(15);
 
@@ -243,7 +243,7 @@
 
 	/** @jsx React.DOM */
 
-	var React = require(7);
+	var React = require(8);
 
 	require(47);
 
@@ -269,7 +269,7 @@
 
 	/** @jsx React.DOM */
 
-	var React = require(7);
+	var React = require(8);
 
 	var Images = require(16);
 	var Message = require(12);
@@ -650,6 +650,18 @@
 /***/ 7:
 /***/ function(module, exports, require) {
 
+	var ReactHack = require(49);
+	var FetchingMixin = require(50);
+
+	ReactHack.FetchingMixin = FetchingMixin;
+
+	module.exports = ReactHack;
+
+/***/ },
+
+/***/ 8:
+/***/ function(module, exports, require) {
+
 	/**
 	 * Copyright 2013 Facebook, Inc.
 	 *
@@ -725,24 +737,12 @@
 
 /***/ },
 
-/***/ 8:
-/***/ function(module, exports, require) {
-
-	var ReactHack = require(49);
-	var FetchingMixin = require(50);
-
-	ReactHack.FetchingMixin = FetchingMixin;
-
-	module.exports = ReactHack;
-
-/***/ },
-
 /***/ 9:
 /***/ function(module, exports, require) {
 
 	/** @jsx React.DOM */
 
-	var React = require(7);
+	var React = require(8);
 
 	var GlassViewport = require(51);
 	var StyleKeys = require(13);
@@ -853,7 +853,7 @@
 
 	/** @jsx React.DOM */
 
-	var React = require(7);
+	var React = require(8);
 
 	var NYNY = require(54);
 
@@ -884,9 +884,9 @@
 
 	/** @jsx React.DOM */
 
-	var React = require(7);
+	var React = require(8);
 
-	require(57);
+	require(67);
 
 	var Header = React.createClass({displayName: 'Header',
 	  render: function() {
@@ -907,9 +907,9 @@
 
 	/** @jsx React.DOM */
 
-	var React = require(7);
+	var React = require(8);
 
-	require(59);
+	require(57);
 
 	var Message = React.createClass({displayName: 'Message',
 	  render: function() {
@@ -959,14 +959,14 @@
 
 	/** @jsx React.DOM */
 
-	var React = require(7);
+	var React = require(8);
 
 	var Header = require(11);
-	var PreventBrowserSwipe = require(61);
-	var StaticContainer = require(62);
+	var PreventBrowserSwipe = require(59);
+	var StaticContainer = require(60);
 	var StyleKeys = require(13);
 
-	require(63);
+	require(61);
 
 	// Keep in sync with Layout.css
 	// TODO: deprecate the CSS standard
@@ -1115,10 +1115,10 @@
 	/** @jsx React.DOM */
 
 	// Implicit require of Scroller from Zynga
-	var ImageCardContainer = require(65);
-	var React = require(7);
+	var ImageCardContainer = require(63);
+	var React = require(8);
 
-	require(66);
+	require(64);
 
 	var Viewer = React.createClass({displayName: 'Viewer',
 	  componentWillMount: function() {
@@ -2258,9 +2258,9 @@
 
 	"use strict";
 
-	var ReactComponentEnvironment = require(71);
+	var ReactComponentEnvironment = require(78);
 	var ReactCurrentOwner = require(32);
-	var ReactOwner = require(72);
+	var ReactOwner = require(71);
 	var ReactUpdates = require(73);
 
 	var invariant = require(29);
@@ -2755,16 +2755,16 @@
 
 	var ReactComponent = require(30);
 	var ReactCurrentOwner = require(32);
-	var ReactOwner = require(72);
+	var ReactOwner = require(71);
 	var ReactPerf = require(39);
-	var ReactPropTransferer = require(76);
+	var ReactPropTransferer = require(72);
 	var ReactUpdates = require(73);
 
 	var invariant = require(29);
 	var keyMirror = require(74);
 	var merge = require(75);
-	var mixInto = require(77);
-	var objMap = require(78);
+	var mixInto = require(76);
+	var objMap = require(77);
 
 	/**
 	 * Policies that describe methods in `ReactCompositeComponentInterface`.
@@ -3947,7 +3947,7 @@
 	var invariant = require(29);
 	var keyOf = require(23);
 	var merge = require(75);
-	var mixInto = require(77);
+	var mixInto = require(76);
 
 	var putListener = ReactEventEmitter.putListener;
 	var deleteListener = ReactEventEmitter.deleteListener;
@@ -5954,7 +5954,7 @@
 	var ReactMount = require(37);
 
 	var escapeTextForBrowser = require(85);
-	var mixInto = require(77);
+	var mixInto = require(76);
 
 	/**
 	 * Text nodes violate a couple assumptions that React makes about components:
@@ -6030,7 +6030,7 @@
 /***/ function(module, exports, require) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-	var dispose = require(68)
+	var dispose = require(66)
 		// The css code:
 		(require(44))
 	if(false) {
@@ -6052,7 +6052,7 @@
 /***/ function(module, exports, require) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-	var dispose = require(68)
+	var dispose = require(66)
 		// The css code:
 		(require(46))
 	if(false) {
@@ -6074,7 +6074,7 @@
 /***/ function(module, exports, require) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-	var dispose = require(68)
+	var dispose = require(66)
 		// The css code:
 		(require(48))
 	if(false) {
@@ -6095,7 +6095,7 @@
 /***/ 49:
 /***/ function(module, exports, require) {
 
-	var React = require(7);
+	var React = require(8);
 	var Parse = require(147).Parse;
 
 	var container = document.getElementById('react-root');
@@ -6258,7 +6258,7 @@
 
 	/** @jsx React.DOM */
 
-	var React = require(7);
+	var React = require(8);
 
 	var GlassViewport = React.createClass({displayName: 'GlassViewport',
 	  getDefaultProps: function() {
@@ -6311,7 +6311,7 @@
 /***/ function(module, exports, require) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-	var dispose = require(68)
+	var dispose = require(66)
 		// The css code:
 		(require(53))
 	if(false) {
@@ -6340,7 +6340,7 @@
 /***/ function(module, exports, require) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-	var dispose = require(68)
+	var dispose = require(66)
 		// The css code:
 		(require(56))
 	if(false) {
@@ -6362,7 +6362,7 @@
 /***/ function(module, exports, require) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-	var dispose = require(68)
+	var dispose = require(66)
 		// The css code:
 		(require(58))
 	if(false) {
@@ -6376,38 +6376,16 @@
 /***/ function(module, exports, require) {
 
 	module.exports =
-		".Header {\n  font-family: sans-serif;\n  font-size: 16px;\n  font-weight: bold;\n}";
+		".Message {\n  bottom: 0;\n  font-family: sans-serif;\n  font-size: 12px;\n  left: 0;\n  margin-top: -6px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 50%;\n}\n\n.Message,\n.Message a {\n  color: gray;\n}";
 
 /***/ },
 
 /***/ 59:
 /***/ function(module, exports, require) {
 
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	var dispose = require(68)
-		// The css code:
-		(require(60))
-	if(false) {
-		module.hot.accept();
-		module.hot.dispose(dispose);
-	}
-
-/***/ },
-
-/***/ 60:
-/***/ function(module, exports, require) {
-
-	module.exports =
-		".Message {\n  bottom: 0;\n  font-family: sans-serif;\n  font-size: 12px;\n  left: 0;\n  margin-top: -6px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 50%;\n}\n\n.Message,\n.Message a {\n  color: gray;\n}";
-
-/***/ },
-
-/***/ 61:
-/***/ function(module, exports, require) {
-
 	/** @jsx React.DOM */
 
-	var React = require(7);
+	var React = require(8);
 
 	// Some browsers will do a weird bounce thing. This disables it.
 	var PreventBrowserSwipe = React.createClass({displayName: 'PreventBrowserSwipe',
@@ -6428,12 +6406,12 @@
 
 /***/ },
 
-/***/ 62:
+/***/ 60:
 /***/ function(module, exports, require) {
 
 	/** @jsx React.DOM */
 
-	var React = require(7);
+	var React = require(8);
 
 	var StaticContainer = React.createClass({displayName: 'StaticContainer',
 	  getDefaultProps: function() {
@@ -6453,13 +6431,13 @@
 
 /***/ },
 
-/***/ 63:
+/***/ 61:
 /***/ function(module, exports, require) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-	var dispose = require(68)
+	var dispose = require(66)
 		// The css code:
-		(require(64))
+		(require(62))
 	if(false) {
 		module.hot.accept();
 		module.hot.dispose(dispose);
@@ -6467,22 +6445,22 @@
 
 /***/ },
 
-/***/ 64:
+/***/ 62:
 /***/ function(module, exports, require) {
 
 	module.exports =
-		".Layout {\n  bottom: 0;\n  left: 0;\n  overflow: hidden;\n  position: fixed;\n  right: 0;\n  top: 0;\n}\n\n.Layout-topBar {\n  border-bottom: 1px solid black;\n  left: 0;\n  line-height: 40px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 0;\n}\n\n.Layout-hamburger {\n  font-size: 20px;\n  left: 0;\n  line-height: 40px;\n  padding: 0 12px;\n  position: absolute;\n}\n\n.Layout-content {\n  background: #f0f0f0;\n  bottom: 0;\n  left: 0;\n  overflow: scroll;\n  padding: 10px;\n  position: absolute;\n  right: 0;\n  top: 40px;\n}\n\n.Layout-nav {\n  background: #ccc;\n  border-bottom: rgba(100, 100, 100, 0.3);\n  bottom: 0;\n  left: -128px;\n  padding: 10px;\n  position: absolute;\n  top: 0;\n  width: 128px;\n}\n\n.Layout-scroller {\n  height: 100%;\n  width: 100%;\n}";
+		".Layout {\n  bottom: 0;\n  left: 0;\n  overflow: hidden;\n  position: fixed;\n  right: 0;\n  top: 0;\n}\n\n.Layout-topBar {\n  border-bottom: 1px solid black;\n  left: 0;\n  line-height: 50px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 0;\n}\n\n.Layout-hamburger {\n  font-size: 25px;\n  left: 0;\n  line-height: 50px;\n  padding: 0 12px;\n  position: absolute;\n}\n\n.Layout-content {\n  background: #f0f0f0;\n  bottom: 0;\n  left: 0;\n  overflow: scroll;\n  padding: 10px;\n  position: absolute;\n  right: 0;\n  top: 50px;\n}\n\n.Layout-nav {\n  background: #ccc;\n  border-bottom: rgba(100, 100, 100, 0.3);\n  bottom: 0;\n  left: -128px;\n  padding: 10px;\n  position: absolute;\n  top: 0;\n  width: 128px;\n}\n\n.Layout-scroller {\n  height: 100%;\n  width: 100%;\n}";
 
 /***/ },
 
-/***/ 65:
+/***/ 63:
 /***/ function(module, exports, require) {
 
 	/** @jsx React.DOM */
 
 	var EasingFunctions = require(110);
 	var ImageCard = require(111);
-	var React = require(7);
+	var React = require(8);
 	var StyleKeys = require(13);
 
 	require(112);
@@ -6510,13 +6488,13 @@
 
 /***/ },
 
-/***/ 66:
+/***/ 64:
 /***/ function(module, exports, require) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-	var dispose = require(68)
+	var dispose = require(66)
 		// The css code:
-		(require(67))
+		(require(65))
 	if(false) {
 		module.hot.accept();
 		module.hot.dispose(dispose);
@@ -6524,7 +6502,7 @@
 
 /***/ },
 
-/***/ 67:
+/***/ 65:
 /***/ function(module, exports, require) {
 
 	module.exports =
@@ -6532,7 +6510,7 @@
 
 /***/ },
 
-/***/ 68:
+/***/ 66:
 /***/ function(module, exports, require) {
 
 	/*
@@ -6553,6 +6531,28 @@
 			head.removeChild(styleElement);
 		};
 	}
+
+/***/ },
+
+/***/ 67:
+/***/ function(module, exports, require) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	var dispose = require(66)
+		// The css code:
+		(require(68))
+	if(false) {
+		module.hot.accept();
+		module.hot.dispose(dispose);
+	}
+
+/***/ },
+
+/***/ 68:
+/***/ function(module, exports, require) {
+
+	module.exports =
+		".Header {\n  font-family: sans-serif;\n  font-size: 16px;\n  font-weight: bold;\n}";
 
 /***/ },
 
@@ -6820,37 +6820,6 @@
 	 * See the License for the specific language governing permissions and
 	 * limitations under the License.
 	 *
-	 * @providesModule ReactComponentEnvironment
-	 */
-
-	var ReactComponentBrowserEnvironment =
-	  require(117);
-
-	var ReactComponentEnvironment = ReactComponentBrowserEnvironment;
-
-	module.exports = ReactComponentEnvironment;
-
-
-/***/ },
-
-/***/ 72:
-/***/ function(module, exports, require) {
-
-	/**
-	 * Copyright 2013 Facebook, Inc.
-	 *
-	 * Licensed under the Apache License, Version 2.0 (the "License");
-	 * you may not use this file except in compliance with the License.
-	 * You may obtain a copy of the License at
-	 *
-	 * http://www.apache.org/licenses/LICENSE-2.0
-	 *
-	 * Unless required by applicable law or agreed to in writing, software
-	 * distributed under the License is distributed on an "AS IS" BASIS,
-	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	 * See the License for the specific language governing permissions and
-	 * limitations under the License.
-	 *
 	 * @providesModule ReactOwner
 	 */
 
@@ -6972,6 +6941,134 @@
 	};
 
 	module.exports = ReactOwner;
+
+
+/***/ },
+
+/***/ 72:
+/***/ function(module, exports, require) {
+
+	/**
+	 * Copyright 2013 Facebook, Inc.
+	 *
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 * http://www.apache.org/licenses/LICENSE-2.0
+	 *
+	 * Unless required by applicable law or agreed to in writing, software
+	 * distributed under the License is distributed on an "AS IS" BASIS,
+	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 * See the License for the specific language governing permissions and
+	 * limitations under the License.
+	 *
+	 * @providesModule ReactPropTransferer
+	 */
+
+	"use strict";
+
+	var emptyFunction = require(115);
+	var invariant = require(29);
+	var joinClasses = require(117);
+	var merge = require(75);
+
+	/**
+	 * Creates a transfer strategy that will merge prop values using the supplied
+	 * `mergeStrategy`. If a prop was previously unset, this just sets it.
+	 *
+	 * @param {function} mergeStrategy
+	 * @return {function}
+	 */
+	function createTransferStrategy(mergeStrategy) {
+	  return function(props, key, value) {
+	    if (!props.hasOwnProperty(key)) {
+	      props[key] = value;
+	    } else {
+	      props[key] = mergeStrategy(props[key], value);
+	    }
+	  };
+	}
+
+	/**
+	 * Transfer strategies dictate how props are transferred by `transferPropsTo`.
+	 */
+	var TransferStrategies = {
+	  /**
+	   * Never transfer `children`.
+	   */
+	  children: emptyFunction,
+	  /**
+	   * Transfer the `className` prop by merging them.
+	   */
+	  className: createTransferStrategy(joinClasses),
+	  /**
+	   * Never transfer the `ref` prop.
+	   */
+	  ref: emptyFunction,
+	  /**
+	   * Transfer the `style` prop (which is an object) by merging them.
+	   */
+	  style: createTransferStrategy(merge)
+	};
+
+	/**
+	 * ReactPropTransferer are capable of transferring props to another component
+	 * using a `transferPropsTo` method.
+	 *
+	 * @class ReactPropTransferer
+	 */
+	var ReactPropTransferer = {
+
+	  TransferStrategies: TransferStrategies,
+
+	  /**
+	   * @lends {ReactPropTransferer.prototype}
+	   */
+	  Mixin: {
+
+	    /**
+	     * Transfer props from this component to a target component.
+	     *
+	     * Props that do not have an explicit transfer strategy will be transferred
+	     * only if the target component does not already have the prop set.
+	     *
+	     * This is usually used to pass down props to a returned root component.
+	     *
+	     * @param {ReactComponent} component Component receiving the properties.
+	     * @return {ReactComponent} The supplied `component`.
+	     * @final
+	     * @protected
+	     */
+	    transferPropsTo: function(component) {
+	      invariant(component.props.__owner__ === this);
+
+	      var props = {};
+	      for (var thatKey in component.props) {
+	        if (component.props.hasOwnProperty(thatKey)) {
+	          props[thatKey] = component.props[thatKey];
+	        }
+	      }
+	      for (var thisKey in this.props) {
+	        if (!this.props.hasOwnProperty(thisKey)) {
+	          continue;
+	        }
+	        var transferStrategy = TransferStrategies[thisKey];
+	        if (transferStrategy) {
+	          transferStrategy(props, thisKey, this.props[thisKey]);
+	        } else if (!props.hasOwnProperty(thisKey)) {
+	          props[thisKey] = this.props[thisKey];
+	        }
+	      }
+	      component.props = props;
+	      return component;
+	    }
+
+	  }
+
+	};
+
+	module.exports = ReactPropTransferer;
 
 
 /***/ },
@@ -7238,134 +7335,6 @@
 	 * See the License for the specific language governing permissions and
 	 * limitations under the License.
 	 *
-	 * @providesModule ReactPropTransferer
-	 */
-
-	"use strict";
-
-	var emptyFunction = require(115);
-	var invariant = require(29);
-	var joinClasses = require(118);
-	var merge = require(75);
-
-	/**
-	 * Creates a transfer strategy that will merge prop values using the supplied
-	 * `mergeStrategy`. If a prop was previously unset, this just sets it.
-	 *
-	 * @param {function} mergeStrategy
-	 * @return {function}
-	 */
-	function createTransferStrategy(mergeStrategy) {
-	  return function(props, key, value) {
-	    if (!props.hasOwnProperty(key)) {
-	      props[key] = value;
-	    } else {
-	      props[key] = mergeStrategy(props[key], value);
-	    }
-	  };
-	}
-
-	/**
-	 * Transfer strategies dictate how props are transferred by `transferPropsTo`.
-	 */
-	var TransferStrategies = {
-	  /**
-	   * Never transfer `children`.
-	   */
-	  children: emptyFunction,
-	  /**
-	   * Transfer the `className` prop by merging them.
-	   */
-	  className: createTransferStrategy(joinClasses),
-	  /**
-	   * Never transfer the `ref` prop.
-	   */
-	  ref: emptyFunction,
-	  /**
-	   * Transfer the `style` prop (which is an object) by merging them.
-	   */
-	  style: createTransferStrategy(merge)
-	};
-
-	/**
-	 * ReactPropTransferer are capable of transferring props to another component
-	 * using a `transferPropsTo` method.
-	 *
-	 * @class ReactPropTransferer
-	 */
-	var ReactPropTransferer = {
-
-	  TransferStrategies: TransferStrategies,
-
-	  /**
-	   * @lends {ReactPropTransferer.prototype}
-	   */
-	  Mixin: {
-
-	    /**
-	     * Transfer props from this component to a target component.
-	     *
-	     * Props that do not have an explicit transfer strategy will be transferred
-	     * only if the target component does not already have the prop set.
-	     *
-	     * This is usually used to pass down props to a returned root component.
-	     *
-	     * @param {ReactComponent} component Component receiving the properties.
-	     * @return {ReactComponent} The supplied `component`.
-	     * @final
-	     * @protected
-	     */
-	    transferPropsTo: function(component) {
-	      invariant(component.props.__owner__ === this);
-
-	      var props = {};
-	      for (var thatKey in component.props) {
-	        if (component.props.hasOwnProperty(thatKey)) {
-	          props[thatKey] = component.props[thatKey];
-	        }
-	      }
-	      for (var thisKey in this.props) {
-	        if (!this.props.hasOwnProperty(thisKey)) {
-	          continue;
-	        }
-	        var transferStrategy = TransferStrategies[thisKey];
-	        if (transferStrategy) {
-	          transferStrategy(props, thisKey, this.props[thisKey]);
-	        } else if (!props.hasOwnProperty(thisKey)) {
-	          props[thisKey] = this.props[thisKey];
-	        }
-	      }
-	      component.props = props;
-	      return component;
-	    }
-
-	  }
-
-	};
-
-	module.exports = ReactPropTransferer;
-
-
-/***/ },
-
-/***/ 77:
-/***/ function(module, exports, require) {
-
-	/**
-	 * Copyright 2013 Facebook, Inc.
-	 *
-	 * Licensed under the Apache License, Version 2.0 (the "License");
-	 * you may not use this file except in compliance with the License.
-	 * You may obtain a copy of the License at
-	 *
-	 * http://www.apache.org/licenses/LICENSE-2.0
-	 *
-	 * Unless required by applicable law or agreed to in writing, software
-	 * distributed under the License is distributed on an "AS IS" BASIS,
-	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	 * See the License for the specific language governing permissions and
-	 * limitations under the License.
-	 *
 	 * @providesModule mixInto
 	 */
 
@@ -7389,7 +7358,7 @@
 
 /***/ },
 
-/***/ 78:
+/***/ 77:
 /***/ function(module, exports, require) {
 
 	/**
@@ -7439,6 +7408,37 @@
 	}
 
 	module.exports = objMap;
+
+
+/***/ },
+
+/***/ 78:
+/***/ function(module, exports, require) {
+
+	/**
+	 * Copyright 2013 Facebook, Inc.
+	 *
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 * http://www.apache.org/licenses/LICENSE-2.0
+	 *
+	 * Unless required by applicable law or agreed to in writing, software
+	 * distributed under the License is distributed on an "AS IS" BASIS,
+	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 * See the License for the specific language governing permissions and
+	 * limitations under the License.
+	 *
+	 * @providesModule ReactComponentEnvironment
+	 */
+
+	var ReactComponentBrowserEnvironment =
+	  require(118);
+
+	var ReactComponentEnvironment = ReactComponentBrowserEnvironment;
+
+	module.exports = ReactComponentEnvironment;
 
 
 /***/ },
@@ -10758,7 +10758,7 @@
 	var Transaction = require(140);
 
 	var emptyFunction = require(115);
-	var mixInto = require(77);
+	var mixInto = require(76);
 
 	var RESET_BATCHED_UPDATES = {
 	  initialize: emptyFunction,
@@ -11212,7 +11212,7 @@
 	var ReactMountReady = require(146);
 	var Transaction = require(140);
 
-	var mixInto = require(77);
+	var mixInto = require(76);
 
 	/**
 	 * Ensures that, when possible, the selection range (currently selected text
@@ -11399,7 +11399,7 @@
 
 	/** @jsx React.DOM */
 
-	var React = require(7);
+	var React = require(8);
 
 	var STYLE_LOADING = {
 	  color: 'gray',
@@ -11474,7 +11474,7 @@
 /***/ function(module, exports, require) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
-	var dispose = require(68)
+	var dispose = require(66)
 		// The css code:
 		(require(113))
 	if(false) {
@@ -11723,6 +11723,57 @@
 	 * See the License for the specific language governing permissions and
 	 * limitations under the License.
 	 *
+	 * @providesModule joinClasses
+	 * @typechecks static-only
+	 */
+
+	"use strict";
+
+	/**
+	 * Combines multiple className strings into one.
+	 * http://jsperf.com/joinclasses-args-vs-array
+	 *
+	 * @param {...?string} classes
+	 * @return {string}
+	 */
+	function joinClasses(className/*, ... */) {
+	  if (!className) {
+	    className = '';
+	  }
+	  var nextClass;
+	  var argLength = arguments.length;
+	  if (argLength > 1) {
+	    for (var ii = 1; ii < argLength; ii++) {
+	      nextClass = arguments[ii];
+	      nextClass && (className += ' ' + nextClass);
+	    }
+	  }
+	  return className;
+	}
+
+	module.exports = joinClasses;
+
+
+/***/ },
+
+/***/ 118:
+/***/ function(module, exports, require) {
+
+	/**
+	 * Copyright 2013 Facebook, Inc.
+	 *
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 * http://www.apache.org/licenses/LICENSE-2.0
+	 *
+	 * Unless required by applicable law or agreed to in writing, software
+	 * distributed under the License is distributed on an "AS IS" BASIS,
+	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 * See the License for the specific language governing permissions and
+	 * limitations under the License.
+	 *
 	 * @providesModule ReactComponentBrowserEnvironment
 	 */
 
@@ -11827,57 +11878,6 @@
 	};
 
 	module.exports = ReactComponentBrowserEnvironment;
-
-
-/***/ },
-
-/***/ 118:
-/***/ function(module, exports, require) {
-
-	/**
-	 * Copyright 2013 Facebook, Inc.
-	 *
-	 * Licensed under the Apache License, Version 2.0 (the "License");
-	 * you may not use this file except in compliance with the License.
-	 * You may obtain a copy of the License at
-	 *
-	 * http://www.apache.org/licenses/LICENSE-2.0
-	 *
-	 * Unless required by applicable law or agreed to in writing, software
-	 * distributed under the License is distributed on an "AS IS" BASIS,
-	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	 * See the License for the specific language governing permissions and
-	 * limitations under the License.
-	 *
-	 * @providesModule joinClasses
-	 * @typechecks static-only
-	 */
-
-	"use strict";
-
-	/**
-	 * Combines multiple className strings into one.
-	 * http://jsperf.com/joinclasses-args-vs-array
-	 *
-	 * @param {...?string} classes
-	 * @return {string}
-	 */
-	function joinClasses(className/*, ... */) {
-	  if (!className) {
-	    className = '';
-	  }
-	  var nextClass;
-	  var argLength = arguments.length;
-	  if (argLength > 1) {
-	    for (var ii = 1; ii < argLength; ii++) {
-	      nextClass = arguments[ii];
-	      nextClass && (className += ' ' + nextClass);
-	    }
-	  }
-	  return className;
-	}
-
-	module.exports = joinClasses;
 
 
 /***/ },
@@ -13982,7 +13982,7 @@
 
 	var PooledClass = require(114);
 
-	var mixInto = require(77);
+	var mixInto = require(76);
 
 	/**
 	 * A specialized pseudo-event module to help keep track of components waiting to
