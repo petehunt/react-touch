@@ -17,7 +17,7 @@ var Viewer = React.createClass({
     this.scroller.setDimensions(
       this.props.width,
       this.props.height,
-      this.props.width * this.props.images.length,
+      this.props.width * this.props.images.urls.length,
       this.props.height
     );
     this.scroller.setSnapSize(this.props.width, this.props.height);
@@ -47,7 +47,7 @@ var Viewer = React.createClass({
   },
 
   render: function() {
-    var images = this.props.images.map(function(image, i) {
+    var images = this.props.images.urls.map(function(url, i) {
       if (this.state.left < (i - 1) * this.props.width || this.state.left > (i + 1) * this.props.width) {
         return null;
       }
@@ -58,10 +58,10 @@ var Viewer = React.createClass({
           left={this.state.left}
           key={i}
           index={i}
-          url={image.source}
+          url={url}
           width={this.props.width}
           height={this.props.height}
-          caption={image.name || 'Amazing Justin Bieber photo #' + (i + 1)}
+          caption={'Lorem Ipsum photo #' + (i + 1)}
         />
       );
     }, this);

@@ -9,5 +9,5 @@ React.initializeTouchEvents(true);
 ReactHack.start({
   '': HomePage,
   'glass': GlassPage,
-  ':username': ViewerPage,
+  'viewer': ViewerPage,
 });

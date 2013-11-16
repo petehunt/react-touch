@@ -6,6 +6,7 @@ var React = require('React');
 
 var GlassContainer = require('../components/GlassContainer');
 var GlassContent = require('../components/GlassContent');
+var Header = require('../components/Header');
 var Message = require('../components/Message');
 var StyleKeys = require('../environment/StyleKeys');
 
@@ -98,7 +99,7 @@ var GlassPage = React.createClass({
         width: '100%',
         height: HEADER_HEIGHT,
         style: {borderBottom: '1px solid rgba(10, 10, 10, 0.1)'},
-        children: <div className="GlassPage-header">This is the header</div>
+        children: <Header className="GlassPage-header">This is the header</Header>
       }
     };
 

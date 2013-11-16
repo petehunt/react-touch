@@ -2,16 +2,18 @@
 
 var React = require('React');
 
+var Layout = require('../layout/Layout');
+
 require('./HomePage.css');
 
 var HomePage = React.createClass({
   render: function() {
     return (
-      <div className="HomePage">
+      <Layout className="HomePage">
         <h1>What do ya want?</h1>
         <p><a href="#glass">Frosted glass</a></p>
-        <p><a href="#justinbieber">The Justin Bieber Experience</a></p>
-      </div>
+        <p><a href="#viewer">Photo viewer</a></p>
+      </Layout>
     );
   }
 });

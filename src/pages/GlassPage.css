@@ -4,9 +4,6 @@
 
 .GlassPage-header,
 .GlassPage-footer {
-  font-family: sans-serif;
-  font-size: 16px;
-  font-weight: bold;
   line-height: 40px;
   text-align: center;
 }

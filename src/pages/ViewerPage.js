@@ -1,6 +1,8 @@
 /** @jsx React.DOM */
 
 var React = require('React');
+
+var Images = require('../data/Images');
 var Message = require('../components/Message');
 var Viewer = require('../components/Viewer');
 
@@ -14,7 +16,7 @@ var START_INDEX = 5;
 
 var ViewerPage = React.createClass({
   getInitialState: function() {
-    return {data: null, width: 0, height: 0, force: false};
+    return {width: 0, height: 0, force: false};
   },
 
   handleClick: function() {
@@ -30,13 +32,6 @@ var ViewerPage = React.createClass({
       width: document.documentElement.clientWidth,
       height: document.documentElement.clientHeight
     });
-
-    $.getJSON(
-      'http://graph.facebook.com/' + this.getUsername() + '/photos?fields=name,source&limit=100',
-      function(data) {
-        this.setState({data: data.data.slice(START_INDEX, START_INDEX + NUM_IMAGES)});
-      }.bind(this)
-    );
   },
 
   render: function() {
@@ -49,7 +44,7 @@ var ViewerPage = React.createClass({
       );
     }
 
-    if (!this.state.data) {
+    if (!this.state.width || !this.state.height) {
       return <Message>Loading...</Message>;
     }
 
@@ -57,7 +52,7 @@ var ViewerPage = React.createClass({
       <Viewer
         width={this.state.width}
         height={this.state.height}
-        images={this.state.data}
+        images={Images}
       />
     );
   }
