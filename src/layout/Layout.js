@@ -112,7 +112,7 @@ var Layout = React.createClass({
                   onTouchMove={this.handleTouchMove}
                   onTouchEnd={this.handleTouchEnd}
                 />
-                <Header>Left nav header</Header>
+                <Header>React touch demo</Header>
               </div>
               <div
                 className="Layout-content"
@@ -122,7 +122,9 @@ var Layout = React.createClass({
                 {this.props.children}
               </div>
               <div className="Layout-nav">
-                I bet you expected something cooler here.
+                <a href="#" className="Layout-navLink">Home</a>
+                <a href="#glass" className="Layout-navLink">Frosted glass</a>
+                <a href="#viewer" className="Layout-lastNavLink">Photo gallery</a>
               </div>
             </div>
           </StaticContainer>

@@ -3,6 +3,7 @@
 var React = require('React');
 
 var GlassViewport = require('./GlassViewport');
+var PreventBrowserSwipe = require('../components/PreventBrowserSwipe');
 var StyleKeys = require('../environment/StyleKeys');
 
 require('./GlassContainer.css');
@@ -98,9 +99,9 @@ var GlassContainer = React.createClass({
     }
 
     return (
-      <div className="GlassContainer" style={this.props.style}>
+      <PreventBrowserSwipe className="GlassContainer" style={this.props.style}>
         {viewports}
-      </div>
+      </PreventBrowserSwipe>
     );
   }
 });

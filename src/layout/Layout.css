@@ -33,7 +33,7 @@
   overflow: scroll;
   position: absolute;
   right: 0;
-  top: 50px;
+  top: 51px;
 }
 
 .Layout-nav {
@@ -50,4 +50,17 @@
 .Layout-scroller {
   height: 100%;
   width: 100%;
+}
+
+.Layout-navLink,
+.Layout-lastNavLink {
+  color: black;
+  display: block;
+  font-family: sans-serif;
+  padding: 10px 0;
+  text-decoration: none;
+}
+
+.Layout-navLink {
+  border-bottom: 1px solid rgba(20, 20, 20, 0.3);
 }
