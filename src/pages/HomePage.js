@@ -5,6 +5,10 @@ var React = require('React');
 require('./HomePage.css');
 
 var HomePage = React.createClass({
+  shouldComponentUpdate: function() {
+    return false;
+  },
+
   render: function() {
     return (
       <div>
@@ -21,6 +25,7 @@ var HomePage = React.createClass({
           in mind that this demo uses JavaScript to animate CSS3d transforms <strong>every frame</strong>
           using React's data binding while targeting mobile devices.
         </p>
+        <p><strong>Open the left nav to get started.</strong></p>
         <p>
           Source available <a href="http://github.com/petehunt/react-touch/" target="_blank">on my github account</a>.
         </p>
