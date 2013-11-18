@@ -61,7 +61,7 @@ var Viewer = React.createClass({
           url={url}
           width={this.props.width}
           height={this.props.height}
-          caption={'Lorem Ipsum photo #' + (i + 1)}
+          caption={'LoremPixel photo #' + (i + 1)}
         />
       );
     }, this);
