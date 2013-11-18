@@ -4,6 +4,7 @@ var React = require('React');
 
 // Implicit require of Scroller from Zynga
 
+var FastLink = require('../components/FastLink');
 var GlassContainer = require('../components/GlassContainer');
 var GlassContent = require('../components/GlassContent');
 var Header = require('../components/Header');
@@ -101,7 +102,7 @@ var GlassPage = React.createClass({
         style: {borderBottom: '1px solid rgba(10, 10, 10, 0.1)'},
         children: (
           <div className="GlassPage-header">
-            <a className="GlassPage-arrow fa fa-arrow-left" href="#" />
+            <FastLink className="GlassPage-arrow fa fa-arrow-left" href="#" />
             <Header>This is the header</Header>
           </div>
         )

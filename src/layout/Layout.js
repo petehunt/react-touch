@@ -2,6 +2,7 @@
 
 var React = require('React');
 
+var FastLink = require('../components/FastLink');
 var Header = require('../components/Header');
 var PreventBrowserSwipe = require('../components/PreventBrowserSwipe');
 var StaticContainer = require('../components/StaticContainer');
@@ -122,9 +123,9 @@ var Layout = React.createClass({
                 {this.props.children}
               </div>
               <div className="Layout-nav">
-                <a href="#" className="Layout-navLink">Home</a>
-                <a href="#glass" className="Layout-navLink">Frosted glass</a>
-                <a href="#viewer" className="Layout-lastNavLink">Photo gallery</a>
+                <FastLink href="#" className="Layout-navLink">Home</FastLink>
+                <FastLink href="#glass" className="Layout-navLink">Frosted glass</FastLink>
+                <FastLink href="#viewer" className="Layout-lastNavLink">Photo gallery</FastLink>
               </div>
             </div>
           </StaticContainer>
