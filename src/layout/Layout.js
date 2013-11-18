@@ -37,12 +37,6 @@ var Layout = React.createClass({
     this.scroller.scrollTo(SIDEBAR_WIDTH, 0);
   },
 
-  componentWillReceiveProps: function(nextProps) {
-    if (this.props.route !== nextProps.route) {
-      this.scroller.scrollTo(SIDEBAR_WIDTH, 0, true);
-    }
-  },
-
   handleScroll: function(left, top, zoom) {
     this.setState({scrollLeft: left});
   },
