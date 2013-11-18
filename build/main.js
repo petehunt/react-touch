@@ -7605,7 +7605,7 @@
 /***/ function(module, exports, require) {
 
 	module.exports =
-		".Message {\n  bottom: 0;\n  font-family: sans-serif;\n  font-size: 12px;\n  left: 0;\n  padding: 10px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 0;\n}\n\n.Message,\n.Message a {\n  color: gray;\n}";
+		".Message {\n  bottom: 0;\n  font-family: sans-serif;\n  font-size: 12px;\n  left: 0;\n  overflow-y: scroll;\n  padding: 10px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 0;\n}\n\n.Message,\n.Message a {\n  color: gray;\n}";
 
 /***/ },
 
