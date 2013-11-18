@@ -5,10 +5,32 @@ var React = require('React');
 var Layout = require('../layout/Layout');
 var HomePage = require('../pages/HomePage');
 var GlassPage = require('../pages/GlassPage');
+var Message = require('../components/Message');
 var ViewerPage = require('../pages/ViewerPage');
 
+var isIPhone5 = require('../environment/isIPhone5');
+
+var IS_IPHONE_5 = isIPhone5();
+
 var RootPage = React.createClass({
+  getInitialState: function() {
+    return {force: false};
+  },
+
+  handleClick: function() {
+    this.setState({force: true});
+  },
+
   render: function() {
+    if (!IS_IPHONE_5 && !this.state.force) {
+      return (
+        <Message>
+          This demo peforms best on at least an iPhone 5 and iOS 7.<br />
+          <a href="javascript:;" onClick={this.handleClick}>Click here to live dangerously</a>.
+        </Message>
+      );
+    }
+
     var routeName = this.props.routeParams[0] || '';
 
     if (routeName === '') {

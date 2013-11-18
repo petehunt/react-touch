@@ -8,7 +8,7 @@
 }
 
 .Layout-topBar {
-  background: rgb(250, 250, 250);
+  background: rgb(255, 255, 255);
   border-bottom: 1px solid black;
   font-family: sans-serif;
   left: 0;
@@ -40,11 +40,11 @@
   background: #ccc;
   border-bottom: rgba(100, 100, 100, 0.3);
   bottom: 0;
-  left: -128px;
+  left: -192px;
   padding: 10px;
   position: absolute;
   top: 0;
-  width: 128px;
+  width: 192px;
 }
 
 .Layout-scroller {

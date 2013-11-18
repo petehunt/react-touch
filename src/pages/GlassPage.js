@@ -9,25 +9,16 @@ var GlassContainer = require('../components/GlassContainer');
 var GlassContent = require('../components/GlassContent');
 var Header = require('../components/Header');
 var Layout = require('../layout/Layout');
-var Message = require('../components/Message');
 var StyleKeys = require('../environment/StyleKeys');
 
 require('./GlassPage.css');
-
-var isIPhone5 = require('../environment/isIPhone5');
-
-var IS_IPHONE_5 = isIPhone5();
 
 var COLORS = ['red', 'green', 'blue'];
 var HEADER_HEIGHT = 50; // keep in sync w/ GlassPage.css
 
 var GlassPage = React.createClass({
   getInitialState: function() {
-    return {scrollTop: 0, force: false};
-  },
-
-  handleClick: function() {
-    this.setState({force: true});
+    return {scrollTop: 0};
   },
 
   componentWillMount: function() {
@@ -44,7 +35,7 @@ var GlassPage = React.createClass({
   },
 
   configure: function() {
-    if (this.configured || (!IS_IPHONE_5 && !this.state.force)) {
+    if (this.configured) {
       return;
     }
     this.configured = true;
@@ -77,15 +68,6 @@ var GlassPage = React.createClass({
   },
 
   render: function() {
-    if (!IS_IPHONE_5 && !this.state.force) {
-      return (
-        <Message>
-          This demo peforms best on at least an iPhone 5 and iOS 7.<br />
-          <a href="javascript:;" onClick={this.handleClick}>Click here to live dangerously</a>.
-        </Message>
-      );
-    }
-
     var style = {};
     style[StyleKeys.TRANSFORM] = 'translate3d(0, ' + (-this.state.scrollTop) + 'px, 0)';
 

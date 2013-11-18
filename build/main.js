@@ -81,10 +81,31 @@
 	var Layout = require(6);
 	var HomePage = require(7);
 	var GlassPage = require(8);
+	var Message = require(27);
 	var ViewerPage = require(9);
 
+	var isIPhone5 = require(28);
+
+	var IS_IPHONE_5 = isIPhone5();
+
 	var RootPage = React.createClass({displayName: 'RootPage',
+	  getInitialState: function() {
+	    return {force: false};
+	  },
+
+	  handleClick: function() {
+	    this.setState({force: true});
+	  },
+
 	  render: function() {
+	    if (!IS_IPHONE_5 && !this.state.force) {
+	      return (
+	        Message(null, 
+	" This demo peforms best on at least an iPhone 5 and iOS 7.",React.DOM.br(null ),
+	          React.DOM.a( {href:"javascript:;", onClick:this.handleClick}, "Click here to live dangerously"),". "        )
+	      );
+	    }
+
 	    var routeName = this.props.routeParams[0] || '';
 
 	    if (routeName === '') {
@@ -497,8 +518,8 @@
 
 	// Keep in sync with Layout.css
 	// TODO: deprecate the CSS standard
-	var SIDEBAR_WIDTH = 128;
-	var TOPBAR_HEIGHT = 50;
+	var SIDEBAR_WIDTH = 192;
+	var TOPBAR_HEIGHT = 50 + 1; // + 1 for the border
 
 	var Layout = React.createClass({displayName: 'Layout',
 	  componentWillMount: function() {
@@ -680,25 +701,16 @@
 	var GlassContent = require(26);
 	var Header = require(23);
 	var Layout = require(6);
-	var Message = require(27);
 	var StyleKeys = require(24);
 
 	require(72);
-
-	var isIPhone5 = require(28);
-
-	var IS_IPHONE_5 = isIPhone5();
 
 	var COLORS = ['red', 'green', 'blue'];
 	var HEADER_HEIGHT = 50; // keep in sync w/ GlassPage.css
 
 	var GlassPage = React.createClass({displayName: 'GlassPage',
 	  getInitialState: function() {
-	    return {scrollTop: 0, force: false};
-	  },
-
-	  handleClick: function() {
-	    this.setState({force: true});
+	    return {scrollTop: 0};
 	  },
 
 	  componentWillMount: function() {
@@ -715,7 +727,7 @@
 	  },
 
 	  configure: function() {
-	    if (this.configured || (!IS_IPHONE_5 && !this.state.force)) {
+	    if (this.configured) {
 	      return;
 	    }
 	    this.configured = true;
@@ -748,14 +760,6 @@
 	  },
 
 	  render: function() {
-	    if (!IS_IPHONE_5 && !this.state.force) {
-	      return (
-	        Message(null, 
-	" This demo peforms best on at least an iPhone 5 and iOS 7.",React.DOM.br(null ),
-	          React.DOM.a( {href:"javascript:;", onClick:this.handleClick}, "Click here to live dangerously"),". "        )
-	      );
-	    }
-
 	    var style = {};
 	    style[StyleKeys.TRANSFORM] = 'translate3d(0, ' + (-this.state.scrollTop) + 'px, 0)';
 
@@ -815,21 +819,13 @@
 	var Message = require(27);
 	var Viewer = require(34);
 
-	var isIPhone5 = require(28);
-
-	var IS_IPHONE_5 = isIPhone5();
-
 	var NUM_IMAGES = 10;
 
 	var START_INDEX = 5;
 
 	var ViewerPage = React.createClass({displayName: 'ViewerPage',
 	  getInitialState: function() {
-	    return {width: 0, height: 0, force: false};
-	  },
-
-	  handleClick: function() {
-	    this.setState({force: true});
+	    return {width: 0, height: 0};
 	  },
 
 	  getUsername: function() {
@@ -844,14 +840,6 @@
 	  },
 
 	  render: function() {
-	    if (!IS_IPHONE_5 && !this.state.force) {
-	      return (
-	        Message(null, 
-	" This demo peforms best on at least an iPhone 5 and iOS 7.",React.DOM.br(null ),
-	          React.DOM.a( {href:"javascript:;", onClick:this.handleClick}, "Click here to live dangerously"),". "        )
-	      );
-	    }
-
 	    if (!this.state.width || !this.state.height) {
 	      return Message(null, "Loading...");
 	    }
@@ -7964,7 +7952,7 @@
 /***/ function(module, exports, require) {
 
 	module.exports =
-		".Layout {\n  bottom: 0;\n  left: 0;\n  overflow: hidden;\n  position: fixed;\n  right: 0;\n  top: 0;\n}\n\n.Layout-topBar {\n  background: rgb(250, 250, 250);\n  border-bottom: 1px solid black;\n  font-family: sans-serif;\n  left: 0;\n  line-height: 50px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 0;\n}\n\n.Layout-hamburger {\n  font-size: 25px;\n  left: 0;\n  line-height: 50px;\n  padding: 0 12px;\n  position: absolute;\n}\n\n.Layout-content {\n  bottom: 0;\n  left: 0;\n  overflow: scroll;\n  position: absolute;\n  right: 0;\n  top: 51px;\n}\n\n.Layout-nav {\n  background: #ccc;\n  border-bottom: rgba(100, 100, 100, 0.3);\n  bottom: 0;\n  left: -128px;\n  padding: 10px;\n  position: absolute;\n  top: 0;\n  width: 128px;\n}\n\n.Layout-scroller {\n  height: 100%;\n  width: 100%;\n}\n\n.Layout-navLink,\n.Layout-lastNavLink {\n  color: black;\n  display: block;\n  font-family: sans-serif;\n  padding: 10px 0;\n  text-decoration: none;\n}\n\n.Layout-navLink {\n  border-bottom: 1px solid rgba(20, 20, 20, 0.3);\n}";
+		".Layout {\n  bottom: 0;\n  left: 0;\n  overflow: hidden;\n  position: fixed;\n  right: 0;\n  top: 0;\n}\n\n.Layout-topBar {\n  background: rgb(255, 255, 255);\n  border-bottom: 1px solid black;\n  font-family: sans-serif;\n  left: 0;\n  line-height: 50px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 0;\n}\n\n.Layout-hamburger {\n  font-size: 25px;\n  left: 0;\n  line-height: 50px;\n  padding: 0 12px;\n  position: absolute;\n}\n\n.Layout-content {\n  bottom: 0;\n  left: 0;\n  overflow: scroll;\n  position: absolute;\n  right: 0;\n  top: 51px;\n}\n\n.Layout-nav {\n  background: #ccc;\n  border-bottom: rgba(100, 100, 100, 0.3);\n  bottom: 0;\n  left: -192px;\n  padding: 10px;\n  position: absolute;\n  top: 0;\n  width: 192px;\n}\n\n.Layout-scroller {\n  height: 100%;\n  width: 100%;\n}\n\n.Layout-navLink,\n.Layout-lastNavLink {\n  color: black;\n  display: block;\n  font-family: sans-serif;\n  padding: 10px 0;\n  text-decoration: none;\n}\n\n.Layout-navLink {\n  border-bottom: 1px solid rgba(20, 20, 20, 0.3);\n}";
 
 /***/ },
 
