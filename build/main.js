@@ -219,11 +219,33 @@
 	var React = require(7);
 
 	var Layout = require(15);
+	var Message = require(12);
 
 	require(36);
 
+	var isIPhone5 = require(14);
+
+	var IS_IPHONE_5 = isIPhone5();
+
+
 	var LeftNavPage = React.createClass({displayName: 'LeftNavPage',
+	  getInitialState: function() {
+	    return {force: false};
+	  },
+
+	  handleClick: function() {
+	    this.setState({force: true});
+	  },
+
 	  render: function() {
+	    if (!IS_IPHONE_5 && !this.state.force) {
+	      return (
+	        Message(null, 
+	" This demo peforms best on at least an iPhone 5 and iOS 7.",React.DOM.br(null ),
+	          React.DOM.a( {href:"javascript:;", onClick:this.handleClick}, "Click here to live dangerously"),". "        )
+	      );
+	    }
+
 	    return (
 	      Layout( {className:"LeftNavPage"}, 
 	        React.DOM.h1(null, "Check out this sweet left nav."),
