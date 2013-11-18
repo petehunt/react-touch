@@ -2,12 +2,18 @@
   box-sizing: border-box;
 }
 
-.GlassPage-header,
-.GlassPage-footer {
-  line-height: 40px;
+.GlassPage-header {
+  background: rgba(257, 257, 257, 0.3);
+  line-height: 50px;
   text-align: center;
 }
 
-.GlassPage-header {
-  background: rgba(257, 257, 257, 0.3);
+.GlassPage-arrow {
+  color: black;
+  font-size: 25px;
+  left: 0;
+  line-height: 50px;
+  padding: 0 12px;
+  position: absolute;
+  text-decoration: none;
 }

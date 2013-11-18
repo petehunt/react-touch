@@ -98,7 +98,7 @@
 	var IS_IPHONE_5 = isIPhone5();
 
 	var COLORS = ['red', 'green', 'blue'];
-	var HEADER_HEIGHT = 40; // keep in sync w/ GlassPage.css
+	var HEADER_HEIGHT = 50; // keep in sync w/ GlassPage.css
 
 	var GlassPage = React.createClass({displayName: 'GlassPage',
 	  getInitialState: function() {
@@ -179,7 +179,12 @@
 	        width: '100%',
 	        height: HEADER_HEIGHT,
 	        style: {borderBottom: '1px solid rgba(10, 10, 10, 0.1)'},
-	        children: Header( {className:"GlassPage-header"}, "This is the header")
+	        children: (
+	          React.DOM.div( {className:"GlassPage-header"}, 
+	            React.DOM.a( {className:"GlassPage-arrow fa fa-arrow-left", href:"#"} ),
+	            Header(null, "This is the header")
+	          )
+	        )
 	      }
 	    };
 
@@ -802,7 +807,10 @@
 	        top:this.props.content.top,
 	        width:this.props.content.width,
 	        height:this.props.content.height,
-	        style:this.props.content.style}
+	        style:this.props.content.style,
+	        onTouchStart:this.props.onTouchStart,
+	        onTouchMove:this.props.onTouchMove,
+	        onTouchEnd:this.props.onTouchEnd}
 	      )
 	    ];
 
@@ -832,8 +840,8 @@
 	      );
 	    }
 
-	    return this.transferPropsTo(
-	      React.DOM.div( {className:"GlassContainer"}, 
+	    return (
+	      React.DOM.div( {className:"GlassContainer", style:this.props.style}, 
 	        viewports
 	      )
 	    );
@@ -2603,7 +2611,7 @@
 /***/ function(module, exports, require) {
 
 	module.exports =
-		"* {\n  box-sizing: border-box;\n}\n\n.GlassPage-header,\n.GlassPage-footer {\n  line-height: 40px;\n  text-align: center;\n}\n\n.GlassPage-header {\n  background: rgba(257, 257, 257, 0.3);\n}";
+		"* {\n  box-sizing: border-box;\n}\n\n.GlassPage-header {\n  background: rgba(257, 257, 257, 0.3);\n  line-height: 50px;\n  text-align: center;\n}\n\n.GlassPage-arrow {\n  color: black;\n  font-size: 25px;\n  left: 0;\n  line-height: 50px;\n  padding: 0 12px;\n  position: absolute;\n  text-decoration: none;\n}";
 
 /***/ },
 

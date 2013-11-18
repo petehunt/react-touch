@@ -17,7 +17,7 @@ var isIPhone5 = require('../environment/isIPhone5');
 var IS_IPHONE_5 = isIPhone5();
 
 var COLORS = ['red', 'green', 'blue'];
-var HEADER_HEIGHT = 40; // keep in sync w/ GlassPage.css
+var HEADER_HEIGHT = 50; // keep in sync w/ GlassPage.css
 
 var GlassPage = React.createClass({
   getInitialState: function() {
@@ -99,7 +99,12 @@ var GlassPage = React.createClass({
         width: '100%',
         height: HEADER_HEIGHT,
         style: {borderBottom: '1px solid rgba(10, 10, 10, 0.1)'},
-        children: <Header className="GlassPage-header">This is the header</Header>
+        children: (
+          <div className="GlassPage-header">
+            <a className="GlassPage-arrow fa fa-arrow-left" href="#" />
+            <Header>This is the header</Header>
+          </div>
+        )
       }
     };
 

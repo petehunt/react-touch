@@ -65,6 +65,9 @@ var GlassContainer = React.createClass({
         width={this.props.content.width}
         height={this.props.content.height}
         style={this.props.content.style}
+        onTouchStart={this.props.onTouchStart}
+        onTouchMove={this.props.onTouchMove}
+        onTouchEnd={this.props.onTouchEnd}
       />
     ];
 
@@ -94,8 +97,8 @@ var GlassContainer = React.createClass({
       );
     }
 
-    return this.transferPropsTo(
-      <div className="GlassContainer">
+    return (
+      <div className="GlassContainer" style={this.props.style}>
         {viewports}
       </div>
     );
