@@ -2,7 +2,6 @@
 
 var React = require('React');
 
-var DemoVideo = require('../components/DemoVideo');
 var Layout = require('../layout/Layout');
 var HomePage = require('../pages/HomePage');
 var GlassPage = require('../pages/GlassPage');
@@ -26,9 +25,9 @@ var RootPage = React.createClass({
     if (!IS_IPHONE_5 && !this.state.force) {
       return (
         <Message>
-          This demo peforms best on at least an iPhone 5 and iOS 7.<br />
-          <a href="javascript:;" onClick={this.handleClick}>Click here to run the demo anyway</a>.<br />
-          <DemoVideo />
+          <p>This demo peforms best on at least an iPhone 5 and iOS 7.</p>
+          <p><a href="javascript:;" onClick={this.handleClick}>Click here to run the demo anyway</a>.</p>
+          <p><a href="https://vimeo.com/79659941" target="_blank">Or check out the demo video instead</a>.</p>
         </Message>
       );
     }
