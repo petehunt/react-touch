@@ -1,4 +1,5 @@
 .Viewer {
+  background: black;
   overflow: hidden;
   perspective: 500px;
   -webkit-perspective: 500px;

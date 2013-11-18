@@ -115,11 +115,27 @@ var Layout = React.createClass({
     var style = {};
     style[StyleKeys.TRANSFORM] = 'translate3d(' + (SIDEBAR_WIDTH - this.state.scrollLeft) + 'px, 0, 0)';
 
-    var navStyle = {
-      opacity: !this.isNavOpen() ? 0 : .5 + .5 * (1 - this.state.scrollLeft / SIDEBAR_WIDTH)
-    };
+    var nav = null;
 
-    navStyle[StyleKeys.TRANSFORM] = 'translate3d(' + (SIDEBAR_WIDTH - .5 * this.state.scrollLeft) + 'px, 0, 0)';
+    if (this.isNavOpen()) {
+      var navStyle = {
+        opacity: .5 + .5 * (1 - this.state.scrollLeft / SIDEBAR_WIDTH)
+      };
+      // Parallax!
+      navStyle[StyleKeys.TRANSFORM] = 'translate3d(' + (SIDEBAR_WIDTH - .5 * this.state.scrollLeft) + 'px, 0, 0)';
+
+      nav = (
+        <div className="Layout-nav" style={navStyle}>
+          <StaticContainer>
+            <div>
+              <FastLink href="#home" className="Layout-navLink" onClick={this.handleNavClick}>Home</FastLink>
+              <FastLink href="#glass" className="Layout-navLink" onClick={this.handleNavClick}>Frosted glass</FastLink>
+              <FastLink href="#viewer" className="Layout-lastNavLink" onClick={this.handleNavClick}>Photo gallery</FastLink>
+            </div>
+          </StaticContainer>
+        </div>
+      );
+    }
 
     return this.transferPropsTo(
       <PreventBrowserSwipe className="Layout">
@@ -149,15 +165,7 @@ var Layout = React.createClass({
               <div>{this.props.children}</div>
             </StaticContainer>
           </div>
-          <div className="Layout-nav" style={navStyle}>
-            <StaticContainer>
-              <div>
-                <FastLink href="#home" className="Layout-navLink" onClick={this.handleNavClick}>Home</FastLink>
-                <FastLink href="#glass" className="Layout-navLink" onClick={this.handleNavClick}>Frosted glass</FastLink>
-                <FastLink href="#viewer" className="Layout-lastNavLink" onClick={this.handleNavClick}>Photo gallery</FastLink>
-              </div>
-            </StaticContainer>
-          </div>
+          {nav}
         </div>
       </PreventBrowserSwipe>
     );

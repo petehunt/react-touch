@@ -621,11 +621,27 @@
 	    var style = {};
 	    style[StyleKeys.TRANSFORM] = 'translate3d(' + (SIDEBAR_WIDTH - this.state.scrollLeft) + 'px, 0, 0)';
 
-	    var navStyle = {
-	      opacity: !this.isNavOpen() ? 0 : .5 + .5 * (1 - this.state.scrollLeft / SIDEBAR_WIDTH)
-	    };
+	    var nav = null;
 
-	    navStyle[StyleKeys.TRANSFORM] = 'translate3d(' + (SIDEBAR_WIDTH - .5 * this.state.scrollLeft) + 'px, 0, 0)';
+	    if (this.isNavOpen()) {
+	      var navStyle = {
+	        opacity: .5 + .5 * (1 - this.state.scrollLeft / SIDEBAR_WIDTH)
+	      };
+	      // Parallax!
+	      navStyle[StyleKeys.TRANSFORM] = 'translate3d(' + (SIDEBAR_WIDTH - .5 * this.state.scrollLeft) + 'px, 0, 0)';
+
+	      nav = (
+	        React.DOM.div( {className:"Layout-nav", style:navStyle}, 
+	          StaticContainer(null, 
+	            React.DOM.div(null, 
+	              FastLink( {href:"#home", className:"Layout-navLink", onClick:this.handleNavClick}, "Home"),
+	              FastLink( {href:"#glass", className:"Layout-navLink", onClick:this.handleNavClick}, "Frosted glass"),
+	              FastLink( {href:"#viewer", className:"Layout-lastNavLink", onClick:this.handleNavClick}, "Photo gallery")
+	            )
+	          )
+	        )
+	      );
+	    }
 
 	    return this.transferPropsTo(
 	      PreventBrowserSwipe( {className:"Layout"}, 
@@ -655,15 +671,7 @@
 	              React.DOM.div(null, this.props.children)
 	            )
 	          ),
-	          React.DOM.div( {className:"Layout-nav", style:navStyle}, 
-	            StaticContainer(null, 
-	              React.DOM.div(null, 
-	                FastLink( {href:"#home", className:"Layout-navLink", onClick:this.handleNavClick}, "Home"),
-	                FastLink( {href:"#glass", className:"Layout-navLink", onClick:this.handleNavClick}, "Frosted glass"),
-	                FastLink( {href:"#viewer", className:"Layout-lastNavLink", onClick:this.handleNavClick}, "Photo gallery")
-	              )
-	            )
-	          )
+	          nav
 	        )
 	      )
 	    );
@@ -703,7 +711,7 @@
 	" The UX isn't that great (snapping is off, etc) but the performance is pretty good. Keep "+
 	          "in mind that this demo uses JavaScript to animate CSS3d transforms ", React.DOM.strong(null, "every frame"),
 	" using React's data binding while targeting mobile devices. "        ),
-	        React.DOM.p(null, React.DOM.strong(null, "Open the left nav to get started.")),
+	        React.DOM.p(null, React.DOM.strong(null, "Open the left nav to get started."),' ',"For a full-screen app-like experience, add this as a bookmark on your home screen."),
 	        React.DOM.p(null, 
 	" Source available ", React.DOM.a( {href:"http://github.com/petehunt/react-touch/", target:"_blank"}, "on my github account"),". "        )
 	      )
@@ -7766,7 +7774,7 @@
 /***/ function(module, exports, require) {
 
 	module.exports =
-		".Viewer {\n  overflow: hidden;\n  perspective: 500px;\n  -webkit-perspective: 500px;\n  -moz-perspective: 500px;\n}";
+		".Viewer {\n  background: black;\n  overflow: hidden;\n  perspective: 500px;\n  -webkit-perspective: 500px;\n  -moz-perspective: 500px;\n}";
 
 /***/ },
 
