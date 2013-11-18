@@ -8,7 +8,9 @@
 }
 
 .Layout-topBar {
+  background: rgb(250, 250, 250);
   border-bottom: 1px solid black;
+  font-family: sans-serif;
   left: 0;
   line-height: 50px;
   position: absolute;
@@ -26,11 +28,9 @@
 }
 
 .Layout-content {
-  background: #f0f0f0;
   bottom: 0;
   left: 0;
   overflow: scroll;
-  padding: 10px;
   position: absolute;
   right: 0;
   top: 50px;

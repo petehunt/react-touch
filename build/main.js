@@ -295,6 +295,7 @@
 	var React = require(7);
 
 	var Images = require(16);
+	var Layout = require(15);
 	var Message = require(12);
 	var Viewer = require(17);
 
@@ -340,10 +341,12 @@
 	    }
 
 	    return (
-	      Viewer(
-	        {width:this.state.width,
-	        height:this.state.height,
-	        images:Images}
+	      Layout(null, 
+	        Viewer(
+	          {width:this.state.width,
+	          height:this.state.height - Layout.TOPBAR_HEIGHT,
+	          images:Images}
+	        )
 	      )
 	    );
 	  }
@@ -964,6 +967,7 @@
 	// Keep in sync with Layout.css
 	// TODO: deprecate the CSS standard
 	var SIDEBAR_WIDTH = 128;
+	var TOPBAR_HEIGHT = 50;
 
 	var Layout = React.createClass({displayName: 'Layout',
 	  componentWillMount: function() {
@@ -1081,6 +1085,8 @@
 	    );
 	  }
 	});
+
+	Layout.TOPBAR_HEIGHT = TOPBAR_HEIGHT;
 
 	module.exports = Layout;
 
@@ -2628,7 +2634,7 @@
 /***/ function(module, exports, require) {
 
 	module.exports =
-		".LeftNavPage {\n  background: rgb(250, 250, 250);\n  font-family: sans-serif;\n}";
+		".LeftNavPage .Layout-content {\n  background: #f0f0f0;\n  padding: 10px;\n}";
 
 /***/ },
 
@@ -3033,7 +3039,7 @@
 /***/ function(module, exports, require) {
 
 	module.exports =
-		".Layout {\n  bottom: 0;\n  left: 0;\n  overflow: hidden;\n  position: fixed;\n  right: 0;\n  top: 0;\n}\n\n.Layout-topBar {\n  border-bottom: 1px solid black;\n  left: 0;\n  line-height: 50px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 0;\n}\n\n.Layout-hamburger {\n  font-size: 25px;\n  left: 0;\n  line-height: 50px;\n  padding: 0 12px;\n  position: absolute;\n}\n\n.Layout-content {\n  background: #f0f0f0;\n  bottom: 0;\n  left: 0;\n  overflow: scroll;\n  padding: 10px;\n  position: absolute;\n  right: 0;\n  top: 50px;\n}\n\n.Layout-nav {\n  background: #ccc;\n  border-bottom: rgba(100, 100, 100, 0.3);\n  bottom: 0;\n  left: -128px;\n  padding: 10px;\n  position: absolute;\n  top: 0;\n  width: 128px;\n}\n\n.Layout-scroller {\n  height: 100%;\n  width: 100%;\n}";
+		".Layout {\n  bottom: 0;\n  left: 0;\n  overflow: hidden;\n  position: fixed;\n  right: 0;\n  top: 0;\n}\n\n.Layout-topBar {\n  background: rgb(250, 250, 250);\n  border-bottom: 1px solid black;\n  font-family: sans-serif;\n  left: 0;\n  line-height: 50px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 0;\n}\n\n.Layout-hamburger {\n  font-size: 25px;\n  left: 0;\n  line-height: 50px;\n  padding: 0 12px;\n  position: absolute;\n}\n\n.Layout-content {\n  bottom: 0;\n  left: 0;\n  overflow: scroll;\n  position: absolute;\n  right: 0;\n  top: 50px;\n}\n\n.Layout-nav {\n  background: #ccc;\n  border-bottom: rgba(100, 100, 100, 0.3);\n  bottom: 0;\n  left: -128px;\n  padding: 10px;\n  position: absolute;\n  top: 0;\n  width: 128px;\n}\n\n.Layout-scroller {\n  height: 100%;\n  width: 100%;\n}";
 
 /***/ },
 

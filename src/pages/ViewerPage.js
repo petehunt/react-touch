@@ -3,6 +3,7 @@
 var React = require('React');
 
 var Images = require('../data/Images');
+var Layout = require('../layout/Layout');
 var Message = require('../components/Message');
 var Viewer = require('../components/Viewer');
 
@@ -49,11 +50,13 @@ var ViewerPage = React.createClass({
     }
 
     return (
-      <Viewer
-        width={this.state.width}
-        height={this.state.height}
-        images={Images}
-      />
+      <Layout>
+        <Viewer
+          width={this.state.width}
+          height={this.state.height - Layout.TOPBAR_HEIGHT}
+          images={Images}
+        />
+      </Layout>
     );
   }
 });
