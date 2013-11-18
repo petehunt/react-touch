@@ -98,6 +98,15 @@ var Layout = React.createClass({
     }
   },
 
+  handleContentTouchTap: function(e) {
+    if (!this.isNavOpen()) {
+      return;
+    }
+
+    this.scroller.scrollTo(SIDEBAR_WIDTH, 0, true);
+    e.preventDefault();
+  },
+
   isNavOpen: function() {
     return this.state.scrollLeft !== SIDEBAR_WIDTH;
   },
@@ -123,6 +132,7 @@ var Layout = React.createClass({
               </div>
               <div
                 className="Layout-content"
+                onTouchTap={this.handleContentTouchTap}
                 onTouchStart={this.handleContentTouchStart}
                 onTouchMove={this.handleContentTouchMove}
                 onTouchEnd={this.handleContentTouchEnd}>
