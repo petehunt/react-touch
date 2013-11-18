@@ -238,7 +238,9 @@
 	        React.DOM.p(null, 
 	" The UX isn't that great (snapping is off, etc) but the performance is pretty good. Keep "+
 	          "in mind that this demo uses JavaScript to animate CSS3d transforms ", React.DOM.strong(null, "every frame"),
-	" using React's data binding while targeting mobile devices. "        )
+	" using React's data binding while targeting mobile devices. "        ),
+	        React.DOM.p(null, 
+	" Source available ", React.DOM.a( {href:"http://github.com/petehunt/react-touch/", target:"_blank"}, "on my github account"),". "        )
 	      )
 	    );
 	  }
