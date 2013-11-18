@@ -98,6 +98,12 @@ var Layout = React.createClass({
     }
   },
 
+  handleNavClick: function() {
+    if (this.isNavOpen()) {
+      this.scroller.scrollTo(SIDEBAR_WIDTH, 0, true);
+    }
+  },
+
   handleContentTouchTap: function(e) {
     if (!this.isNavOpen()) {
       return;
@@ -128,7 +134,7 @@ var Layout = React.createClass({
                   onTouchMove={this.handleTouchMove}
                   onTouchEnd={this.handleTouchEnd}
                 />
-                <Header>React touch demo</Header>
+                <Header>React touch demos</Header>
               </div>
               <div
                 className="Layout-content"
@@ -139,9 +145,9 @@ var Layout = React.createClass({
                 {this.props.children}
               </div>
               <div className="Layout-nav">
-                <FastLink href="#" className="Layout-navLink">Home</FastLink>
-                <FastLink href="#glass" className="Layout-navLink">Frosted glass</FastLink>
-                <FastLink href="#viewer" className="Layout-lastNavLink">Photo gallery</FastLink>
+                <FastLink href="#home" className="Layout-navLink" onClick={this.handleNavClick}>Home</FastLink>
+                <FastLink href="#glass" className="Layout-navLink" onClick={this.handleNavClick}>Frosted glass</FastLink>
+                <FastLink href="#viewer" className="Layout-lastNavLink" onClick={this.handleNavClick}>Photo gallery</FastLink>
               </div>
             </div>
           </StaticContainer>

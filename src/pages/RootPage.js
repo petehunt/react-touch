@@ -31,9 +31,9 @@ var RootPage = React.createClass({
       );
     }
 
-    var routeName = this.props.routeParams[0] || '';
+    var routeName = this.props.routeParams[0] || 'home';
 
-    if (routeName === '') {
+    if (routeName === '' || routeName === 'home') {
       return <Layout className="HomePage" route="home"><HomePage /></Layout>;
     } else if (routeName === 'glass') {
       return <Layout route="glass"><GlassPage /></Layout>;

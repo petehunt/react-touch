@@ -106,9 +106,9 @@
 	      );
 	    }
 
-	    var routeName = this.props.routeParams[0] || '';
+	    var routeName = this.props.routeParams[0] || 'home';
 
-	    if (routeName === '') {
+	    if (routeName === '' || routeName === 'home') {
 	      return Layout( {className:"HomePage", route:"home"}, HomePage(null ));
 	    } else if (routeName === 'glass') {
 	      return Layout( {route:"glass"}, GlassPage(null ));
@@ -604,6 +604,12 @@
 	    }
 	  },
 
+	  handleNavClick: function() {
+	    if (this.isNavOpen()) {
+	      this.scroller.scrollTo(SIDEBAR_WIDTH, 0, true);
+	    }
+	  },
+
 	  handleContentTouchTap: function(e) {
 	    if (!this.isNavOpen()) {
 	      return;
@@ -634,7 +640,7 @@
 	                  onTouchMove:this.handleTouchMove,
 	                  onTouchEnd:this.handleTouchEnd}
 	                ),
-	                Header(null, "React touch demo")
+	                Header(null, "React touch demos")
 	              ),
 	              React.DOM.div(
 	                {className:"Layout-content",
@@ -645,9 +651,9 @@
 	                this.props.children
 	              ),
 	              React.DOM.div( {className:"Layout-nav"}, 
-	                FastLink( {href:"#", className:"Layout-navLink"}, "Home"),
-	                FastLink( {href:"#glass", className:"Layout-navLink"}, "Frosted glass"),
-	                FastLink( {href:"#viewer", className:"Layout-lastNavLink"}, "Photo gallery")
+	                FastLink( {href:"#home", className:"Layout-navLink", onClick:this.handleNavClick}, "Home"),
+	                FastLink( {href:"#glass", className:"Layout-navLink", onClick:this.handleNavClick}, "Frosted glass"),
+	                FastLink( {href:"#viewer", className:"Layout-lastNavLink", onClick:this.handleNavClick}, "Photo gallery")
 	              )
 	            )
 	          )
@@ -1981,6 +1987,9 @@
 	  handleTap: function(e) {
 	    Parse.history.navigate(this.props.href, {trigger: true});
 	    e.preventDefault();
+	    if (this.props.onClick) {
+	      this.props.onClick();
+	    }
 	  },
 
 	  render: function() {
@@ -8011,7 +8020,7 @@
 /***/ function(module, exports, require) {
 
 	module.exports =
-		"* {\n  box-sizing: border-box;\n}\n\n.GlassPage-header {\n  background: rgba(257, 257, 257, 0.3);\n  line-height: 50px;\n  text-align: center;\n}\n";
+		".GlassPage-header {\n  background: rgba(257, 257, 257, 0.3);\n  line-height: 50px;\n  text-align: center;\n}\n";
 
 /***/ },
 

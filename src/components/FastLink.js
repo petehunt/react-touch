@@ -7,6 +7,9 @@ var FastLink = React.createClass({
   handleTap: function(e) {
     Parse.history.navigate(this.props.href, {trigger: true});
     e.preventDefault();
+    if (this.props.onClick) {
+      this.props.onClick();
+    }
   },
 
   render: function() {
