@@ -113,18 +113,20 @@ var Layout = React.createClass({
 
   render: function() {
     var style = {};
-    style[StyleKeys.TRANSFORM] =  'translate3d(' + (SIDEBAR_WIDTH - this.state.scrollLeft) + 'px, 0, 0)';
+    style[StyleKeys.TRANSFORM] = 'translate3d(' + (SIDEBAR_WIDTH - this.state.scrollLeft) + 'px, 0, 0)';
 
     var navStyle = {
       opacity: .5 + .5 * (1 - this.state.scrollLeft / SIDEBAR_WIDTH)
     };
 
+    navStyle[StyleKeys.TRANSFORM] = 'translate3d(' + (SIDEBAR_WIDTH - .5 * this.state.scrollLeft) + 'px, 0, 0)';
+
     return this.transferPropsTo(
       <PreventBrowserSwipe className="Layout">
-        <div className="Layout-scroller" style={style}>
-          <StaticContainer staticKey={this.props.route}>
-            <div>
-              <div className="Layout-topBar">
+        <div className="Layout-scroller">
+          <div className="Layout-topBar" style={style}>
+            <StaticContainer>
+              <div>
                 <div
                   className="Layout-hamburger fa fa-bars"
                   onTouchTap={this.handleTap}
@@ -134,18 +136,21 @@ var Layout = React.createClass({
                 />
                 <Header>React touch demos</Header>
               </div>
-              <div
-                className="Layout-content"
-                onTouchTap={this.handleContentTouchTap}
-                onTouchStart={this.handleContentTouchStart}
-                onTouchMove={this.handleContentTouchMove}
-                onTouchEnd={this.handleContentTouchEnd}>
-                {this.props.children}
-              </div>
-            </div>
-          </StaticContainer>
-          <div className="Layout-nav" style={navStyle}>
+            </StaticContainer>
+          </div>
+          <div
+            className="Layout-content"
+            style={style}
+            onTouchTap={this.handleContentTouchTap}
+            onTouchStart={this.handleContentTouchStart}
+            onTouchMove={this.handleContentTouchMove}
+            onTouchEnd={this.handleContentTouchEnd}>
             <StaticContainer staticKey={this.props.route}>
+              <div>{this.props.children}</div>
+            </StaticContainer>
+          </div>
+          <div className="Layout-nav" style={navStyle}>
+            <StaticContainer>
               <div>
                 <FastLink href="#home" className="Layout-navLink" onClick={this.handleNavClick}>Home</FastLink>
                 <FastLink href="#glass" className="Layout-navLink" onClick={this.handleNavClick}>Frosted glass</FastLink>

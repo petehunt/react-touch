@@ -619,18 +619,20 @@
 
 	  render: function() {
 	    var style = {};
-	    style[StyleKeys.TRANSFORM] =  'translate3d(' + (SIDEBAR_WIDTH - this.state.scrollLeft) + 'px, 0, 0)';
+	    style[StyleKeys.TRANSFORM] = 'translate3d(' + (SIDEBAR_WIDTH - this.state.scrollLeft) + 'px, 0, 0)';
 
 	    var navStyle = {
 	      opacity: .5 + .5 * (1 - this.state.scrollLeft / SIDEBAR_WIDTH)
 	    };
 
+	    navStyle[StyleKeys.TRANSFORM] = 'translate3d(' + (SIDEBAR_WIDTH - .5 * this.state.scrollLeft) + 'px, 0, 0)';
+
 	    return this.transferPropsTo(
 	      PreventBrowserSwipe( {className:"Layout"}, 
-	        React.DOM.div( {className:"Layout-scroller", style:style}, 
-	          StaticContainer( {staticKey:this.props.route}, 
-	            React.DOM.div(null, 
-	              React.DOM.div( {className:"Layout-topBar"}, 
+	        React.DOM.div( {className:"Layout-scroller"}, 
+	          React.DOM.div( {className:"Layout-topBar", style:style}, 
+	            StaticContainer(null, 
+	              React.DOM.div(null, 
 	                React.DOM.div(
 	                  {className:"Layout-hamburger fa fa-bars",
 	                  onTouchTap:this.handleTap,
@@ -639,19 +641,22 @@
 	                  onTouchEnd:this.handleTouchEnd}
 	                ),
 	                Header(null, "React touch demos")
-	              ),
-	              React.DOM.div(
-	                {className:"Layout-content",
-	                onTouchTap:this.handleContentTouchTap,
-	                onTouchStart:this.handleContentTouchStart,
-	                onTouchMove:this.handleContentTouchMove,
-	                onTouchEnd:this.handleContentTouchEnd}, 
-	                this.props.children
 	              )
 	            )
 	          ),
-	          React.DOM.div( {className:"Layout-nav", style:navStyle}, 
+	          React.DOM.div(
+	            {className:"Layout-content",
+	            style:style,
+	            onTouchTap:this.handleContentTouchTap,
+	            onTouchStart:this.handleContentTouchStart,
+	            onTouchMove:this.handleContentTouchMove,
+	            onTouchEnd:this.handleContentTouchEnd}, 
 	            StaticContainer( {staticKey:this.props.route}, 
+	              React.DOM.div(null, this.props.children)
+	            )
+	          ),
+	          React.DOM.div( {className:"Layout-nav", style:navStyle}, 
+	            StaticContainer(null, 
 	              React.DOM.div(null, 
 	                FastLink( {href:"#home", className:"Layout-navLink", onClick:this.handleNavClick}, "Home"),
 	                FastLink( {href:"#glass", className:"Layout-navLink", onClick:this.handleNavClick}, "Frosted glass"),
@@ -7511,7 +7516,7 @@
 /***/ function(module, exports, require) {
 
 	module.exports =
-		".Layout {\n  bottom: 0;\n  left: 0;\n  overflow: hidden;\n  position: fixed;\n  right: 0;\n  top: 0;\n}\n\n.Layout-topBar {\n  background: rgb(255, 255, 255);\n  border-bottom: 1px solid black;\n  font-family: sans-serif;\n  left: 0;\n  line-height: 50px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 0;\n}\n\n.Layout-hamburger {\n  font-size: 25px;\n  left: 0;\n  line-height: 50px;\n  padding: 0 12px;\n  position: absolute;\n}\n\n.Layout-content {\n  bottom: 0;\n  left: 0;\n  overflow: scroll;\n  position: absolute;\n  right: 0;\n  top: 51px;\n}\n\n.Layout-nav {\n  background: #ccc;\n  border-bottom: rgba(100, 100, 100, 0.3);\n  bottom: 0;\n  left: -192px;\n  padding: 10px;\n  position: absolute;\n  top: 0;\n  width: 192px;\n}\n\n.Layout-scroller {\n  height: 100%;\n  width: 100%;\n}\n\n.Layout-navLink,\n.Layout-lastNavLink {\n  color: black;\n  display: block;\n  font-family: sans-serif;\n  padding: 10px 0;\n  text-decoration: none;\n}\n\n.Layout-navLink {\n  border-bottom: 1px solid rgba(20, 20, 20, 0.3);\n}";
+		".Layout {\n  bottom: 0;\n  left: 0;\n  overflow: hidden;\n  position: fixed;\n  right: 0;\n  top: 0;\n}\n\n.Layout-topBar {\n  background: rgb(255, 255, 255);\n  border-bottom: 1px solid black;\n  font-family: sans-serif;\n  left: 0;\n  line-height: 50px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 0;\n  z-index: 2;\n}\n\n.Layout-hamburger {\n  font-size: 25px;\n  left: 0;\n  line-height: 50px;\n  padding: 0 12px;\n  position: absolute;\n}\n\n.Layout-content {\n  bottom: 0;\n  left: 0;\n  overflow: scroll;\n  position: absolute;\n  right: 0;\n  top: 51px;\n  z-index: 2;\n}\n\n.Layout-nav {\n  background: #ccc;\n  border-bottom: rgba(100, 100, 100, 0.3);\n  bottom: 0;\n  left: -192px;\n  padding: 10px;\n  position: absolute;\n  top: 0;\n  width: 192px;\n  z-index: 1;\n}\n\n.Layout-scroller {\n  height: 100%;\n  width: 100%;\n}\n\n.Layout-navLink,\n.Layout-lastNavLink {\n  color: black;\n  display: block;\n  font-family: sans-serif;\n  padding: 10px 0;\n  text-decoration: none;\n}\n\n.Layout-navLink {\n  border-bottom: 1px solid rgba(20, 20, 20, 0.3);\n}";
 
 /***/ },
 
