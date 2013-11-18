@@ -8,6 +8,7 @@ var FastLink = require('../components/FastLink');
 var GlassContainer = require('../components/GlassContainer');
 var GlassContent = require('../components/GlassContent');
 var Header = require('../components/Header');
+var Layout = require('../layout/Layout');
 var Message = require('../components/Message');
 var StyleKeys = require('../environment/StyleKeys');
 
@@ -91,7 +92,7 @@ var GlassPage = React.createClass({
     // TODO: we can make this positioning significantly less lame
     // by measuring the DOM but I'm not sure we want to rely that
     // staying up-to-date, so for now make it explicit.
-    var maxHeight = document.body.clientHeight;
+    var maxHeight = document.body.clientHeight - Layout.TOPBAR_HEIGHT;
 
     var overlays = {
       header: {
@@ -100,12 +101,7 @@ var GlassPage = React.createClass({
         width: '100%',
         height: HEADER_HEIGHT,
         style: {borderBottom: '1px solid rgba(10, 10, 10, 0.1)'},
-        children: (
-          <div className="GlassPage-header">
-            <FastLink className="GlassPage-arrow fa fa-arrow-left" href="#" />
-            <Header>This is the header</Header>
-          </div>
-        )
+        children: <Header className="GlassPage-header">Frosted glass overlay</Header>
       }
     };
 
