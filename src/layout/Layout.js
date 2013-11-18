@@ -115,6 +115,10 @@ var Layout = React.createClass({
     var style = {};
     style[StyleKeys.TRANSFORM] =  'translate3d(' + (SIDEBAR_WIDTH - this.state.scrollLeft) + 'px, 0, 0)';
 
+    var navStyle = {
+      opacity: .5 + .5 * (1 - this.state.scrollLeft / SIDEBAR_WIDTH)
+    };
+
     return this.transferPropsTo(
       <PreventBrowserSwipe className="Layout">
         <div className="Layout-scroller" style={style}>
@@ -138,13 +142,17 @@ var Layout = React.createClass({
                 onTouchEnd={this.handleContentTouchEnd}>
                 {this.props.children}
               </div>
-              <div className="Layout-nav">
+            </div>
+          </StaticContainer>
+          <div className="Layout-nav" style={navStyle}>
+            <StaticContainer staticKey={this.props.route}>
+              <div>
                 <FastLink href="#home" className="Layout-navLink" onClick={this.handleNavClick}>Home</FastLink>
                 <FastLink href="#glass" className="Layout-navLink" onClick={this.handleNavClick}>Frosted glass</FastLink>
                 <FastLink href="#viewer" className="Layout-lastNavLink" onClick={this.handleNavClick}>Photo gallery</FastLink>
               </div>
-            </div>
-          </StaticContainer>
+            </StaticContainer>
+          </div>
         </div>
       </PreventBrowserSwipe>
     );
