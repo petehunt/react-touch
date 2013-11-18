@@ -2,14 +2,12 @@
 
 var React = require('React');
 
-var Layout = require('../layout/Layout');
-
 require('./HomePage.css');
 
 var HomePage = React.createClass({
   render: function() {
     return (
-      <Layout className="HomePage">
+      <div>
         <h1><a href="http://reactjs.org/" target="_blank">React</a>-based touch demos</h1>
         <p>
           The web isn't as performant as native, but on modern devices we can get pretty close.
@@ -26,7 +24,7 @@ var HomePage = React.createClass({
         <p>
           Source available <a href="http://github.com/petehunt/react-touch/" target="_blank">on my github account</a>.
         </p>
-      </Layout>
+      </div>
     );
   }
 });

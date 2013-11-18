@@ -51,9 +51,7 @@
 	var React = require(6);
 	var ReactHack = require(7);
 
-	var GlassPage = require(1);
-	var HomePage = require(2);
-	var ViewerPage = require(3);
+	var RootPage = require(172);
 
 	// The following code is required to install the TapEventPlugin. We have
 	// an open issue to make this easier to do.
@@ -67,9 +65,8 @@
 	React.initializeTouchEvents(true);
 
 	ReactHack.start({
-	  '': HomePage,
-	  'glass': GlassPage,
-	  'viewer': ViewerPage,
+	  '': RootPage,
+	  ':name': RootPage
 	});
 
 /***/ },
@@ -222,14 +219,12 @@
 
 	var React = require(6);
 
-	var Layout = require(15);
-
 	require(31);
 
 	var HomePage = React.createClass({displayName: 'HomePage',
 	  render: function() {
 	    return (
-	      Layout( {className:"HomePage"}, 
+	      React.DOM.div(null, 
 	        React.DOM.h1(null, React.DOM.a( {href:"http://reactjs.org/", target:"_blank"}, "React"),"-based touch demos"),
 	        React.DOM.p(null, 
 	" The web isn't as performant as native, but on modern devices we can get pretty close. "+
@@ -305,12 +300,10 @@
 	    }
 
 	    return (
-	      Layout(null, 
-	        Viewer(
-	          {width:this.state.width,
-	          height:this.state.height - Layout.TOPBAR_HEIGHT,
-	          images:Images}
-	        )
+	      Viewer(
+	        {width:this.state.width,
+	        height:this.state.height - Layout.TOPBAR_HEIGHT,
+	        images:Images}
 	      )
 	    );
 	  }
@@ -967,6 +960,12 @@
 	    this.scroller.scrollTo(SIDEBAR_WIDTH, 0);
 	  },
 
+	  componentWillReceiveProps: function(nextProps) {
+	    if (this.props.route !== nextProps.route) {
+	      this.scroller.scrollTo(SIDEBAR_WIDTH, 0, true);
+	    }
+	  },
+
 	  handleScroll: function(left, top, zoom) {
 	    this.setState({scrollLeft: left});
 	  },
@@ -1033,7 +1032,7 @@
 	    return this.transferPropsTo(
 	      PreventBrowserSwipe( {className:"Layout"}, 
 	        React.DOM.div( {className:"Layout-scroller", style:style}, 
-	          StaticContainer(null, 
+	          StaticContainer( {staticKey:this.props.route}, 
 	            React.DOM.div(null, 
 	              React.DOM.div( {className:"Layout-topBar"}, 
 	                React.DOM.div(
@@ -2487,7 +2486,7 @@
 	  },
 
 	  shouldComponentUpdate: function(nextProps) {
-	    return nextProps.shouldUpdate;
+	    return nextProps.shouldUpdate || (this.props.staticKey !== nextProps.staticKey);
 	  },
 
 	  render: function() {
@@ -25167,12 +25166,46 @@
 
 	  render: function() {
 	    return this.transferPropsTo(
-	      React.DOM.a( {onTouchTap:this.handleTap}, this.props.children)
+	      React.DOM.a( {onTouchTap:this.handleTap}, 
+	        this.props.children
+	      )
 	    );
 	  }
 	});
 
 	module.exports = FastLink;
+
+/***/ },
+
+/***/ 172:
+/***/ function(module, exports, require) {
+
+	/** @jsx React.DOM */
+
+	var React = require(6);
+
+	var Layout = require(15);
+	var HomePage = require(2);
+	var GlassPage = require(1);
+	var ViewerPage = require(3);
+
+	var RootPage = React.createClass({displayName: 'RootPage',
+	  render: function() {
+	    var routeName = this.props.routeParams[0] || '';
+
+	    if (routeName === '') {
+	      return Layout( {className:"HomePage", route:"home"}, HomePage(null ));
+	    } else if (routeName === 'glass') {
+	      return GlassPage(null );
+	    } else if (routeName === 'viewer') {
+	      return Layout( {route:"viewer"}, ViewerPage(null ));
+	    } else {
+	      return React.DOM.h1(null, "Route not found");
+	    }
+	  }
+	});
+
+	module.exports = RootPage;
 
 /***/ }
 /******/ })

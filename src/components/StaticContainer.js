@@ -8,7 +8,7 @@ var StaticContainer = React.createClass({
   },
 
   shouldComponentUpdate: function(nextProps) {
-    return nextProps.shouldUpdate;
+    return nextProps.shouldUpdate || (this.props.staticKey !== nextProps.staticKey);
   },
 
   render: function() {

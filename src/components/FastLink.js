@@ -11,7 +11,9 @@ var FastLink = React.createClass({
 
   render: function() {
     return this.transferPropsTo(
-      <a onTouchTap={this.handleTap}>{this.props.children}</a>
+      <a onTouchTap={this.handleTap}>
+        {this.props.children}
+      </a>
     );
   }
 });

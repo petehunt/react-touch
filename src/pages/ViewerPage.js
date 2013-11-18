@@ -50,13 +50,11 @@ var ViewerPage = React.createClass({
     }
 
     return (
-      <Layout>
-        <Viewer
-          width={this.state.width}
-          height={this.state.height - Layout.TOPBAR_HEIGHT}
-          images={Images}
-        />
-      </Layout>
+      <Viewer
+        width={this.state.width}
+        height={this.state.height - Layout.TOPBAR_HEIGHT}
+        images={Images}
+      />
     );
   }
 });

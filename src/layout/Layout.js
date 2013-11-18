@@ -37,6 +37,12 @@ var Layout = React.createClass({
     this.scroller.scrollTo(SIDEBAR_WIDTH, 0);
   },
 
+  componentWillReceiveProps: function(nextProps) {
+    if (this.props.route !== nextProps.route) {
+      this.scroller.scrollTo(SIDEBAR_WIDTH, 0, true);
+    }
+  },
+
   handleScroll: function(left, top, zoom) {
     this.setState({scrollLeft: left});
   },
@@ -103,7 +109,7 @@ var Layout = React.createClass({
     return this.transferPropsTo(
       <PreventBrowserSwipe className="Layout">
         <div className="Layout-scroller" style={style}>
-          <StaticContainer>
+          <StaticContainer staticKey={this.props.route}>
             <div>
               <div className="Layout-topBar">
                 <div
