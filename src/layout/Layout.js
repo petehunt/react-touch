@@ -116,7 +116,7 @@ var Layout = React.createClass({
     style[StyleKeys.TRANSFORM] = 'translate3d(' + (SIDEBAR_WIDTH - this.state.scrollLeft) + 'px, 0, 0)';
 
     var navStyle = {
-      opacity: .5 + .5 * (1 - this.state.scrollLeft / SIDEBAR_WIDTH)
+      opacity: !this.isNavOpen() ? 0 : .5 + .5 * (1 - this.state.scrollLeft / SIDEBAR_WIDTH)
     };
 
     navStyle[StyleKeys.TRANSFORM] = 'translate3d(' + (SIDEBAR_WIDTH - .5 * this.state.scrollLeft) + 'px, 0, 0)';
