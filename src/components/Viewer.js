@@ -72,7 +72,8 @@ var Viewer = React.createClass({
         style={{width: this.props.width, height: this.props.height}}
         onTouchStart={this.handleTouchStart}
         onTouchMove={this.handleTouchMove}
-        onTouchEnd={this.handleTouchEnd}>
+        onTouchEnd={this.handleTouchEnd}
+        onTouchCancel={this.handleTouchEnd}>
         {images}
       </div>
     );

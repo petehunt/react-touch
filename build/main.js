@@ -656,7 +656,8 @@
 	                  onTouchTap:this.handleTap,
 	                  onTouchStart:this.handleTouchStart,
 	                  onTouchMove:this.handleTouchMove,
-	                  onTouchEnd:this.handleTouchEnd}
+	                  onTouchEnd:this.handleTouchEnd,
+	                  onTouchCancel:this.handleTouchEnd}
 	                ),
 	                Header(null, "React touch demos")
 	              )
@@ -668,7 +669,8 @@
 	            onTouchTap:this.handleContentTouchTap,
 	            onTouchStart:this.handleContentTouchStart,
 	            onTouchMove:this.handleContentTouchMove,
-	            onTouchEnd:this.handleContentTouchEnd}, 
+	            onTouchEnd:this.handleContentTouchEnd,
+	            onTouchCancel:this.handleContentTouchEnd}, 
 	            StaticContainer( {staticKey:this.props.route}, 
 	              React.DOM.div(null, this.props.children)
 	            )
@@ -824,7 +826,8 @@
 	        content:contentBox,
 	        onTouchStart:this.handleTouchStart,
 	        onTouchMove:this.handleTouchMove,
-	        onTouchEnd:this.handleTouchEnd}, 
+	        onTouchEnd:this.handleTouchEnd,
+	        onTouchCancel:this.handleTouchEnd}, 
 	        React.DOM.div( {style:style, ref:"content"}, 
 	          GlassContent(null )
 	        )
@@ -2621,7 +2624,8 @@
 	        style:{width: this.props.width, height: this.props.height},
 	        onTouchStart:this.handleTouchStart,
 	        onTouchMove:this.handleTouchMove,
-	        onTouchEnd:this.handleTouchEnd}, 
+	        onTouchEnd:this.handleTouchEnd,
+	        onTouchCancel:this.handleTouchEnd}, 
 	        images
 	      )
 	    );

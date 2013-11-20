@@ -149,6 +149,7 @@ var Layout = React.createClass({
                   onTouchStart={this.handleTouchStart}
                   onTouchMove={this.handleTouchMove}
                   onTouchEnd={this.handleTouchEnd}
+                  onTouchCancel={this.handleTouchEnd}
                 />
                 <Header>React touch demos</Header>
               </div>
@@ -160,7 +161,8 @@ var Layout = React.createClass({
             onTouchTap={this.handleContentTouchTap}
             onTouchStart={this.handleContentTouchStart}
             onTouchMove={this.handleContentTouchMove}
-            onTouchEnd={this.handleContentTouchEnd}>
+            onTouchEnd={this.handleContentTouchEnd}
+            onTouchCancel={this.handleContentTouchEnd}>
             <StaticContainer staticKey={this.props.route}>
               <div>{this.props.children}</div>
             </StaticContainer>

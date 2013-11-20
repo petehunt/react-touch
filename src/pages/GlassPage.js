@@ -102,7 +102,8 @@ var GlassPage = React.createClass({
         content={contentBox}
         onTouchStart={this.handleTouchStart}
         onTouchMove={this.handleTouchMove}
-        onTouchEnd={this.handleTouchEnd}>
+        onTouchEnd={this.handleTouchEnd}
+        onTouchCancel={this.handleTouchEnd}>
         <div style={style} ref="content">
           <GlassContent />
         </div>
