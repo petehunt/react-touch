@@ -21498,7 +21498,7 @@
 /***/ function(module, exports, require) {
 
 	module.exports =
-		".ImageCardContainer {\n   left: 0;\n   position: absolute;\n   top: 0;\n}\n";
+		".ImageCardContainer {\n   backface-visibility: hidden;\n   -webkit-backface-visibility: hidden;\n   -moz-backface-visibility: hidden;\n   left: 0;\n   position: absolute;\n   top: 0;\n}\n";
 
 /***/ },
 
