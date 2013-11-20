@@ -35,7 +35,7 @@ var ImageCard = React.createClass({
   render: function() {
     var imgStyle = {
       backgroundImage: 'url(' + this.props.url + ')',
-      backgroundSize: '100% auto',
+      backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
       height: this.props.height,
