@@ -1,6 +1,7 @@
 var React = require('React');
 var ReactHack = require('ReactHack');
 
+var AnimationLock = require('./environment/AnimationLock');
 var RootPage = require('./pages/RootPage');
 
 // The following code is required to install the TapEventPlugin. We have
@@ -12,6 +13,7 @@ EventPluginHub.injection.injectEventPluginsByName({
   TapEventPlugin: TapEventPlugin
 });
 
+AnimationLock.init();
 React.initializeTouchEvents(true);
 
 ReactHack.start({

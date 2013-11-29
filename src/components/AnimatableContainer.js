@@ -2,6 +2,7 @@
 
 var React = require('React');
 
+var AnimationLock = require('../environment/AnimationLock');
 var StaticContainer = require('../components/StaticContainer');
 var StyleKeys = require('../environment/StyleKeys');
 
@@ -16,39 +17,64 @@ var AnimatableContainer = React.createClass({
     };
   },
 
-  render: function() {
-    var component = this.props.component;
+  componentWillMount: function() {
+    this.wasEverOnGPU = false;
+  },
+
+  componentDidUpdate: function(prevProps) {
+    var style = this.getStyle(this.props);
+    var prevStyle = this.getStyle(prevProps);
+    if (style['opacity'] !== prevStyle.opacity ||
+        style[StyleKeys.TRANSFORM] !== prevStyle[StyleKeys.TRANSFORM]) {
+      AnimationLock.informAnimationFrame();
+    }
+  },
+
+  getStyle: function(props) {
     var style = {};
     var transforms = '';
 
-    if (this.props.opacity !== 1) {
-      style['opacity'] = this.props.opacity;
+    if (props.opacity !== 1) {
+      style['opacity'] = props.opacity;
     }
 
-    if (this.props.translate) {
+    if (props.translate) {
       transforms += (
-        'translate3d(' + this.props.translate.x + 'px, ' +
-        this.props.translate.y + 'px, ' +
-        this.props.translate.z + 'px) '
+        'translate3d(' + (props.translate.x || 0) + 'px, ' +
+        (props.translate.y || 0) + 'px, ' +
+        (props.translate.z || 0) + 'px) '
       );
     }
 
-    if (this.props.rotate) {
+    if (props.rotate) {
       transforms += (
-        'rotate3d(' + this.props.rotate.x + ', ' +
-        this.props.rotate.y + ', ' +
-        this.props.rotate.z + ', ' +
-        this.props.rotate.deg + 'deg)'
+        'rotate3d(' + (props.rotate.x || 0) + ', ' +
+        (props.rotate.y || 0) + ', ' +
+        (props.rotate.z || 0) + ', ' +
+        props.rotate.deg + 'deg)'
       );
     }
 
     if (transforms.length > 0) {
       style[StyleKeys.TRANSFORM] = transforms;
+      this.wasEverOnGPU = true;
+    } else {
+      if (this.wasEverOnGPU) {
+        // on iOS when you go from translate3d to non-translate3d you get
+        // flicker. Let's avoid it
+        style[StyleKeys.TRANSFORM] = 'translate3d(0, 0, 0)';
+      }
     }
 
+    return style;
+  },
+
+  render: function() {
+    var component = this.props.component;
+
     return this.transferPropsTo(
-      <component style={style}>
-        <StaticContainer shouldUpdate={!this.props.animating}>
+      <component style={this.getStyle(this.props)}>
+        <StaticContainer shouldUpdate={AnimationLock.isUnlocked(this)}>
           {this.props.children}
         </StaticContainer>
       </component>

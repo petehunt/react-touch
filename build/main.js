@@ -51,6 +51,7 @@
 	var React = require(4);
 	var ReactHack = require(5);
 
+	var AnimationLock = require(175);
 	var RootPage = require(1);
 
 	// The following code is required to install the TapEventPlugin. We have
@@ -62,6 +63,7 @@
 	  TapEventPlugin: TapEventPlugin
 	});
 
+	AnimationLock.init();
 	React.initializeTouchEvents(true);
 
 	ReactHack.start({
@@ -1606,11 +1608,11 @@
 
 	var React = require(4);
 
+	var AnimatableContainer = require(174);
 	var FastLink = require(33);
 	var Header = require(34);
 	var PreventBrowserSwipe = require(40);
 	var StaticContainer = require(41);
-	var StyleKeys = require(35);
 	var ZyngaScrollerTouchableArea =
 	  require(133);
 
@@ -1679,26 +1681,23 @@
 	  },
 
 	  render: function() {
-	    var style = {};
-	    style[StyleKeys.TRANSFORM] = 'translate3d(' + (SIDEBAR_WIDTH - this.state.scrollLeft) + 'px, 0, 0)';
+	    var sidebarX = (SIDEBAR_WIDTH - this.state.scrollLeft);
 
 	    var nav = null;
 
 	    if (this.isNavOpen()) {
-	      var navStyle = {
-	        opacity: .5 + .5 * (1 - this.state.scrollLeft / SIDEBAR_WIDTH)
-	      };
-	      // Parallax!
-	      navStyle[StyleKeys.TRANSFORM] = 'translate3d(' + (SIDEBAR_WIDTH - .5 * this.state.scrollLeft) + 'px, 0, 0)';
+	      var navOpacity = .5 + .5 * (1 - this.state.scrollLeft / SIDEBAR_WIDTH);
+	      var navX = (SIDEBAR_WIDTH - .5 * this.state.scrollLeft);
 
 	      nav = (
-	        React.DOM.div( {className:"Layout-nav", style:navStyle}, 
-	          StaticContainer(null, 
-	            React.DOM.div(null, 
-	              FastLink( {href:"#home", className:"Layout-navLink", onClick:this.handleNavClick}, "Home"),
-	              FastLink( {href:"#glass", className:"Layout-navLink", onClick:this.handleNavClick}, "Frosted glass"),
-	              FastLink( {href:"#viewer", className:"Layout-lastNavLink", onClick:this.handleNavClick}, "Photo gallery")
-	            )
+	        AnimatableContainer(
+	          {className:"Layout-nav",
+	          translate:{x: navX},
+	          opacity:navOpacity}, 
+	          React.DOM.div(null, 
+	            FastLink( {href:"#home", className:"Layout-navLink", onClick:this.handleNavClick}, "Home"),
+	            FastLink( {href:"#glass", className:"Layout-navLink", onClick:this.handleNavClick}, "Frosted glass"),
+	            FastLink( {href:"#viewer", className:"Layout-lastNavLink", onClick:this.handleNavClick}, "Photo gallery")
 	          )
 	        )
 	      );
@@ -1707,25 +1706,22 @@
 	    return this.transferPropsTo(
 	      PreventBrowserSwipe( {className:"Layout"}, 
 	        React.DOM.div( {className:"Layout-scroller"}, 
-	          React.DOM.div( {className:"Layout-topBar", style:style}, 
-	            StaticContainer(null, 
-	              React.DOM.div(null, 
-	                ZyngaScrollerTouchableArea(
-	                  {className:"Layout-hamburger fa fa-bars",
-	                  onTouchTap:this.handleTap,
-	                  scroller:this.scroller}
-	                ),
-	                Header(null, "React touch demos")
-	              )
+	          AnimatableContainer( {className:"Layout-topBar", translate:{x: sidebarX}}, 
+	            React.DOM.div(null, 
+	              ZyngaScrollerTouchableArea(
+	                {className:"Layout-hamburger fa fa-bars",
+	                onTouchTap:this.handleTap,
+	                scroller:this.scroller}
+	              ),
+	              Header(null, "React touch demos")
 	            )
 	          ),
-	          ZyngaScrollerTouchableArea(
-	            {className:"Layout-content",
-	            style:style,
-	            scroller:this.scroller,
-	            touchable:this.isNavOpen(),
-	            onTouchTap:this.handleContentTouchTap}, 
-	            StaticContainer( {staticKey:this.props.route}, 
+	          AnimatableContainer( {translate:{x: sidebarX}, className:"Layout-contentContainer"}, 
+	            ZyngaScrollerTouchableArea(
+	              {className:"Layout-content",
+	              scroller:this.scroller,
+	              touchable:this.isNavOpen(),
+	              onTouchTap:this.handleContentTouchTap}, 
 	              React.DOM.div(null, this.props.children)
 	            )
 	          ),
@@ -1752,10 +1748,6 @@
 	require(69);
 
 	var HomePage = React.createClass({displayName: 'HomePage',
-	  shouldComponentUpdate: function() {
-	    return false;
-	  },
-
 	  render: function() {
 	    return (
 	      React.DOM.div(null, 
@@ -7816,7 +7808,7 @@
 /***/ function(module, exports, require) {
 
 	module.exports =
-		".Layout {\n  bottom: 0;\n  left: 0;\n  overflow: hidden;\n  position: fixed;\n  right: 0;\n  top: 0;\n}\n\n.Layout-topBar {\n  background: rgb(255, 255, 255);\n  border-bottom: 1px solid black;\n  font-family: sans-serif;\n  left: 0;\n  line-height: 50px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 0;\n  z-index: 2;\n}\n\n.Layout-hamburger {\n  font-size: 25px;\n  left: 0;\n  line-height: 50px;\n  padding: 0 12px;\n  position: absolute;\n}\n\n.Layout-content {\n  bottom: 0;\n  left: 0;\n  overflow: scroll;\n  position: absolute;\n  right: 0;\n  top: 51px;\n  z-index: 2;\n}\n\n.Layout-nav {\n  background: #ccc;\n  border-bottom: rgba(100, 100, 100, 0.3);\n  bottom: 0;\n  left: -192px;\n  padding: 10px;\n  position: absolute;\n  top: 0;\n  width: 192px;\n  z-index: 1;\n}\n\n.Layout-scroller {\n  height: 100%;\n  width: 100%;\n}\n\n.Layout-navLink,\n.Layout-lastNavLink {\n  color: black;\n  display: block;\n  font-family: sans-serif;\n  padding: 10px 0;\n  text-decoration: none;\n}\n\n.Layout-navLink {\n  border-bottom: 1px solid rgba(20, 20, 20, 0.3);\n}";
+		".Layout {\n  bottom: 0;\n  left: 0;\n  overflow: hidden;\n  position: fixed;\n  right: 0;\n  top: 0;\n}\n\n.Layout-topBar {\n  background: rgb(255, 255, 255);\n  border-bottom: 1px solid black;\n  font-family: sans-serif;\n  left: 0;\n  line-height: 50px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 0;\n  z-index: 2;\n}\n\n.Layout-hamburger {\n  font-size: 25px;\n  left: 0;\n  line-height: 50px;\n  padding: 0 12px;\n  position: absolute;\n}\n\n.Layout-contentContainer {\n  bottom: 0;\n  left: 0;\n  position: absolute;\n  right: 0;\n  top: 51px;\n  z-index: 2;\n}\n\n.Layout-content {\n  bottom: 0;\n  left: 0;\n  overflow: scroll;\n  position: absolute;\n  right: 0;\n  top: 0;\n}\n\n.Layout-nav {\n  background: #ccc;\n  border-bottom: rgba(100, 100, 100, 0.3);\n  bottom: 0;\n  left: -192px;\n  padding: 10px;\n  position: absolute;\n  top: 0;\n  width: 192px;\n  z-index: 1;\n}\n\n.Layout-scroller {\n  height: 100%;\n  width: 100%;\n}\n\n.Layout-navLink,\n.Layout-lastNavLink {\n  color: black;\n  display: block;\n  font-family: sans-serif;\n  padding: 10px 0;\n  text-decoration: none;\n}\n\n.Layout-navLink {\n  border-bottom: 1px solid rgba(20, 20, 20, 0.3);\n}";
 
 /***/ },
 
@@ -7960,11 +7952,10 @@
 
 	    return (
 	      AnimatableContainer(
-	        {animating:true,
-	        className:"ImageCardContainer",
+	        {className:"ImageCardContainer",
 	        opacity:EasingFunctions.easeOutCubic(1 - Math.abs(pct)),
-	        rotate:{x: 0, y: yAxis, z: 0, deg: deg},
-	        translate:{x: x, y: 0, z: z}}, 
+	        rotate:{y: yAxis, deg: deg},
+	        translate:{x: x, z: z}}, 
 	        card
 	      )
 	    );
@@ -21625,6 +21616,8 @@
 
 	var React = require(4);
 
+	var AnimationLock = require(175);
+
 	var ZyngaScrollerTouchableArea = React.createClass({displayName: 'ZyngaScrollerTouchableArea',
 	  getDefaultProps: function() {
 	    return {
@@ -21637,6 +21630,8 @@
 	    if (!this.props.scroller || !this.props.touchable) {
 	      return;
 	    }
+
+	    AnimationLock.acquire();
 
 	    this.props.scroller.doTouchStart(e.touches, e.timeStamp);
 	    e.preventDefault();
@@ -21655,6 +21650,8 @@
 	    if (!this.props.scroller || !this.props.touchable) {
 	      return;
 	    }
+
+	    AnimationLock.release();
 
 	    this.props.scroller.doTouchEnd(e.timeStamp);
 	    e.preventDefault();
@@ -25222,6 +25219,7 @@
 
 	var React = require(4);
 
+	var AnimationLock = require(175);
 	var StaticContainer = require(41);
 	var StyleKeys = require(35);
 
@@ -25236,39 +25234,64 @@
 	    };
 	  },
 
-	  render: function() {
-	    var component = this.props.component;
+	  componentWillMount: function() {
+	    this.wasEverOnGPU = false;
+	  },
+
+	  componentDidUpdate: function(prevProps) {
+	    var style = this.getStyle(this.props);
+	    var prevStyle = this.getStyle(prevProps);
+	    if (style['opacity'] !== prevStyle.opacity ||
+	        style[StyleKeys.TRANSFORM] !== prevStyle[StyleKeys.TRANSFORM]) {
+	      AnimationLock.informAnimationFrame();
+	    }
+	  },
+
+	  getStyle: function(props) {
 	    var style = {};
 	    var transforms = '';
 
-	    if (this.props.opacity !== 1) {
-	      style['opacity'] = this.props.opacity;
+	    if (props.opacity !== 1) {
+	      style['opacity'] = props.opacity;
 	    }
 
-	    if (this.props.translate) {
+	    if (props.translate) {
 	      transforms += (
-	        'translate3d(' + this.props.translate.x + 'px, ' +
-	        this.props.translate.y + 'px, ' +
-	        this.props.translate.z + 'px) '
+	        'translate3d(' + (props.translate.x || 0) + 'px, ' +
+	        (props.translate.y || 0) + 'px, ' +
+	        (props.translate.z || 0) + 'px) '
 	      );
 	    }
 
-	    if (this.props.rotate) {
+	    if (props.rotate) {
 	      transforms += (
-	        'rotate3d(' + this.props.rotate.x + ', ' +
-	        this.props.rotate.y + ', ' +
-	        this.props.rotate.z + ', ' +
-	        this.props.rotate.deg + 'deg)'
+	        'rotate3d(' + (props.rotate.x || 0) + ', ' +
+	        (props.rotate.y || 0) + ', ' +
+	        (props.rotate.z || 0) + ', ' +
+	        props.rotate.deg + 'deg)'
 	      );
 	    }
 
 	    if (transforms.length > 0) {
 	      style[StyleKeys.TRANSFORM] = transforms;
+	      this.wasEverOnGPU = true;
+	    } else {
+	      if (this.wasEverOnGPU) {
+	        // on iOS when you go from translate3d to non-translate3d you get
+	        // flicker. Let's avoid it
+	        style[StyleKeys.TRANSFORM] = 'translate3d(0, 0, 0)';
+	      }
 	    }
 
+	    return style;
+	  },
+
+	  render: function() {
+	    var component = this.props.component;
+
 	    return this.transferPropsTo(
-	      component( {style:style}, 
-	        StaticContainer( {shouldUpdate:!this.props.animating}, 
+	      component( {style:this.getStyle(this.props)}, 
+	        StaticContainer( {shouldUpdate:AnimationLock.isUnlocked(this)}, 
 	          this.props.children
 	        )
 	      )
@@ -25277,6 +25300,70 @@
 	});
 
 	module.exports = AnimatableContainer;
+
+/***/ },
+
+/***/ 175:
+/***/ function(module, exports, require) {
+
+	// System-wide animation lock.
+	// You can either explicitly acquire and release the lock (i.e. when touching)
+	// or you can ping it and it'll time out.
+
+	var acquires = 0;
+	var lastAnimated = Date.now();
+	var waitingComponents = null;
+
+	var UNLOCK_TIMEOUT = 200;
+	var POLL_INTERVAL = UNLOCK_TIMEOUT / 2;
+
+	function checkIfUnlocked() {
+	  if (waitingComponents) {
+	    if (AnimationLock.isUnlocked()) {
+	      for (var key in waitingComponents) {
+	        waitingComponents[key].forceUpdate();
+	      }
+	      waitingComponents = null;
+	    }
+	  }
+	}
+
+	var AnimationLock = {
+	  init: function() {
+	    setInterval(checkIfUnlocked, POLL_INTERVAL);
+	  },
+
+	  acquire: function() {
+	    acquires++;
+	  },
+
+	  release: function() {
+	    acquires--;
+	  },
+
+	  informAnimationFrame: function() {
+	    lastAnimated = Date.now();
+	  },
+
+	  isUnlocked: function(component) {
+	    var isLocked = acquires > 0 || (Date.now() - lastAnimated) < UNLOCK_TIMEOUT;
+
+	    if (!isLocked) {
+	      return true;
+	    }
+
+	    if (component) {
+	      if (!waitingComponents) {
+	        waitingComponents = {};
+	      }
+	      waitingComponents[component._rootNodeID] = component;
+	    }
+
+	    return false;
+	  }
+	};
+
+	module.exports = AnimationLock;
 
 /***/ }
 /******/ })

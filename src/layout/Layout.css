@@ -28,14 +28,22 @@
   position: absolute;
 }
 
+.Layout-contentContainer {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 51px;
+  z-index: 2;
+}
+
 .Layout-content {
   bottom: 0;
   left: 0;
   overflow: scroll;
   position: absolute;
   right: 0;
-  top: 51px;
-  z-index: 2;
+  top: 0;
 }
 
 .Layout-nav {

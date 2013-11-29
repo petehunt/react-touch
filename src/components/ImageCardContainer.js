@@ -18,11 +18,10 @@ var ImageCardContainer = React.createClass({
 
     return (
       <AnimatableContainer
-        animating={true}
         className="ImageCardContainer"
         opacity={EasingFunctions.easeOutCubic(1 - Math.abs(pct))}
-        rotate={{x: 0, y: yAxis, z: 0, deg: deg}}
-        translate={{x: x, y: 0, z: z}}>
+        rotate={{y: yAxis, deg: deg}}
+        translate={{x: x, z: z}}>
         {card}
       </AnimatableContainer>
     );

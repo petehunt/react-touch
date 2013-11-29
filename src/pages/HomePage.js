@@ -5,10 +5,6 @@ var React = require('React');
 require('./HomePage.css');
 
 var HomePage = React.createClass({
-  shouldComponentUpdate: function() {
-    return false;
-  },
-
   render: function() {
     return (
       <div>

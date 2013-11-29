@@ -2,6 +2,8 @@
 
 var React = require('React');
 
+var AnimationLock = require('../environment/AnimationLock');
+
 var ZyngaScrollerTouchableArea = React.createClass({
   getDefaultProps: function() {
     return {
@@ -14,6 +16,8 @@ var ZyngaScrollerTouchableArea = React.createClass({
     if (!this.props.scroller || !this.props.touchable) {
       return;
     }
+
+    AnimationLock.acquire();
 
     this.props.scroller.doTouchStart(e.touches, e.timeStamp);
     e.preventDefault();
@@ -32,6 +36,8 @@ var ZyngaScrollerTouchableArea = React.createClass({
     if (!this.props.scroller || !this.props.touchable) {
       return;
     }
+
+    AnimationLock.release();
 
     this.props.scroller.doTouchEnd(e.timeStamp);
     e.preventDefault();

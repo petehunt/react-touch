@@ -2,11 +2,11 @@
 
 var React = require('React');
 
+var AnimatableContainer = require('../components/AnimatableContainer');
 var FastLink = require('../components/FastLink');
 var Header = require('../components/Header');
 var PreventBrowserSwipe = require('../components/PreventBrowserSwipe');
 var StaticContainer = require('../components/StaticContainer');
-var StyleKeys = require('../environment/StyleKeys');
 var ZyngaScrollerTouchableArea =
   require('../components/ZyngaScrollerTouchableArea');
 
@@ -75,56 +75,50 @@ var Layout = React.createClass({
   },
 
   render: function() {
-    var style = {};
-    style[StyleKeys.TRANSFORM] = 'translate3d(' + (SIDEBAR_WIDTH - this.state.scrollLeft) + 'px, 0, 0)';
+    var sidebarX = (SIDEBAR_WIDTH - this.state.scrollLeft);
 
     var nav = null;
 
     if (this.isNavOpen()) {
-      var navStyle = {
-        opacity: .5 + .5 * (1 - this.state.scrollLeft / SIDEBAR_WIDTH)
-      };
-      // Parallax!
-      navStyle[StyleKeys.TRANSFORM] = 'translate3d(' + (SIDEBAR_WIDTH - .5 * this.state.scrollLeft) + 'px, 0, 0)';
+      var navOpacity = .5 + .5 * (1 - this.state.scrollLeft / SIDEBAR_WIDTH);
+      var navX = (SIDEBAR_WIDTH - .5 * this.state.scrollLeft);
 
       nav = (
-        <div className="Layout-nav" style={navStyle}>
-          <StaticContainer>
-            <div>
-              <FastLink href="#home" className="Layout-navLink" onClick={this.handleNavClick}>Home</FastLink>
-              <FastLink href="#glass" className="Layout-navLink" onClick={this.handleNavClick}>Frosted glass</FastLink>
-              <FastLink href="#viewer" className="Layout-lastNavLink" onClick={this.handleNavClick}>Photo gallery</FastLink>
-            </div>
-          </StaticContainer>
-        </div>
+        <AnimatableContainer
+          className="Layout-nav"
+          translate={{x: navX}}
+          opacity={navOpacity}>
+          <div>
+            <FastLink href="#home" className="Layout-navLink" onClick={this.handleNavClick}>Home</FastLink>
+            <FastLink href="#glass" className="Layout-navLink" onClick={this.handleNavClick}>Frosted glass</FastLink>
+            <FastLink href="#viewer" className="Layout-lastNavLink" onClick={this.handleNavClick}>Photo gallery</FastLink>
+          </div>
+        </AnimatableContainer>
       );
     }
 
     return this.transferPropsTo(
       <PreventBrowserSwipe className="Layout">
         <div className="Layout-scroller">
-          <div className="Layout-topBar" style={style}>
-            <StaticContainer>
-              <div>
-                <ZyngaScrollerTouchableArea
-                  className="Layout-hamburger fa fa-bars"
-                  onTouchTap={this.handleTap}
-                  scroller={this.scroller}
-                />
-                <Header>React touch demos</Header>
-              </div>
-            </StaticContainer>
-          </div>
-          <ZyngaScrollerTouchableArea
-            className="Layout-content"
-            style={style}
-            scroller={this.scroller}
-            touchable={this.isNavOpen()}
-            onTouchTap={this.handleContentTouchTap}>
-            <StaticContainer staticKey={this.props.route}>
+          <AnimatableContainer className="Layout-topBar" translate={{x: sidebarX}}>
+            <div>
+              <ZyngaScrollerTouchableArea
+                className="Layout-hamburger fa fa-bars"
+                onTouchTap={this.handleTap}
+                scroller={this.scroller}
+              />
+              <Header>React touch demos</Header>
+            </div>
+          </AnimatableContainer>
+          <AnimatableContainer translate={{x: sidebarX}} className="Layout-contentContainer">
+            <ZyngaScrollerTouchableArea
+              className="Layout-content"
+              scroller={this.scroller}
+              touchable={this.isNavOpen()}
+              onTouchTap={this.handleContentTouchTap}>
               <div>{this.props.children}</div>
-            </StaticContainer>
-          </ZyngaScrollerTouchableArea>
+            </ZyngaScrollerTouchableArea>
+          </AnimatableContainer>
           {nav}
         </div>
       </PreventBrowserSwipe>
