@@ -121,7 +121,7 @@ var Layout = React.createClass({
             scroller={this.scroller}
             touchable={this.isNavOpen()}
             onTouchTap={this.handleContentTouchTap}>
-            <StaticContainer staticKey={this.props.route} key="xyz">
+            <StaticContainer staticKey={this.props.route}>
               <div>{this.props.children}</div>
             </StaticContainer>
           </ZyngaScrollerTouchableArea>

@@ -1725,7 +1725,7 @@
 	            scroller:this.scroller,
 	            touchable:this.isNavOpen(),
 	            onTouchTap:this.handleContentTouchTap}, 
-	            StaticContainer( {staticKey:this.props.route, key:"xyz"}, 
+	            StaticContainer( {staticKey:this.props.route}, 
 	              React.DOM.div(null, this.props.children)
 	            )
 	          ),
