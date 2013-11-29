@@ -28,10 +28,6 @@ var STYLE_CAPTION = {
 };
 
 var ImageCard = React.createClass({
-  shouldComponentUpdate: function() {
-    return false;
-  },
-
   render: function() {
     var imgStyle = {
       backgroundImage: 'url(' + this.props.url + ')',

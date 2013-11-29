@@ -7942,10 +7942,10 @@
 
 	/** @jsx React.DOM */
 
+	var AnimatableContainer = require(174);
 	var EasingFunctions = require(129);
 	var ImageCard = require(130);
 	var React = require(4);
-	var StyleKeys = require(35);
 
 	require(131);
 
@@ -7954,17 +7954,20 @@
 	    var card = this.transferPropsTo(ImageCard(null ));
 	    var pct = (this.props.left - (this.props.index * this.props.width)) / this.props.width;
 	    var x = this.props.index * this.props.width - this.props.left;
-	    var y = 0;
 	    var z = Math.abs(pct * 200) * -1;
 	    var yAxis = this.props.left > this.props.index * this.props.width ? 1 : -1;
 	    var deg = Math.abs(pct * 69);
 
-	    var style = {
-	      opacity: EasingFunctions.easeOutCubic(1 - Math.abs(pct))
-	    };
-
-	    style[StyleKeys.TRANSFORM] = 'translate3d(' + x + 'px, ' + y + 'px, ' + z + 'px) rotate3d(0, ' + yAxis + ', 0, ' + deg + 'deg)';
-	    return React.DOM.div( {style:style, className:"ImageCardContainer"}, card);
+	    return (
+	      AnimatableContainer(
+	        {animating:true,
+	        className:"ImageCardContainer",
+	        opacity:EasingFunctions.easeOutCubic(1 - Math.abs(pct)),
+	        rotate:{x: 0, y: yAxis, z: 0, deg: deg},
+	        translate:{x: x, y: 0, z: z}}, 
+	        card
+	      )
+	    );
 	  }
 	});
 
@@ -21554,10 +21557,6 @@
 	};
 
 	var ImageCard = React.createClass({displayName: 'ImageCard',
-	  shouldComponentUpdate: function() {
-	    return false;
-	  },
-
 	  render: function() {
 	    var imgStyle = {
 	      backgroundImage: 'url(' + this.props.url + ')',
@@ -25213,6 +25212,71 @@
 
 	module.exports = Danger;
 
+
+/***/ },
+
+/***/ 174:
+/***/ function(module, exports, require) {
+
+	/** @jsx React.DOM */
+
+	var React = require(4);
+
+	var StaticContainer = require(41);
+	var StyleKeys = require(35);
+
+	var AnimatableContainer = React.createClass({displayName: 'AnimatableContainer',
+	  getDefaultProps: function() {
+	    return {
+	      animating: false,
+	      component: React.DOM.div,
+	      translate: null,
+	      rotate: null,
+	      opacity: 1
+	    };
+	  },
+
+	  render: function() {
+	    var component = this.props.component;
+	    var style = {};
+	    var transforms = '';
+
+	    if (this.props.opacity !== 1) {
+	      style['opacity'] = this.props.opacity;
+	    }
+
+	    if (this.props.translate) {
+	      transforms += (
+	        'translate3d(' + this.props.translate.x + 'px, ' +
+	        this.props.translate.y + 'px, ' +
+	        this.props.translate.z + 'px) '
+	      );
+	    }
+
+	    if (this.props.rotate) {
+	      transforms += (
+	        'rotate3d(' + this.props.rotate.x + ', ' +
+	        this.props.rotate.y + ', ' +
+	        this.props.rotate.z + ', ' +
+	        this.props.rotate.deg + 'deg)'
+	      );
+	    }
+
+	    if (transforms.length > 0) {
+	      style[StyleKeys.TRANSFORM] = transforms;
+	    }
+
+	    return this.transferPropsTo(
+	      component( {style:style}, 
+	        StaticContainer( {shouldUpdate:!this.props.animating}, 
+	          this.props.children
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = AnimatableContainer;
 
 /***/ }
 /******/ })
