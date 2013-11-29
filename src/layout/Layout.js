@@ -7,6 +7,8 @@ var Header = require('../components/Header');
 var PreventBrowserSwipe = require('../components/PreventBrowserSwipe');
 var StaticContainer = require('../components/StaticContainer');
 var StyleKeys = require('../environment/StyleKeys');
+var ZyngaScrollerTouchableArea =
+  require('../components/ZyngaScrollerTouchableArea');
 
 require('./Layout.css');
 
@@ -39,21 +41,6 @@ var Layout = React.createClass({
 
   handleScroll: function(left, top, zoom) {
     this.setState({scrollLeft: left});
-  },
-
-  handleTouchStart: function(e) {
-    this.scroller.doTouchStart(e.touches, e.timeStamp);
-    e.preventDefault();
-  },
-
-  handleTouchMove: function(e) {
-    this.scroller.doTouchMove(e.touches, e.timeStamp, e.scale);
-    e.preventDefault();
-  },
-
-  handleTouchEnd: function(e) {
-    this.scroller.doTouchEnd(e.timeStamp);
-    e.preventDefault();
   },
 
   handleContentTouchStart: function(e) {
@@ -143,13 +130,10 @@ var Layout = React.createClass({
           <div className="Layout-topBar" style={style}>
             <StaticContainer>
               <div>
-                <div
+                <ZyngaScrollerTouchableArea
                   className="Layout-hamburger fa fa-bars"
                   onTouchTap={this.handleTap}
-                  onTouchStart={this.handleTouchStart}
-                  onTouchMove={this.handleTouchMove}
-                  onTouchEnd={this.handleTouchEnd}
-                  onTouchCancel={this.handleTouchEnd}
+                  scroller={this.scroller}
                 />
                 <Header>React touch demos</Header>
               </div>

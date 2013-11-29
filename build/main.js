@@ -1611,6 +1611,8 @@
 	var PreventBrowserSwipe = require(40);
 	var StaticContainer = require(41);
 	var StyleKeys = require(35);
+	var ZyngaScrollerTouchableArea =
+	  require(133);
 
 	require(65);
 
@@ -1643,21 +1645,6 @@
 
 	  handleScroll: function(left, top, zoom) {
 	    this.setState({scrollLeft: left});
-	  },
-
-	  handleTouchStart: function(e) {
-	    this.scroller.doTouchStart(e.touches, e.timeStamp);
-	    e.preventDefault();
-	  },
-
-	  handleTouchMove: function(e) {
-	    this.scroller.doTouchMove(e.touches, e.timeStamp, e.scale);
-	    e.preventDefault();
-	  },
-
-	  handleTouchEnd: function(e) {
-	    this.scroller.doTouchEnd(e.timeStamp);
-	    e.preventDefault();
 	  },
 
 	  handleContentTouchStart: function(e) {
@@ -1747,13 +1734,10 @@
 	          React.DOM.div( {className:"Layout-topBar", style:style}, 
 	            StaticContainer(null, 
 	              React.DOM.div(null, 
-	                React.DOM.div(
+	                ZyngaScrollerTouchableArea(
 	                  {className:"Layout-hamburger fa fa-bars",
 	                  onTouchTap:this.handleTap,
-	                  onTouchStart:this.handleTouchStart,
-	                  onTouchMove:this.handleTouchMove,
-	                  onTouchEnd:this.handleTouchEnd,
-	                  onTouchCancel:this.handleTouchEnd}
+	                  scroller:this.scroller}
 	                ),
 	                Header(null, "React touch demos")
 	              )
