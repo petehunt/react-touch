@@ -2982,6 +2982,9 @@
 	var ImageCardContainer = require(78);
 	var React = require(4);
 
+	var ZyngaScrollerTouchableArea =
+	  require(133);
+
 	require(79);
 
 	var Viewer = React.createClass({displayName: 'Viewer',
@@ -3009,21 +3012,6 @@
 	    this.setState({left: left});
 	  },
 
-	  handleTouchStart: function(e) {
-	    this.scroller.doTouchStart(e.touches, e.timeStamp);
-	    e.preventDefault();
-	  },
-
-	  handleTouchMove: function(e) {
-	    this.scroller.doTouchMove(e.touches, e.timeStamp, e.scale);
-	    e.preventDefault();
-	  },
-
-	  handleTouchEnd: function(e) {
-	    this.scroller.doTouchEnd(e.timeStamp);
-	    e.preventDefault();
-	  },
-
 	  render: function() {
 	    var images = this.props.images.urls.map(function(url, i) {
 	      if (this.state.left < (i - 1) * this.props.width || this.state.left > (i + 1) * this.props.width) {
@@ -3045,13 +3033,10 @@
 	    }, this);
 
 	    return (
-	      React.DOM.div(
+	      ZyngaScrollerTouchableArea(
 	        {className:"Viewer",
 	        style:{width: this.props.width, height: this.props.height},
-	        onTouchStart:this.handleTouchStart,
-	        onTouchMove:this.handleTouchMove,
-	        onTouchEnd:this.handleTouchEnd,
-	        onTouchCancel:this.handleTouchEnd}, 
+	        scroller:this.scroller}, 
 	        images
 	      )
 	    );

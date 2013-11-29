@@ -4,6 +4,9 @@
 var ImageCardContainer = require('./ImageCardContainer');
 var React = require('React');
 
+var ZyngaScrollerTouchableArea =
+  require('../components/ZyngaScrollerTouchableArea');
+
 require('./Viewer.css');
 
 var Viewer = React.createClass({
@@ -31,21 +34,6 @@ var Viewer = React.createClass({
     this.setState({left: left});
   },
 
-  handleTouchStart: function(e) {
-    this.scroller.doTouchStart(e.touches, e.timeStamp);
-    e.preventDefault();
-  },
-
-  handleTouchMove: function(e) {
-    this.scroller.doTouchMove(e.touches, e.timeStamp, e.scale);
-    e.preventDefault();
-  },
-
-  handleTouchEnd: function(e) {
-    this.scroller.doTouchEnd(e.timeStamp);
-    e.preventDefault();
-  },
-
   render: function() {
     var images = this.props.images.urls.map(function(url, i) {
       if (this.state.left < (i - 1) * this.props.width || this.state.left > (i + 1) * this.props.width) {
@@ -67,15 +55,12 @@ var Viewer = React.createClass({
     }, this);
 
     return (
-      <div
+      <ZyngaScrollerTouchableArea
         className="Viewer"
         style={{width: this.props.width, height: this.props.height}}
-        onTouchStart={this.handleTouchStart}
-        onTouchMove={this.handleTouchMove}
-        onTouchEnd={this.handleTouchEnd}
-        onTouchCancel={this.handleTouchEnd}>
+        scroller={this.scroller}>
         {images}
-      </div>
+      </ZyngaScrollerTouchableArea>
     );
   }
 });
