@@ -66,9 +66,7 @@ var GlassContainer = React.createClass({
         width={this.props.content.width}
         height={this.props.content.height}
         style={this.props.content.style}
-        onTouchStart={this.props.onTouchStart}
-        onTouchMove={this.props.onTouchMove}
-        onTouchEnd={this.props.onTouchEnd}
+        scroller={this.props.scroller}
       />
     ];
 

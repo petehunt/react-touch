@@ -52,21 +52,6 @@ var GlassPage = React.createClass({
     this.setState({scrollTop: top});
   },
 
-  handleTouchStart: function(e) {
-    this.scroller.doTouchStart(e.touches, e.timeStamp);
-    e.preventDefault();
-  },
-
-  handleTouchMove: function(e) {
-    this.scroller.doTouchMove(e.touches, e.timeStamp, e.scale);
-    e.preventDefault();
-  },
-
-  handleTouchEnd: function(e) {
-    this.scroller.doTouchEnd(e.timeStamp);
-    e.preventDefault();
-  },
-
   render: function() {
     var style = {};
     style[StyleKeys.TRANSFORM] = 'translate3d(0, ' + (-this.state.scrollTop) + 'px, 0)';
@@ -100,10 +85,7 @@ var GlassPage = React.createClass({
         style={{height: maxHeight}}
         overlays={overlays}
         content={contentBox}
-        onTouchStart={this.handleTouchStart}
-        onTouchMove={this.handleTouchMove}
-        onTouchEnd={this.handleTouchEnd}
-        onTouchCancel={this.handleTouchEnd}>
+        scroller={this.scroller}>
         <div style={style} ref="content">
           <GlassContent />
         </div>
