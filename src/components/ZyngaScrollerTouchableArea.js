@@ -5,12 +5,13 @@ var React = require('React');
 var ZyngaScrollerTouchableArea = React.createClass({
   getDefaultProps: function() {
     return {
-      component: React.DOM.div
+      component: React.DOM.div,
+      touchable: true
     };
   },
 
   handleTouchStart: function(e) {
-    if (!this.props.scroller) {
+    if (!this.props.scroller || !this.props.touchable) {
       return;
     }
 
@@ -19,7 +20,7 @@ var ZyngaScrollerTouchableArea = React.createClass({
   },
 
   handleTouchMove: function(e) {
-    if (!this.props.scroller) {
+    if (!this.props.scroller || !this.props.touchable) {
       return;
     }
 
@@ -28,7 +29,7 @@ var ZyngaScrollerTouchableArea = React.createClass({
   },
 
   handleTouchEnd: function(e) {
-    if (!this.props.scroller) {
+    if (!this.props.scroller || !this.props.touchable) {
       return;
     }
 

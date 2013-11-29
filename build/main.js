@@ -1647,30 +1647,6 @@
 	    this.setState({scrollLeft: left});
 	  },
 
-	  handleContentTouchStart: function(e) {
-	    if (!this.isNavOpen()) {
-	      return;
-	    }
-	    this.scroller.doTouchStart(e.touches, e.timeStamp);
-	    e.preventDefault();
-	  },
-
-	  handleContentTouchMove: function(e) {
-	    if (!this.isNavOpen()) {
-	      return;
-	    }
-	    this.scroller.doTouchMove(e.touches, e.timeStamp, e.scale);
-	    e.preventDefault();
-	  },
-
-	  handleContentTouchEnd: function(e) {
-	    if (!this.isNavOpen()) {
-	      return;
-	    }
-	    this.scroller.doTouchEnd(e.timeStamp);
-	    e.preventDefault();
-	  },
-
 	  getInitialState: function() {
 	    return {scrollLeft: 0};
 	  },
@@ -1743,15 +1719,13 @@
 	              )
 	            )
 	          ),
-	          React.DOM.div(
+	          ZyngaScrollerTouchableArea(
 	            {className:"Layout-content",
 	            style:style,
-	            onTouchTap:this.handleContentTouchTap,
-	            onTouchStart:this.handleContentTouchStart,
-	            onTouchMove:this.handleContentTouchMove,
-	            onTouchEnd:this.handleContentTouchEnd,
-	            onTouchCancel:this.handleContentTouchEnd}, 
-	            StaticContainer( {staticKey:this.props.route}, 
+	            scroller:this.scroller,
+	            touchable:this.isNavOpen(),
+	            onTouchTap:this.handleContentTouchTap}, 
+	            StaticContainer( {staticKey:this.props.route, key:"xyz"}, 
 	              React.DOM.div(null, this.props.children)
 	            )
 	          ),
@@ -21655,12 +21629,13 @@
 	var ZyngaScrollerTouchableArea = React.createClass({displayName: 'ZyngaScrollerTouchableArea',
 	  getDefaultProps: function() {
 	    return {
-	      component: React.DOM.div
+	      component: React.DOM.div,
+	      touchable: true
 	    };
 	  },
 
 	  handleTouchStart: function(e) {
-	    if (!this.props.scroller) {
+	    if (!this.props.scroller || !this.props.touchable) {
 	      return;
 	    }
 
@@ -21669,7 +21644,7 @@
 	  },
 
 	  handleTouchMove: function(e) {
-	    if (!this.props.scroller) {
+	    if (!this.props.scroller || !this.props.touchable) {
 	      return;
 	    }
 
@@ -21678,7 +21653,7 @@
 	  },
 
 	  handleTouchEnd: function(e) {
-	    if (!this.props.scroller) {
+	    if (!this.props.scroller || !this.props.touchable) {
 	      return;
 	    }
 

@@ -43,30 +43,6 @@ var Layout = React.createClass({
     this.setState({scrollLeft: left});
   },
 
-  handleContentTouchStart: function(e) {
-    if (!this.isNavOpen()) {
-      return;
-    }
-    this.scroller.doTouchStart(e.touches, e.timeStamp);
-    e.preventDefault();
-  },
-
-  handleContentTouchMove: function(e) {
-    if (!this.isNavOpen()) {
-      return;
-    }
-    this.scroller.doTouchMove(e.touches, e.timeStamp, e.scale);
-    e.preventDefault();
-  },
-
-  handleContentTouchEnd: function(e) {
-    if (!this.isNavOpen()) {
-      return;
-    }
-    this.scroller.doTouchEnd(e.timeStamp);
-    e.preventDefault();
-  },
-
   getInitialState: function() {
     return {scrollLeft: 0};
   },
@@ -139,18 +115,16 @@ var Layout = React.createClass({
               </div>
             </StaticContainer>
           </div>
-          <div
+          <ZyngaScrollerTouchableArea
             className="Layout-content"
             style={style}
-            onTouchTap={this.handleContentTouchTap}
-            onTouchStart={this.handleContentTouchStart}
-            onTouchMove={this.handleContentTouchMove}
-            onTouchEnd={this.handleContentTouchEnd}
-            onTouchCancel={this.handleContentTouchEnd}>
-            <StaticContainer staticKey={this.props.route}>
+            scroller={this.scroller}
+            touchable={this.isNavOpen()}
+            onTouchTap={this.handleContentTouchTap}>
+            <StaticContainer staticKey={this.props.route} key="xyz">
               <div>{this.props.children}</div>
             </StaticContainer>
-          </div>
+          </ZyngaScrollerTouchableArea>
           {nav}
         </div>
       </PreventBrowserSwipe>
