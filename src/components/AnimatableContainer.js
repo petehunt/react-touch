@@ -12,6 +12,7 @@ var AnimatableContainer = React.createClass({
     return {
       blockUpdates: true,
       component: React.DOM.div,
+      contentComponent: React.DOM.div,
       opacity: 1,
       rotate: null,
       timeout: 200,
@@ -102,11 +103,14 @@ var AnimatableContainer = React.createClass({
 
   render: function() {
     var component = this.props.component;
+    var contentComponent = this.props.contentComponent;
 
     return this.transferPropsTo(
       <component style={this.getStyle(this.props)}>
         <StaticContainer shouldUpdate={!this.props.blockUpdates || !this.isAnimating}>
-          {this.props.children}
+          <contentComponent>
+            {this.props.children}
+          </contentComponent>
         </StaticContainer>
       </component>
     );

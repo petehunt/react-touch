@@ -101,15 +101,13 @@ var Layout = React.createClass({
       <App className="Layout">
         <div className="Layout-scroller">
           <AnimatableContainer className="Layout-topBar" translate={{x: sidebarX}}>
-            <div>
-              <ZyngaScrollerTouchableArea
-                className="Layout-hamburger fa fa-bars"
-                onTouchTap={this.handleTap}
-                scroller={this.scroller}>
-                {'='}
-              </ZyngaScrollerTouchableArea>
-              <Header>React touch demos</Header>
-            </div>
+            <ZyngaScrollerTouchableArea
+              className="Layout-hamburger fa fa-bars"
+              onTouchTap={this.handleTap}
+              scroller={this.scroller}>
+              {'='}
+            </ZyngaScrollerTouchableArea>
+            <Header>React touch demos</Header>
           </AnimatableContainer>
           <AnimatableContainer translate={{x: sidebarX}} className="Layout-contentContainer">
             <ZyngaScrollerTouchableArea
@@ -117,7 +115,7 @@ var Layout = React.createClass({
               scroller={this.scroller}
               touchable={this.isNavOpen()}
               onTouchTap={this.handleContentTouchTap}>
-              <div>{this.props.children}</div>
+              {this.props.children}
             </ZyngaScrollerTouchableArea>
           </AnimatableContainer>
           {nav}

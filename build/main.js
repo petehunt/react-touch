@@ -934,15 +934,13 @@
 	      App( {className:"Layout"}, 
 	        React.DOM.div( {className:"Layout-scroller"}, 
 	          AnimatableContainer( {className:"Layout-topBar", translate:{x: sidebarX}}, 
-	            React.DOM.div(null, 
-	              ZyngaScrollerTouchableArea(
-	                {className:"Layout-hamburger fa fa-bars",
-	                onTouchTap:this.handleTap,
-	                scroller:this.scroller}, 
-	                '='
-	              ),
-	              Header(null, "React touch demos")
-	            )
+	            ZyngaScrollerTouchableArea(
+	              {className:"Layout-hamburger fa fa-bars",
+	              onTouchTap:this.handleTap,
+	              scroller:this.scroller}, 
+	              '='
+	            ),
+	            Header(null, "React touch demos")
 	          ),
 	          AnimatableContainer( {translate:{x: sidebarX}, className:"Layout-contentContainer"}, 
 	            ZyngaScrollerTouchableArea(
@@ -950,7 +948,7 @@
 	              scroller:this.scroller,
 	              touchable:this.isNavOpen(),
 	              onTouchTap:this.handleContentTouchTap}, 
-	              React.DOM.div(null, this.props.children)
+	              this.props.children
 	            )
 	          ),
 	          nav
@@ -2846,6 +2844,7 @@
 	    return {
 	      blockUpdates: true,
 	      component: React.DOM.div,
+	      contentComponent: React.DOM.div,
 	      opacity: 1,
 	      rotate: null,
 	      timeout: 200,
@@ -2936,11 +2935,14 @@
 
 	  render: function() {
 	    var component = this.props.component;
+	    var contentComponent = this.props.contentComponent;
 
 	    return this.transferPropsTo(
 	      component( {style:this.getStyle(this.props)}, 
 	        StaticContainer( {shouldUpdate:!this.props.blockUpdates || !this.isAnimating}, 
-	          this.props.children
+	          contentComponent(null, 
+	            this.props.children
+	          )
 	        )
 	      )
 	    );
