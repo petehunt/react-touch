@@ -1,6 +1,10 @@
 var React = require('React');
 var ReactHack = require('ReactHack');
 
+var FPSCounter = require('./framework/environment/FPSCounter');
+
+FPSCounter.start();
+
 var RootPage = require('./pages/RootPage');
 
 // The following code is required to install the TapEventPlugin. We have
