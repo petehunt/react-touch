@@ -51,10 +51,6 @@
 	var React = require(5);
 	var ReactHack = require(6);
 
-	var FPSCounter = require(179);
-
-	FPSCounter.start();
-
 	var RootPage = require(1);
 
 	// The following code is required to install the TapEventPlugin. We have
@@ -840,58 +836,128 @@
 	var React = require(5);
 
 	var App = require(48);
+	var AnimatableContainer = require(33);
 	var FastLink = require(34);
 	var Header = require(35);
-	var LeftNavContainer = require(176);
+	var TouchableArea =
+	  require(49);
 
 	require(68);
 
 	// Keep in sync with Layout.css
 	// TODO: deprecate the CSS standard
 	var SIDEBAR_WIDTH = 192;
-	var TOPBAR_HEIGHT = 51; // + 1 for the border
+	var TOPBAR_HEIGHT = 50 + 1; // + 1 for the border
 
 	var Layout = React.createClass({displayName: 'Layout',
+	  componentWillMount: function() {
+	    this.scroller = new Scroller(this.handleScroll, {
+	      bouncing: false,
+	      scrollingX: true,
+	      scrollingY: false,
+	      snapping: true
+	    });
+	  },
+
+	  componentDidMount: function() {
+	    var node = this.getDOMNode();
+	    this.scroller.setDimensions(
+	      node.clientWidth,
+	      node.clientHeight,
+	      node.clientWidth + SIDEBAR_WIDTH,
+	      node.clientHeight
+	    );
+	    this.scroller.setSnapSize(SIDEBAR_WIDTH, node.clientHeight);
+	    this.scroller.scrollTo(SIDEBAR_WIDTH, 0);
+	  },
+
+	  handleScroll: function(left, top, zoom) {
+	    this.setState({scrollLeft: left});
+	  },
+
+	  getInitialState: function() {
+	    return {scrollLeft: 0};
+	  },
+
+	  handleTap: function() {
+	    if (this.isNavOpen()) {
+	      this.scroller.scrollTo(SIDEBAR_WIDTH, 0, true);
+	    } else {
+	      this.scroller.scrollTo(0, 0, true);
+	    }
+	  },
+
 	  handleNavClick: function() {
-	    this.refs['leftNavContainer'].closeNav();
+	    if (this.isNavOpen()) {
+	      this.scroller.scrollTo(SIDEBAR_WIDTH, 0, true);
+	    }
+	  },
+
+	  handleContentTouchTap: function(e) {
+	    if (!this.isNavOpen()) {
+	      return;
+	    }
+
+	    this.scroller.scrollTo(SIDEBAR_WIDTH, 0, true);
+	    e.preventDefault();
+	  },
+
+	  isNavOpen: function() {
+	    return this.state.scrollLeft !== SIDEBAR_WIDTH;
 	  },
 
 	  render: function() {
-	    var button = (
-	      React.DOM.div( {className:"Layout-hamburger fa fa-bars"}, '=')
-	    );
+	    var sidebarX = (SIDEBAR_WIDTH - this.state.scrollLeft);
 
-	    var topContent = (
-	      Header( {className:"Layout-topBar"}, "React touch demos")
-	    );
+	    var nav = null;
 
-	    var sideContent = (
-	      React.DOM.div( {className:"Layout-nav"}, 
-	        FastLink( {href:"#home", className:"Layout-navLink", onClick:this.handleNavClick}, "Home"),
-	        FastLink( {href:"#glass", className:"Layout-navLink", onClick:this.handleNavClick}, "Frosted glass"),
-	        FastLink( {href:"#viewer", className:"Layout-lastNavLink", onClick:this.handleNavClick}, "Photo gallery")
-	      )
-	    );
+	    if (this.isNavOpen()) {
+	      var navOpacity = .5 + .5 * (1 - this.state.scrollLeft / SIDEBAR_WIDTH);
+	      var navX = (SIDEBAR_WIDTH - .5 * this.state.scrollLeft);
+
+	      nav = (
+	        AnimatableContainer(
+	          {className:"Layout-nav",
+	          translate:{x: navX},
+	          opacity:navOpacity}, 
+	          React.DOM.div(null, 
+	            FastLink( {href:"#home", className:"Layout-navLink", onClick:this.handleNavClick}, "Home"),
+	            FastLink( {href:"#glass", className:"Layout-navLink", onClick:this.handleNavClick}, "Frosted glass"),
+	            FastLink( {href:"#viewer", className:"Layout-lastNavLink", onClick:this.handleNavClick}, "Photo gallery")
+	          )
+	        )
+	      );
+	    }
 
 	    return this.transferPropsTo(
-	      App(null, 
-	        LeftNavContainer(
-	          {ref:"leftNavContainer",
-	          button:button,
-	          topContent:topContent,
-	          sideContent:sideContent,
-	          topHeight:TOPBAR_HEIGHT,
-	          sideWidth:SIDEBAR_WIDTH}, 
-	          React.DOM.div( {className:"Layout-content"}, 
-	            this.props.children
-	          )
+	      App( {className:"Layout"}, 
+	        React.DOM.div( {className:"Layout-scroller"}, 
+	          AnimatableContainer( {className:"Layout-topBar", translate:{x: sidebarX}}, 
+	            TouchableArea(
+	              {className:"Layout-hamburger fa fa-bars",
+	              onTouchTap:this.handleTap,
+	              scroller:this.scroller}, 
+	              '='
+	            ),
+	            Header(null, "React touch demos")
+	          ),
+	          AnimatableContainer( {translate:{x: sidebarX}, className:"Layout-contentContainer"}, 
+	            TouchableArea(
+	              {className:"Layout-content",
+	              scroller:this.scroller,
+	              touchable:this.isNavOpen(),
+	              onTouchTap:this.handleContentTouchTap}, 
+	              this.props.children
+	            )
+	          ),
+	          nav
 	        )
 	      )
 	    );
 	  }
 	});
 
-	Layout.TOPBAR_HEIGHT = TOPBAR_HEIGHT; // account for border
+	Layout.TOPBAR_HEIGHT = TOPBAR_HEIGHT;
 
 	module.exports = Layout;
 
@@ -3762,7 +3828,6 @@
 	var STYLE = {
 	  bottom: 0,
 	  left: 0,
-	  overflow: 'hidden',
 	  position: 'fixed',
 	  right: 0,
 	  top: 0
@@ -8260,7 +8325,7 @@
 /***/ function(module, exports, require) {
 
 	module.exports =
-		".Layout-topBar {\n  background: rgb(255, 255, 255);\n  border-bottom: 1px solid black;\n  font-family: sans-serif;\n  line-height: 50px;\n  text-align: center;\n}\n\n.Layout-hamburger {\n  font-size: 25px;\n  left: 0;\n  line-height: 50px;\n  padding: 0 12px;\n  position: absolute;\n}\n\n.Layout-content {\n  height: 100%;\n}\n\n.Layout-nav {\n  background: #ccc;\n  border-bottom: rgba(100, 100, 100, 0.3);\n  height: 100%;\n  padding: 10px;\n}\n\n.Layout-navLink,\n.Layout-lastNavLink {\n  color: black;\n  display: block;\n  font-family: sans-serif;\n  padding: 10px 0;\n  text-decoration: none;\n}\n\n.Layout-navLink {\n  border-bottom: 1px solid rgba(20, 20, 20, 0.3);\n}";
+		".Layout {\n  bottom: 0;\n  left: 0;\n  overflow: hidden;\n  position: fixed;\n  right: 0;\n  top: 0;\n}\n\n.Layout-topBar {\n  background: rgb(255, 255, 255);\n  border-bottom: 1px solid black;\n  font-family: sans-serif;\n  left: 0;\n  line-height: 50px;\n  position: absolute;\n  right: 0;\n  text-align: center;\n  top: 0;\n  z-index: 2;\n}\n\n.Layout-hamburger {\n  font-size: 25px;\n  left: 0;\n  line-height: 50px;\n  padding: 0 12px;\n  position: absolute;\n}\n\n.Layout-contentContainer {\n  bottom: 0;\n  left: 0;\n  position: absolute;\n  right: 0;\n  top: 51px;\n  z-index: 2;\n}\n\n.Layout-content {\n  bottom: 0;\n  left: 0;\n  overflow: scroll;\n  position: absolute;\n  right: 0;\n  top: 0;\n}\n\n.Layout-nav {\n  background: #ccc;\n  border-bottom: rgba(100, 100, 100, 0.3);\n  bottom: 0;\n  left: -192px;\n  padding: 10px;\n  position: absolute;\n  top: 0;\n  width: 192px;\n  z-index: 1;\n}\n\n.Layout-scroller {\n  height: 100%;\n  width: 100%;\n}\n\n.Layout-navLink,\n.Layout-lastNavLink {\n  color: black;\n  display: block;\n  font-family: sans-serif;\n  padding: 10px 0;\n  text-decoration: none;\n}\n\n.Layout-navLink {\n  border-bottom: 1px solid rgba(20, 20, 20, 0.3);\n}";
 
 /***/ },
 
@@ -25595,273 +25660,6 @@
 
 	module.exports = getMarkupWrap;
 
-
-/***/ },
-
-/***/ 176:
-/***/ function(module, exports, require) {
-
-	/** @jsx React.DOM */
-
-	var React = require(5);
-
-	var AnimatableContainer = require(33);
-	var LeftNavBehaviors = require(177);
-	var TouchableArea = require(49);
-	var ZyngaScroller = require(178);
-
-	var LeftNavContainer = React.createClass({displayName: 'LeftNavContainer',
-	  componentWillMount: function() {
-	    this.scroller = new Scroller(this._handleScroll, {
-	      bouncing: false,
-	      scrollingX: true,
-	      scrollingY: false,
-	      snapping: true
-	    });
-	  },
-
-	  componentDidMount: function() {
-	    this._measure();
-	  },
-
-	  _measure: function() {
-	    var node = this.getDOMNode();
-	    this.scroller.setDimensions(
-	      node.clientWidth,
-	      node.clientHeight,
-	      node.clientWidth + this.props.sideWidth,
-	      node.clientHeight
-	    );
-	    this.scroller.setSnapSize(this.props.sideWidth, node.clientHeight);
-	    this.scroller.scrollTo(this.props.sideWidth, 0);
-	  },
-
-	  componentDidUpdate: function(prevProps) {
-	    if (this.props.sideWidth !== prevProps.sideWidth) {
-	      this._measure();
-	    }
-	  },
-
-	  closeNav: function() {
-	    if (this.isNavOpen()) {
-	      this.scroller.scrollTo(this.props.sideWidth, 0, true);
-	    }
-	  },
-
-	  _handleScroll: function(left, top, zoom) {
-	    this.setState({scrollLeft: left});
-	  },
-
-	  getInitialState: function() {
-	    return {scrollLeft: 0};
-	  },
-
-	  getDefaultProps: function() {
-	    return {
-	      behavior: LeftNavBehaviors.PARALLAX_FADE
-	    };
-	  },
-
-	  _handleTap: function() {
-	    if (this.isNavOpen()) {
-	      this.scroller.scrollTo(this.props.sideWidth, 0, true);
-	    } else {
-	      this.scroller.scrollTo(0, 0, true);
-	    }
-	  },
-
-	  _handleContentTouchTap: function(e) {
-	    if (!this.isNavOpen()) {
-	      return;
-	    }
-
-	    this.scroller.scrollTo(this.props.sideWidth, 0, true);
-	    e.preventDefault();
-	  },
-
-	  isNavOpen: function() {
-	    return this.state.scrollLeft !== this.props.sideWidth;
-	  },
-
-	  render: function() {
-	    // props:
-	    // sideWidth
-	    // topHeight
-	    // topContent
-	    // button
-	    // sideContent
-	    // children (big content area)
-	    var sidebarX = (this.props.sideWidth - this.state.scrollLeft);
-
-	    var side = null;
-
-	    // TODO: we could do this with style calc
-	    var sideStyle = {
-	      bottom: 0,
-	      left: this.props.sideWidth * -1,
-	      position: 'absolute',
-	      top: 0,
-	      width: this.props.sideWidth
-	    };
-
-	    var behavior = this.props.behavior;
-
-	    if (this.isNavOpen()) {
-	      side = (
-	        AnimatableContainer(
-	          {style:sideStyle,
-	          translate:behavior.side.translate(this.props.sideWidth, this.state.scrollLeft),
-	          rotate:behavior.side.rotate(this.props.sideWidth, this.state.scrollLeft),
-	          opacity:behavior.side.opacity(this.props.sideWidth, this.state.scrollLeft)}, 
-	          this.props.sideContent
-	        )
-	      );
-	    }
-
-	    var contentTouchableAreaStyle = {
-	      bottom: 0,
-	      left: 0,
-	      position: 'absolute',
-	      right: 0,
-	      top: 0
-	    };
-
-	    var topStyle = {
-	      height: this.props.topHeight,
-	      left: 0,
-	      position: 'absolute',
-	      right: 0,
-	      top: 0
-	    };
-
-	    var contentStyle = {
-	      bottom: 0,
-	      left: 0,
-	      position: 'absolute',
-	      right: 0,
-	      top: this.props.topHeight
-	    };
-
-	    return this.transferPropsTo(
-	      React.DOM.div(null, 
-	        side,
-	        AnimatableContainer(
-	          {style:topStyle,
-	          translate:behavior.top.translate(this.props.sideWidth, this.state.scrollLeft),
-	          rotate:behavior.top.rotate(this.props.sideWidth, this.state.scrollLeft),
-	          opacity:behavior.top.opacity(this.props.sideWidth, this.state.scrollLeft)}, 
-	          TouchableArea(
-	            {onTouchTap:this._handleTap,
-	            scroller:this.scroller}, 
-	            this.props.button
-	          ),
-	          this.props.topContent
-	        ),
-	        AnimatableContainer(
-	          {style:contentStyle,
-	          translate:behavior.content.translate(this.props.sideWidth, this.state.scrollLeft),
-	          rotate:behavior.content.rotate(this.props.sideWidth, this.state.scrollLeft),
-	          opacity:behavior.content.opacity(this.props.sideWidth, this.state.scrollLeft)}, 
-	          TouchableArea(
-	            {style:contentTouchableAreaStyle,
-	            scroller:this.scroller,
-	            touchable:this.isNavOpen(),
-	            onTouchTap:this._handleContentTouchTap}, 
-	            this.props.children
-	          )
-	        )
-	      )
-	    );
-	  }
-	});
-
-	module.exports = LeftNavContainer;
-
-/***/ },
-
-/***/ 177:
-/***/ function(module, exports, require) {
-
-	var LeftNavBehaviors = {
-	  PARALLAX_FADE: {
-	    side: {
-	      translate: function(sideWidth, scrollLeft) {
-	        return {
-	          x: sideWidth - .5 * scrollLeft
-	        };
-	      },
-	      rotate: function() {
-	        return null;
-	      },
-	      opacity: function(sideWidth, scrollLeft) {
-	        return .5 + .5 * (1 - scrollLeft / sideWidth);
-	      }
-	    },
-	    top: {
-	      translate: function(sideWidth, scrollLeft) {
-	        return {x: sideWidth - scrollLeft};
-	      },
-	      rotate: function() {
-	        return null;
-	      },
-	      opacity: function() {
-	        return null;
-	      }
-	    },
-	    content: {
-	      translate: function(sideWidth, scrollLeft) {
-	        return {x: sideWidth - scrollLeft};
-	      },
-	      rotate: function() {
-	        return null;
-	      },
-	      opacity: function() {
-	        return null;
-	      }
-	    }
-	  }
-	};
-
-	module.exports = LeftNavBehaviors;
-
-/***/ },
-
-/***/ 178:
-/***/ function(module, exports, require) {
-
-	var ZyngaScroller = window.Scroller;
-
-	module.exports = ZyngaScroller;
-
-/***/ },
-
-/***/ 179:
-/***/ function(module, exports, require) {
-
-	var rAF = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
-
-	var FPSCounter = {
-	  start: function() {
-	    var stats = new Stats();
-	    stats.setMode(0); // 0: fps, 1: ms
-
-	    // Align top-left
-	    stats.domElement.style.position = 'absolute';
-	    stats.domElement.style.right = '0px';
-	    stats.domElement.style.bottom = '0px';
-
-	    document.body.appendChild(stats.domElement);
-
-	    function tick() {
-	      stats.update();
-	      rAF(tick);
-	    }
-
-	    tick();
-	  }
-	};
-
-	module.exports = FPSCounter;
 
 /***/ }
 /******/ })
