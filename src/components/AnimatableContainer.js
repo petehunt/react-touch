@@ -2,32 +2,32 @@
 
 var React = require('React');
 
-var AnimationLock = require('../environment/AnimationLock');
 var StaticContainer = require('../components/StaticContainer');
 var StyleKeys = require('../environment/StyleKeys');
 
 var AnimatableContainer = React.createClass({
   getDefaultProps: function() {
     return {
-      animating: false,
+      blockUpdates: true,
       component: React.DOM.div,
-      translate: null,
+      opacity: 1,
       rotate: null,
-      opacity: 1
+      translate: null
     };
   },
 
   componentWillMount: function() {
     this.wasEverOnGPU = false;
+    this.isAnimating = false;
   },
 
-  componentDidUpdate: function(prevProps) {
-    var style = this.getStyle(this.props);
-    var prevStyle = this.getStyle(prevProps);
-    if (style['opacity'] !== prevStyle.opacity ||
-        style[StyleKeys.TRANSFORM] !== prevStyle[StyleKeys.TRANSFORM]) {
-      AnimationLock.informAnimationFrame();
-    }
+  componentWillReceiveProps: function(nextProps) {
+    var prevStyle = this.getStyle(this.props);
+    var style = this.getStyle(nextProps);
+    this.isAnimating = (
+      style['opacity'] !== prevStyle.opacity ||
+      style[StyleKeys.TRANSFORM] !== prevStyle[StyleKeys.TRANSFORM]
+    );
   },
 
   getStyle: function(props) {
@@ -74,7 +74,7 @@ var AnimatableContainer = React.createClass({
 
     return this.transferPropsTo(
       <component style={this.getStyle(this.props)}>
-        <StaticContainer shouldUpdate={AnimationLock.isUnlocked(this)}>
+        <StaticContainer shouldUpdate={!this.props.blockUpdates || !this.isAnimating}>
           {this.props.children}
         </StaticContainer>
       </component>

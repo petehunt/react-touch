@@ -105,8 +105,9 @@ var Layout = React.createClass({
               <ZyngaScrollerTouchableArea
                 className="Layout-hamburger fa fa-bars"
                 onTouchTap={this.handleTap}
-                scroller={this.scroller}
-              />
+                scroller={this.scroller}>
+                {'='}
+              </ZyngaScrollerTouchableArea>
               <Header>React touch demos</Header>
             </div>
           </AnimatableContainer>

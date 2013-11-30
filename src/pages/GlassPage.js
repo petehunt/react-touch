@@ -4,6 +4,7 @@ var React = require('React');
 
 // Implicit require of Scroller from Zynga
 
+var AnimatableContainer = require('../components/AnimatableContainer');
 var FastLink = require('../components/FastLink');
 var GlassContainer = require('../components/GlassContainer');
 var GlassContent = require('../components/GlassContent');
@@ -53,9 +54,6 @@ var GlassPage = React.createClass({
   },
 
   render: function() {
-    var style = {};
-    style[StyleKeys.TRANSFORM] = 'translate3d(0, ' + (-this.state.scrollTop) + 'px, 0)';
-
     // TODO: we can make this positioning significantly less lame
     // by measuring the DOM but I'm not sure we want to rely that
     // staying up-to-date, so for now make it explicit.
@@ -86,9 +84,9 @@ var GlassPage = React.createClass({
         overlays={overlays}
         content={contentBox}
         scroller={this.scroller}>
-        <div style={style} ref="content">
+        <AnimatableContainer translate={{y: -this.state.scrollTop}} ref="content">
           <GlassContent />
-        </div>
+        </AnimatableContainer>
       </GlassContainer>
     );
   }
