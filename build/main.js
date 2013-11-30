@@ -1965,6 +1965,8 @@
 	var StaticContainer = require(40);
 	var StyleKeys = require(29);
 
+	var POLL_FACTOR = .5;
+
 	var AnimatableContainer = React.createClass({displayName: 'AnimatableContainer',
 	  getDefaultProps: function() {
 	    return {
@@ -1972,6 +1974,7 @@
 	      component: React.DOM.div,
 	      opacity: 1,
 	      rotate: null,
+	      timeout: 200,
 	      translate: null
 	    };
 	  },
@@ -1979,15 +1982,44 @@
 	  componentWillMount: function() {
 	    this.wasEverOnGPU = false;
 	    this.isAnimating = false;
+	    this.lastAnimationTime = 0;
+	    this.animationInterval = null;
+	  },
+
+	  componentWillUnmount: function() {
+	    if (this.animationInterval) {
+	      window.clearInterval(this.animationInterval);
+	    }
 	  },
 
 	  componentWillReceiveProps: function(nextProps) {
 	    var prevStyle = this.getStyle(this.props);
 	    var style = this.getStyle(nextProps);
+
 	    this.isAnimating = (
 	      style['opacity'] !== prevStyle.opacity ||
 	      style[StyleKeys.TRANSFORM] !== prevStyle[StyleKeys.TRANSFORM]
 	    );
+
+	    if (this.isAnimating) {
+	      this.lastAnimationTime = Date.now();
+	      if (this.props.timeout && !this.animationInterval) {
+	        console.log('starting poll');
+	        this.animationInterval = window.setInterval(
+	          this.checkAnimationEnd,
+	          this.props.timeout * POLL_FACTOR
+	        );
+	      }
+	    }
+	  },
+
+	  checkAnimationEnd: function() {
+	    if (Date.now() - this.lastAnimationTime > this.props.timeout) {
+	      console.log('ending poll');
+	      window.clearInterval(this.animationInterval);
+	      this.animationInterval = null;
+	      this.forceUpdate();
+	    }
 	  },
 
 	  getStyle: function(props) {
