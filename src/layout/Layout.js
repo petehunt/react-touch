@@ -15,12 +15,8 @@ var SIDEBAR_WIDTH = 192;
 var TOPBAR_HEIGHT = 51; // + 1 for the border
 
 var Layout = React.createClass({
-  getInitialState: function() {
-    return {numNavs: 0};
-  },
-
   handleNavClick: function() {
-    this.setState({numNavs: this.state.numNavs + 1});
+    this.refs.leftNavContainer.closeNav();
   },
 
   render: function() {
@@ -43,8 +39,8 @@ var Layout = React.createClass({
     return this.transferPropsTo(
       <App>
         <LeftNavContainer
+          ref="leftNavContainer"
           button={button}
-          currentNavKey={this.state.numNavs}
           topContent={topContent}
           sideContent={sideContent}
           topHeight={TOPBAR_HEIGHT}

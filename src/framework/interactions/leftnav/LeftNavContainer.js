@@ -9,7 +9,7 @@ var ZyngaScroller = require('../../environment/ZyngaScroller');
 
 var LeftNavContainer = React.createClass({
   componentWillMount: function() {
-    this.scroller = new Scroller(this.handleScroll, {
+    this.scroller = new Scroller(this._handleScroll, {
       bouncing: false,
       scrollingX: true,
       scrollingY: false,
@@ -18,10 +18,10 @@ var LeftNavContainer = React.createClass({
   },
 
   componentDidMount: function() {
-    this.measure();
+    this._measure();
   },
 
-  measure: function() {
+  _measure: function() {
     var node = this.getDOMNode();
     this.scroller.setDimensions(
       node.clientWidth,
@@ -35,17 +35,17 @@ var LeftNavContainer = React.createClass({
 
   componentDidUpdate: function(prevProps) {
     if (this.props.sideWidth !== prevProps.sideWidth) {
-      this.measure();
-    }
-
-    if (this.props.currentNavKey !== prevProps.currentNavKey) {
-      if (this.isNavOpen()) {
-        this.scroller.scrollTo(this.props.sideWidth, 0, true);
-      }
+      this._measure();
     }
   },
 
-  handleScroll: function(left, top, zoom) {
+  closeNav: function() {
+    if (this.isNavOpen()) {
+      this.scroller.scrollTo(this.props.sideWidth, 0, true);
+    }
+  },
+
+  _handleScroll: function(left, top, zoom) {
     this.setState({scrollLeft: left});
   },
 
@@ -59,7 +59,7 @@ var LeftNavContainer = React.createClass({
     };
   },
 
-  handleTap: function() {
+  _handleTap: function() {
     if (this.isNavOpen()) {
       this.scroller.scrollTo(this.props.sideWidth, 0, true);
     } else {
@@ -67,7 +67,7 @@ var LeftNavContainer = React.createClass({
     }
   },
 
-  handleContentTouchTap: function(e) {
+  _handleContentTouchTap: function(e) {
     if (!this.isNavOpen()) {
       return;
     }
@@ -149,7 +149,7 @@ var LeftNavContainer = React.createClass({
           rotate={behavior.top.rotate(this.props.sideWidth, this.state.scrollLeft)}
           opacity={behavior.top.opacity(this.props.sideWidth, this.state.scrollLeft)}>
           <TouchableArea
-            onTouchTap={this.handleTap}
+            onTouchTap={this._handleTap}
             scroller={this.scroller}>
             {this.props.button}
           </TouchableArea>
@@ -164,7 +164,7 @@ var LeftNavContainer = React.createClass({
             style={contentTouchableAreaStyle}
             scroller={this.scroller}
             touchable={this.isNavOpen()}
-            onTouchTap={this.handleContentTouchTap}>
+            onTouchTap={this._handleContentTouchTap}>
             {this.props.children}
           </TouchableArea>
         </AnimatableContainer>

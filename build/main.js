@@ -848,12 +848,8 @@
 	var TOPBAR_HEIGHT = 51; // + 1 for the border
 
 	var Layout = React.createClass({displayName: 'Layout',
-	  getInitialState: function() {
-	    return {numNavs: 0};
-	  },
-
 	  handleNavClick: function() {
-	    this.setState({numNavs: this.state.numNavs + 1});
+	    this.refs.leftNavContainer.closeNav();
 	  },
 
 	  render: function() {
@@ -876,8 +872,8 @@
 	    return this.transferPropsTo(
 	      App(null, 
 	        LeftNavContainer(
-	          {button:button,
-	          currentNavKey:this.state.numNavs,
+	          {ref:"leftNavContainer",
+	          button:button,
 	          topContent:topContent,
 	          sideContent:sideContent,
 	          topHeight:TOPBAR_HEIGHT,
@@ -25612,7 +25608,7 @@
 
 	var LeftNavContainer = React.createClass({displayName: 'LeftNavContainer',
 	  componentWillMount: function() {
-	    this.scroller = new Scroller(this.handleScroll, {
+	    this.scroller = new Scroller(this._handleScroll, {
 	      bouncing: false,
 	      scrollingX: true,
 	      scrollingY: false,
@@ -25621,10 +25617,10 @@
 	  },
 
 	  componentDidMount: function() {
-	    this.measure();
+	    this._measure();
 	  },
 
-	  measure: function() {
+	  _measure: function() {
 	    var node = this.getDOMNode();
 	    this.scroller.setDimensions(
 	      node.clientWidth,
@@ -25638,17 +25634,17 @@
 
 	  componentDidUpdate: function(prevProps) {
 	    if (this.props.sideWidth !== prevProps.sideWidth) {
-	      this.measure();
-	    }
-
-	    if (this.props.currentNavKey !== prevProps.currentNavKey) {
-	      if (this.isNavOpen()) {
-	        this.scroller.scrollTo(this.props.sideWidth, 0, true);
-	      }
+	      this._measure();
 	    }
 	  },
 
-	  handleScroll: function(left, top, zoom) {
+	  closeNav: function() {
+	    if (this.isNavOpen()) {
+	      this.scroller.scrollTo(this.props.sideWidth, 0, true);
+	    }
+	  },
+
+	  _handleScroll: function(left, top, zoom) {
 	    this.setState({scrollLeft: left});
 	  },
 
@@ -25662,7 +25658,7 @@
 	    };
 	  },
 
-	  handleTap: function() {
+	  _handleTap: function() {
 	    if (this.isNavOpen()) {
 	      this.scroller.scrollTo(this.props.sideWidth, 0, true);
 	    } else {
@@ -25670,7 +25666,7 @@
 	    }
 	  },
 
-	  handleContentTouchTap: function(e) {
+	  _handleContentTouchTap: function(e) {
 	    if (!this.isNavOpen()) {
 	      return;
 	    }
@@ -25752,7 +25748,7 @@
 	          rotate:behavior.top.rotate(this.props.sideWidth, this.state.scrollLeft),
 	          opacity:behavior.top.opacity(this.props.sideWidth, this.state.scrollLeft)}, 
 	          TouchableArea(
-	            {onTouchTap:this.handleTap,
+	            {onTouchTap:this._handleTap,
 	            scroller:this.scroller}, 
 	            this.props.button
 	          ),
@@ -25767,7 +25763,7 @@
 	            {style:contentTouchableAreaStyle,
 	            scroller:this.scroller,
 	            touchable:this.isNavOpen(),
-	            onTouchTap:this.handleContentTouchTap}, 
+	            onTouchTap:this._handleContentTouchTap}, 
 	            this.props.children
 	          )
 	        )
