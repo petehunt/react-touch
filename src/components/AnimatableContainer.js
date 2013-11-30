@@ -44,7 +44,6 @@ var AnimatableContainer = React.createClass({
     if (this.isAnimating) {
       this.lastAnimationTime = Date.now();
       if (this.props.timeout && !this.animationInterval) {
-        console.log('starting poll');
         this.animationInterval = window.setInterval(
           this.checkAnimationEnd,
           this.props.timeout * POLL_FACTOR
@@ -55,9 +54,9 @@ var AnimatableContainer = React.createClass({
 
   checkAnimationEnd: function() {
     if (Date.now() - this.lastAnimationTime > this.props.timeout) {
-      console.log('ending poll');
       window.clearInterval(this.animationInterval);
       this.animationInterval = null;
+      this.isAnimating = false;
       this.forceUpdate();
     }
   },
