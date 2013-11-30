@@ -2224,9 +2224,6 @@
 	require(76);
 
 	var GlassContent = React.createClass({displayName: 'GlassContent',
-	  shouldComponentUpdate: function() {
-	    return false;
-	  },
 	  render: function() {
 	    return (
 	      React.DOM.div( {className:"GlassContent"}, 

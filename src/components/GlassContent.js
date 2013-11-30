@@ -7,9 +7,6 @@ var NYNY = require('../data/NYNY');
 require('./GlassContent.css');
 
 var GlassContent = React.createClass({
-  shouldComponentUpdate: function() {
-    return false;
-  },
   render: function() {
     return (
       <div className="GlassContent">
