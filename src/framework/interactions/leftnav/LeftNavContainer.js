@@ -4,6 +4,7 @@ var React = require('React');
 
 var AnimatableContainer = require('../../primitives/AnimatableContainer');
 var LeftNavBehaviors = require('./LeftNavBehaviors');
+var TouchableArea = require('../../primitives/TouchableArea');
 var ZyngaScroller = require('../../environment/ZyngaScroller');
 
 var LeftNavContainer = React.createClass({
@@ -87,7 +88,7 @@ var LeftNavContainer = React.createClass({
     // button
     // sideContent
     // children (big content area)
-    // currentNavItem
+    // currentNavKey
     var sidebarX = (this.props.sideWidth - this.state.scrollLeft);
 
     var side = null;
@@ -101,21 +102,21 @@ var LeftNavContainer = React.createClass({
       width: this.props.sideWidth
     };
 
-    var navBehavior = this.props.navBehavior;
+    var behavior = this.props.behavior;
 
     if (this.isNavOpen()) {
       side = (
         <AnimatableContainer
           style={sideStyle}
-          translate={navBehavior.side.translate(this.props.sideWidth, this.state.scrollLeft)}
-          rotate={navBehavior.side.rotate(this.props.sideWidth, this.state.scrollLeft)}
-          opacity={navBehavior.side.opacity(this.props.sideWidth, this.state.scrollLeft)}>
+          translate={behavior.side.translate(this.props.sideWidth, this.state.scrollLeft)}
+          rotate={behavior.side.rotate(this.props.sideWidth, this.state.scrollLeft)}
+          opacity={behavior.side.opacity(this.props.sideWidth, this.state.scrollLeft)}>
           {this.props.sideContent}
         </AnimatableContainer>
       );
     }
 
-    var touchableAreaStyle = {
+    var contentTouchableAreaStyle = {
       bottom: 0,
       left: 0,
       position: 'absolute',
@@ -141,13 +142,13 @@ var LeftNavContainer = React.createClass({
 
     return this.transferPropsTo(
       <div>
+        {side}
         <AnimatableContainer
           style={topStyle}
-          translate={navBehavior.top.translate(this.props.sideWidth, this.state.scrollLeft)}
-          rotate={navBehavior.top.rotate(this.props.sideWidth, this.state.scrollLeft)}
-          opacity={navBehavior.top.opacity(this.props.sideWidth, this.state.scrollLeft)}>
+          translate={behavior.top.translate(this.props.sideWidth, this.state.scrollLeft)}
+          rotate={behavior.top.rotate(this.props.sideWidth, this.state.scrollLeft)}
+          opacity={behavior.top.opacity(this.props.sideWidth, this.state.scrollLeft)}>
           <TouchableArea
-            style={touchableAreaStyle}
             onTouchTap={this.handleTap}
             scroller={this.scroller}>
             {this.props.button}
@@ -156,18 +157,17 @@ var LeftNavContainer = React.createClass({
         </AnimatableContainer>
         <AnimatableContainer
           style={contentStyle}
-          translate={navBehavior.content.translate(this.props.sideWidth, this.state.scrollLeft)}
-          rotate={navBehavior.content.rotate(this.props.sideWidth, this.state.scrollLeft)}
-          opacity={navBehavior.content.opacity(this.props.sideWidth, this.state.scrollLeft)}>
+          translate={behavior.content.translate(this.props.sideWidth, this.state.scrollLeft)}
+          rotate={behavior.content.rotate(this.props.sideWidth, this.state.scrollLeft)}
+          opacity={behavior.content.opacity(this.props.sideWidth, this.state.scrollLeft)}>
           <TouchableArea
-            style={touchableAreaStyle}
+            style={contentTouchableAreaStyle}
             scroller={this.scroller}
             touchable={this.isNavOpen()}
             onTouchTap={this.handleContentTouchTap}>
             {this.props.children}
           </TouchableArea>
         </AnimatableContainer>
-        {side}
       </div>
     );
   }

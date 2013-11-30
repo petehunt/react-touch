@@ -10,12 +10,12 @@ var LeftNavBehaviors = {
         return null;
       },
       opacity: function(sideWidth, scrollLeft) {
-        return .5 + .5 * (1 - this.state.scrollLeft / sideWidth);
+        return .5 + .5 * (1 - scrollLeft / sideWidth);
       }
     },
     top: {
       translate: function(sideWidth, scrollLeft) {
-        return sideWidth - scrollLeft;
+        return {x: sideWidth - scrollLeft};
       },
       rotate: function() {
         return null;
@@ -26,7 +26,7 @@ var LeftNavBehaviors = {
     },
     content: {
       translate: function(sideWidth, scrollLeft) {
-        return sideWidth - scrollLeft;
+        return {x: sideWidth - scrollLeft};
       },
       rotate: function() {
         return null;
