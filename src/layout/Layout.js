@@ -2,10 +2,10 @@
 
 var React = require('React');
 
+var App = require('../framework/App');
 var AnimatableContainer = require('../components/AnimatableContainer');
 var FastLink = require('../components/FastLink');
 var Header = require('../components/Header');
-var PreventBrowserSwipe = require('../components/PreventBrowserSwipe');
 var StaticContainer = require('../components/StaticContainer');
 var ZyngaScrollerTouchableArea =
   require('../components/ZyngaScrollerTouchableArea');
@@ -98,7 +98,7 @@ var Layout = React.createClass({
     }
 
     return this.transferPropsTo(
-      <PreventBrowserSwipe className="Layout">
+      <App className="Layout">
         <div className="Layout-scroller">
           <AnimatableContainer className="Layout-topBar" translate={{x: sidebarX}}>
             <div>
@@ -122,7 +122,7 @@ var Layout = React.createClass({
           </AnimatableContainer>
           {nav}
         </div>
-      </PreventBrowserSwipe>
+      </App>
     );
   }
 });

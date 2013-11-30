@@ -2,19 +2,26 @@
 
 var React = require('React');
 
-// Some browsers will do a weird bounce thing. This disables it.
-var PreventBrowserSwipe = React.createClass({
+var STYLE = {
+  bottom: 0,
+  left: 0,
+  position: 'fixed',
+  right: 0,
+  top: 0
+};
+
+var App = React.createClass({
   handleTouch: function(e) {
     e.preventDefault();
   },
 
   render: function() {
     return this.transferPropsTo(
-      <div onTouchMove={this.handleTouch}>
+      <div onTouchMove={this.handleTouch} style={STYLE}>
         {this.props.children}
       </div>
     );
   }
 });
 
-module.exports = PreventBrowserSwipe;
+module.exports = App;
