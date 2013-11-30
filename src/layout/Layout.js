@@ -41,17 +41,19 @@ var Layout = React.createClass({
     );
 
     return this.transferPropsTo(
-      <LeftNavContainer
-        button={button}
-        currentNavKey={this.state.numNavs}
-        topContent={topContent}
-        sideContent={sideContent}
-        topHeight={TOPBAR_HEIGHT}
-        sideWidth={SIDEBAR_WIDTH}>
-        <div className="Layout-content">
-          {this.props.children}
-        </div>
-      </LeftNavContainer>
+      <App>
+        <LeftNavContainer
+          button={button}
+          currentNavKey={this.state.numNavs}
+          topContent={topContent}
+          sideContent={sideContent}
+          topHeight={TOPBAR_HEIGHT}
+          sideWidth={SIDEBAR_WIDTH}>
+          <div className="Layout-content">
+            {this.props.children}
+          </div>
+        </LeftNavContainer>
+      </App>
     );
   }
 });

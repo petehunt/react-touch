@@ -874,15 +874,17 @@
 	    );
 
 	    return this.transferPropsTo(
-	      LeftNavContainer(
-	        {button:button,
-	        currentNavKey:this.state.numNavs,
-	        topContent:topContent,
-	        sideContent:sideContent,
-	        topHeight:TOPBAR_HEIGHT,
-	        sideWidth:SIDEBAR_WIDTH}, 
-	        React.DOM.div( {className:"Layout-content"}, 
-	          this.props.children
+	      App(null, 
+	        LeftNavContainer(
+	          {button:button,
+	          currentNavKey:this.state.numNavs,
+	          topContent:topContent,
+	          sideContent:sideContent,
+	          topHeight:TOPBAR_HEIGHT,
+	          sideWidth:SIDEBAR_WIDTH}, 
+	          React.DOM.div( {className:"Layout-content"}, 
+	            this.props.children
+	          )
 	        )
 	      )
 	    );
