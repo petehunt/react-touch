@@ -16,7 +16,7 @@ var TOPBAR_HEIGHT = 51; // + 1 for the border
 
 var Layout = React.createClass({
   handleNavClick: function() {
-    this.refs.leftNavContainer.closeNav();
+    this.refs['leftNavContainer'].closeNav();
   },
 
   render: function() {

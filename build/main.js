@@ -849,7 +849,7 @@
 
 	var Layout = React.createClass({displayName: 'Layout',
 	  handleNavClick: function() {
-	    this.refs.leftNavContainer.closeNav();
+	    this.refs['leftNavContainer'].closeNav();
 	  },
 
 	  render: function() {
@@ -25687,7 +25687,6 @@
 	    // button
 	    // sideContent
 	    // children (big content area)
-	    // currentNavKey
 	    var sidebarX = (this.props.sideWidth - this.state.scrollLeft);
 
 	    var side = null;
