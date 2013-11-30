@@ -1,6 +1,6 @@
 var React = require('React');
 var ReactHack = require('ReactHack');
-var ReactTouch = require('./framework/ReactTouch.js');
+var ReactTouch = require('./framework/ReactTouch');
 var FPSCounter = require('./framework/environment/FPSCounter');
 
 var RootPage = require('./pages/RootPage');
