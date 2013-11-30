@@ -2,8 +2,8 @@
 
 var React = require('React');
 
-var ZyngaScrollerTouchableArea =
-  require('../components/ZyngaScrollerTouchableArea');
+var TouchableArea =
+  require('../framework/primitives/TouchableArea');
 
 var GlassViewport = React.createClass({
   getDefaultProps: function() {
@@ -36,14 +36,14 @@ var GlassViewport = React.createClass({
     };
 
     return this.transferPropsTo(
-      <ZyngaScrollerTouchableArea style={style}>
+      <TouchableArea style={style}>
         <div style={glassStyle}>
           {this.props.glassContent}
         </div>
         <div style={contentStyle}>
           {this.props.children}
         </div>
-      </ZyngaScrollerTouchableArea>
+      </TouchableArea>
     );
   }
 });

@@ -2,7 +2,7 @@
 
 var React = require('React');
 
-var StaticContainer = require('../components/StaticContainer');
+var StaticContainer = require('./helpers/StaticContainer');
 var StyleKeys = require('../environment/StyleKeys');
 
 var POLL_FACTOR = .5;

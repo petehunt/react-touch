@@ -2,13 +2,12 @@
 
 var React = require('React');
 
-var App = require('../framework/App');
-var AnimatableContainer = require('../components/AnimatableContainer');
+var App = require('../framework/primitives/App');
+var AnimatableContainer = require('../framework/primitives/AnimatableContainer');
 var FastLink = require('../components/FastLink');
 var Header = require('../components/Header');
-var StaticContainer = require('../components/StaticContainer');
-var ZyngaScrollerTouchableArea =
-  require('../components/ZyngaScrollerTouchableArea');
+var TouchableArea =
+  require('../framework/primitives/TouchableArea');
 
 require('./Layout.css');
 
@@ -101,22 +100,22 @@ var Layout = React.createClass({
       <App className="Layout">
         <div className="Layout-scroller">
           <AnimatableContainer className="Layout-topBar" translate={{x: sidebarX}}>
-            <ZyngaScrollerTouchableArea
+            <TouchableArea
               className="Layout-hamburger fa fa-bars"
               onTouchTap={this.handleTap}
               scroller={this.scroller}>
               {'='}
-            </ZyngaScrollerTouchableArea>
+            </TouchableArea>
             <Header>React touch demos</Header>
           </AnimatableContainer>
           <AnimatableContainer translate={{x: sidebarX}} className="Layout-contentContainer">
-            <ZyngaScrollerTouchableArea
+            <TouchableArea
               className="Layout-content"
               scroller={this.scroller}
               touchable={this.isNavOpen()}
               onTouchTap={this.handleContentTouchTap}>
               {this.props.children}
-            </ZyngaScrollerTouchableArea>
+            </TouchableArea>
           </AnimatableContainer>
           {nav}
         </div>

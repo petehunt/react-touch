@@ -4,8 +4,8 @@
 var ImageCardContainer = require('./ImageCardContainer');
 var React = require('React');
 
-var ZyngaScrollerTouchableArea =
-  require('../components/ZyngaScrollerTouchableArea');
+var TouchableArea =
+  require('../framework/primitives/TouchableArea');
 
 require('./Viewer.css');
 
@@ -55,12 +55,12 @@ var Viewer = React.createClass({
     }, this);
 
     return (
-      <ZyngaScrollerTouchableArea
+      <TouchableArea
         className="Viewer"
         style={{width: this.props.width, height: this.props.height}}
         scroller={this.scroller}>
         {images}
-      </ZyngaScrollerTouchableArea>
+      </TouchableArea>
     );
   }
 });

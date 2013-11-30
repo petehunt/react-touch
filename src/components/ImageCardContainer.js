@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var AnimatableContainer = require('../components/AnimatableContainer');
+var AnimatableContainer = require('../framework/primitives/AnimatableContainer');
 var EasingFunctions = require('../math/EasingFunctions');
 var ImageCard = require('./ImageCard');
 var React = require('React');

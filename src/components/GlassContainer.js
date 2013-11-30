@@ -3,7 +3,7 @@
 var React = require('React');
 
 var GlassViewport = require('./GlassViewport');
-var StyleKeys = require('../environment/StyleKeys');
+var StyleKeys = require('../framework/environment/StyleKeys');
 
 require('./GlassContainer.css');
 

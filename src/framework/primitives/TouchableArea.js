@@ -2,7 +2,7 @@
 
 var React = require('React');
 
-var ZyngaScrollerTouchableArea = React.createClass({
+var TouchableArea = React.createClass({
   getDefaultProps: function() {
     return {
       component: React.DOM.div,
@@ -51,4 +51,4 @@ var ZyngaScrollerTouchableArea = React.createClass({
   }
 });
 
-module.exports = ZyngaScrollerTouchableArea;
+module.exports = TouchableArea;
