@@ -1051,7 +1051,7 @@
 
 	  render: function() {
 	    // TODO: we can make this positioning significantly less lame
-	    // by measuring the DOM but I'm not sure we want to rely that
+	    // by measuring the DOM but I'm not sure we want to rely on that
 	    // staying up-to-date, so for now make it explicit.
 	    var maxHeight = document.body.clientHeight - Layout.TOPBAR_HEIGHT;
 
