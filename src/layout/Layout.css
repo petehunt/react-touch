@@ -15,9 +15,7 @@
 }
 
 .Layout-content {
-  background: rgb(255, 255, 255);
   height: 100%;
-  overflow: scroll;
 }
 
 .Layout-nav {

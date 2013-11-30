@@ -40,7 +40,7 @@ var Layout = React.createClass({
       </div>
     );
 
-    return (
+    return this.transferPropsTo(
       <LeftNavContainer
         button={button}
         currentNavKey={this.state.numNavs}

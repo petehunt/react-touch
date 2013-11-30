@@ -873,7 +873,7 @@
 	      )
 	    );
 
-	    return (
+	    return this.transferPropsTo(
 	      LeftNavContainer(
 	        {button:button,
 	        currentNavKey:this.state.numNavs,
@@ -3751,6 +3751,7 @@
 	var STYLE = {
 	  bottom: 0,
 	  left: 0,
+	  overflow: 'hidden',
 	  position: 'fixed',
 	  right: 0,
 	  top: 0
@@ -8248,7 +8249,7 @@
 /***/ function(module, exports, require) {
 
 	module.exports =
-		".Layout-topBar {\n  background: rgb(255, 255, 255);\n  border-bottom: 1px solid black;\n  font-family: sans-serif;\n  line-height: 50px;\n  text-align: center;\n}\n\n.Layout-hamburger {\n  font-size: 25px;\n  left: 0;\n  line-height: 50px;\n  padding: 0 12px;\n  position: absolute;\n}\n\n.Layout-content {\n  background: rgb(255, 255, 255);\n  height: 100%;\n  overflow: scroll;\n}\n\n.Layout-nav {\n  background: #ccc;\n  border-bottom: rgba(100, 100, 100, 0.3);\n  height: 100%;\n  padding: 10px;\n}\n\n.Layout-navLink,\n.Layout-lastNavLink {\n  color: black;\n  display: block;\n  font-family: sans-serif;\n  padding: 10px 0;\n  text-decoration: none;\n}\n\n.Layout-navLink {\n  border-bottom: 1px solid rgba(20, 20, 20, 0.3);\n}";
+		".Layout-topBar {\n  background: rgb(255, 255, 255);\n  border-bottom: 1px solid black;\n  font-family: sans-serif;\n  line-height: 50px;\n  text-align: center;\n}\n\n.Layout-hamburger {\n  font-size: 25px;\n  left: 0;\n  line-height: 50px;\n  padding: 0 12px;\n  position: absolute;\n}\n\n.Layout-content {\n  height: 100%;\n}\n\n.Layout-nav {\n  background: #ccc;\n  border-bottom: rgba(100, 100, 100, 0.3);\n  height: 100%;\n  padding: 10px;\n}\n\n.Layout-navLink,\n.Layout-lastNavLink {\n  color: black;\n  display: block;\n  font-family: sans-serif;\n  padding: 10px 0;\n  text-decoration: none;\n}\n\n.Layout-navLink {\n  border-bottom: 1px solid rgba(20, 20, 20, 0.3);\n}";
 
 /***/ },
 
