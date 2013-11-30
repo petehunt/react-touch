@@ -11,7 +11,7 @@ var AnimatableContainer = React.createClass({
   getDefaultProps: function() {
     return {
       blockUpdates: true,
-      component: React.DOM.span,
+      component: React.DOM.div,
       contentComponent: React.DOM.span,
       opacity: 1,
       rotate: null,
@@ -64,6 +64,13 @@ var AnimatableContainer = React.createClass({
 
   getStyle: function(props) {
     var style = {};
+
+    if (this.props.style) {
+      for (var key in this.props.style) {
+        style[key] = this.props.style[key];
+      }
+    }
+
     var transforms = '';
 
     if (props.opacity !== 1) {
@@ -105,8 +112,10 @@ var AnimatableContainer = React.createClass({
     var component = this.props.component;
     var contentComponent = this.props.contentComponent;
 
-    return this.transferPropsTo(
-      <component style={this.getStyle(this.props)}>
+    return (
+      <component
+        className={this.props.className}
+        style={this.getStyle(this.props)}>
         <StaticContainer shouldUpdate={!this.props.blockUpdates || !this.isAnimating}>
           <contentComponent>
             {this.props.children}
