@@ -25948,6 +25948,10 @@
 	  },
 
 	  trigger: function(route) {
+	    if (route.length === 0 || route[0] !== '/') {
+	      throw new Error('trigger() takes an absolute path');
+	    }
+
 	    if (useHistory) {
 	      window.history.pushState({}, document.title, route);
 	    } else {
