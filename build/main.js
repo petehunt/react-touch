@@ -61,7 +61,7 @@
 	  '/glass': 'glass',
 	  '/viewer': 'viewer',
 	  '/': 'home'
-	});
+	}, true);
 
 
 /***/ },
@@ -74,7 +74,7 @@
 	var Router = require(181);
 
 	var ReactTouch = {
-	  start: function(componentClass, domNode, routes) {
+	  start: function(componentClass, domNode, routes, useHistory) {
 	    // The following code is required to install the TapEventPlugin. We have
 	    // an open issue to make this easier to do.
 	    var EventPluginHub = require(6);
@@ -88,7 +88,7 @@
 
 	    React.initializeTouchEvents(true);
 
-	    Router.start(componentClass, domNode, routes);
+	    Router.start(componentClass, domNode, routes, useHistory);
 	  }
 	};
 
@@ -917,9 +917,9 @@
 
 	    var sideContent = (
 	      React.DOM.div( {className:"Layout-nav"}, 
-	        RoutedLink( {href:"home", className:"Layout-navLink", onClick:this.handleNavClick}, "Home"),
-	        RoutedLink( {href:"glass", className:"Layout-navLink", onClick:this.handleNavClick}, "Frosted glass"),
-	        RoutedLink( {href:"viewer", className:"Layout-lastNavLink", onClick:this.handleNavClick}, "Photo gallery")
+	        RoutedLink( {href:"/home", className:"Layout-navLink", onClick:this.handleNavClick}, "Home"),
+	        RoutedLink( {href:"/glass", className:"Layout-navLink", onClick:this.handleNavClick}, "Frosted glass"),
+	        RoutedLink( {href:"/viewer", className:"Layout-lastNavLink", onClick:this.handleNavClick}, "Photo gallery")
 	      )
 	    );
 
@@ -25936,15 +25936,24 @@
 	    componentClass = componentClass_;
 	    domNode = domNode_;
 	    routes = routes_;
-	    useHistory = useHistory_ && window.history;
+	    useHistory = useHistory_ && !!window.history;
 
 	    if (useHistory) {
 	      window.addEventListener('popstate', renderRouteOnClient, false);
+
+	      // If we got a hash-based URL and we want to use history API
+	      // do a redirect.
+	      if (window.location.hash.length > 0) {
+	        var redirectRoute = window.location.hash;
+	        window.location.hash = '';
+	        Router.trigger('/' + redirectRoute.slice(1));
+	      } else {
+	        renderRouteOnClient();
+	      }
 	    } else {
 	      window.addEventListener('hashchange', renderRouteOnClient, false);
+	      renderRouteOnClient();
 	    }
-
-	    renderRouteOnClient();
 	  },
 
 	  trigger: function(route) {

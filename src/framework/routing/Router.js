@@ -46,15 +46,24 @@ var Router = {
     componentClass = componentClass_;
     domNode = domNode_;
     routes = routes_;
-    useHistory = useHistory_ && window.history;
+    useHistory = useHistory_ && !!window.history;
 
     if (useHistory) {
       window.addEventListener('popstate', renderRouteOnClient, false);
+
+      // If we got a hash-based URL and we want to use history API
+      // do a redirect.
+      if (window.location.hash.length > 0) {
+        var redirectRoute = window.location.hash;
+        window.location.hash = '';
+        Router.trigger('/' + redirectRoute.slice(1));
+      } else {
+        renderRouteOnClient();
+      }
     } else {
       window.addEventListener('hashchange', renderRouteOnClient, false);
+      renderRouteOnClient();
     }
-
-    renderRouteOnClient();
   },
 
   trigger: function(route) {

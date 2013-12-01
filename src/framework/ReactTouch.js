@@ -3,7 +3,7 @@ var React = require('React');
 var Router = require('./routing/Router');
 
 var ReactTouch = {
-  start: function(componentClass, domNode, routes) {
+  start: function(componentClass, domNode, routes, useHistory) {
     // The following code is required to install the TapEventPlugin. We have
     // an open issue to make this easier to do.
     var EventPluginHub = require('React/modules/EventPluginHub');
@@ -17,7 +17,7 @@ var ReactTouch = {
 
     React.initializeTouchEvents(true);
 
-    Router.start(componentClass, domNode, routes);
+    Router.start(componentClass, domNode, routes, useHistory);
   }
 };
 
