@@ -32,7 +32,7 @@ var RootPage = React.createClass({
       );
     }
 
-    var routeName = this.props.routeParams[0] || 'home';
+    var routeName = this.props.routeName;
 
     if (routeName === '' || routeName === 'home') {
       return <Layout className="HomePage" route="home"><HomePage /></Layout>;

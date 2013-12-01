@@ -4,6 +4,7 @@ var React = require('React');
 
 var App = require('../framework/primitives/App');
 var FastLink = require('../components/FastLink');
+var RoutedLink = require('../framework/routing/RoutedLink');
 var Header = require('../components/Header');
 var LeftNavContainer = require('../framework/interactions/leftnav/LeftNavContainer');
 
@@ -30,9 +31,9 @@ var Layout = React.createClass({
 
     var sideContent = (
       <div className="Layout-nav">
-        <FastLink href="#home" className="Layout-navLink" onClick={this.handleNavClick}>Home</FastLink>
-        <FastLink href="#glass" className="Layout-navLink" onClick={this.handleNavClick}>Frosted glass</FastLink>
-        <FastLink href="#viewer" className="Layout-lastNavLink" onClick={this.handleNavClick}>Photo gallery</FastLink>
+        <RoutedLink href="home" className="Layout-navLink" onClick={this.handleNavClick}>Home</RoutedLink>
+        <RoutedLink href="glass" className="Layout-navLink" onClick={this.handleNavClick}>Frosted glass</RoutedLink>
+        <RoutedLink href="viewer" className="Layout-lastNavLink" onClick={this.handleNavClick}>Photo gallery</RoutedLink>
       </div>
     );
 
