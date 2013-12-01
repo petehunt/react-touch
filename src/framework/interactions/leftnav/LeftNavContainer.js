@@ -143,18 +143,6 @@ var LeftNavContainer = React.createClass({
       <div>
         {side}
         <AnimatableContainer
-          style={topStyle}
-          translate={behavior.top.translate(this.props.sideWidth, this.state.scrollLeft)}
-          rotate={behavior.top.rotate(this.props.sideWidth, this.state.scrollLeft)}
-          opacity={behavior.top.opacity(this.props.sideWidth, this.state.scrollLeft)}>
-          <TouchableArea
-            onTouchTap={this._handleTap}
-            scroller={this.scroller}>
-            {this.props.button}
-          </TouchableArea>
-          {this.props.topContent}
-        </AnimatableContainer>
-        <AnimatableContainer
           style={contentStyle}
           translate={behavior.content.translate(this.props.sideWidth, this.state.scrollLeft)}
           rotate={behavior.content.rotate(this.props.sideWidth, this.state.scrollLeft)}
@@ -166,6 +154,18 @@ var LeftNavContainer = React.createClass({
             onTouchTap={this._handleContentTouchTap}>
             {this.props.children}
           </TouchableArea>
+        </AnimatableContainer>
+        <AnimatableContainer
+          style={topStyle}
+          translate={behavior.top.translate(this.props.sideWidth, this.state.scrollLeft)}
+          rotate={behavior.top.rotate(this.props.sideWidth, this.state.scrollLeft)}
+          opacity={behavior.top.opacity(this.props.sideWidth, this.state.scrollLeft)}>
+          <TouchableArea
+            onTouchTap={this._handleTap}
+            scroller={this.scroller}>
+            {this.props.button}
+          </TouchableArea>
+          {this.props.topContent}
         </AnimatableContainer>
       </div>
     );

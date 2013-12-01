@@ -21,7 +21,7 @@ var Layout = React.createClass({
 
   render: function() {
     var button = (
-      <div className="Layout-hamburger fa fa-bars">{'='}</div>
+      <div className="Layout-hamburger fa fa-bars" />
     );
 
     var topContent = (
@@ -31,6 +31,7 @@ var Layout = React.createClass({
     var sideContent = (
       <div className="Layout-nav">
         <RoutedLink href="/home" className="Layout-navLink" onClick={this.handleNavClick}>Home</RoutedLink>
+        <RoutedLink href="/scroll" className="Layout-navLink" onClick={this.handleNavClick}>Simple scroll</RoutedLink>
         <RoutedLink href="/glass" className="Layout-navLink" onClick={this.handleNavClick}>Frosted glass</RoutedLink>
         <RoutedLink href="/viewer" className="Layout-lastNavLink" onClick={this.handleNavClick}>Photo gallery</RoutedLink>
       </div>

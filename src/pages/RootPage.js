@@ -6,6 +6,7 @@ var Layout = require('../layout/Layout');
 var HomePage = require('../pages/HomePage');
 var GlassPage = require('../pages/GlassPage');
 var Message = require('../components/Message');
+var ScrollPage = require('../pages/ScrollPage');
 var ViewerPage = require('../pages/ViewerPage');
 
 var isIPhone5 = require('../environment/isIPhone5');
@@ -37,9 +38,11 @@ var RootPage = React.createClass({
     if (routeName === '' || routeName === 'home') {
       return <Layout className="HomePage" route="home"><HomePage /></Layout>;
     } else if (routeName === 'glass') {
-      return <Layout route="glass"><GlassPage /></Layout>;
+      return <Layout><GlassPage /></Layout>;
     } else if (routeName === 'viewer') {
-      return <Layout route="viewer"><ViewerPage /></Layout>;
+      return <Layout><ViewerPage /></Layout>;
+    } else if (routeName === 'scroll') {
+      return <Layout><ScrollPage /></Layout>;
     } else {
       return <h1>Route not found</h1>;
     }
