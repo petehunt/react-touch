@@ -3,7 +3,7 @@ var React = require('React');
 var componentClass = null;
 var domNode = null;
 var routes = null;
-var useHistory = false;
+var historyRoot = null;
 
 function getComponentForRoute(route) {
   for (var regexSource in routes) {
@@ -23,10 +23,10 @@ function getComponentForRoute(route) {
 }
 
 function getCurrentRouteOnClient() {
-  if (useHistory) {
+  if (historyRoot) {
     return window.location.pathname;
   } else {
-    return '/' + window.location.hash.slice(1);
+    return window.location.hash.slice(1);
   }
 }
 
@@ -38,7 +38,7 @@ function renderRouteOnClient() {
 }
 
 var Router = {
-  start: function(componentClass_, domNode_, routes_, useHistory_) {
+  start: function(componentClass_, domNode_, routes_, historyRoot_) {
     if (componentClass) {
       throw new Error('Already started Router');
     }
@@ -46,9 +46,9 @@ var Router = {
     componentClass = componentClass_;
     domNode = domNode_;
     routes = routes_;
-    useHistory = useHistory_ && !!window.history;
+    historyRoot = window.history && historyRoot_;
 
-    if (useHistory) {
+    if (historyRoot) {
       window.addEventListener('popstate', renderRouteOnClient, false);
 
       // If we got a hash-based URL and we want to use history API
@@ -56,13 +56,20 @@ var Router = {
       if (window.location.hash.length > 0) {
         var redirectRoute = window.location.hash;
         window.location.hash = '';
-        Router.trigger('/' + redirectRoute.slice(1));
+        Router.trigger(redirectRoute.slice(1));
       } else {
         renderRouteOnClient();
       }
     } else {
       window.addEventListener('hashchange', renderRouteOnClient, false);
-      renderRouteOnClient();
+
+      // If we got a history-based URL and we want to use hash routing
+      // do a redirect.
+      if (window.location.pathname.indexOf(historyRoot) === 0 && window.location.hash.length === 0) {
+        Router.trigger(window.location.pathname.slice(historyRoot.length));
+      } else {
+        renderRouteOnClient();
+      }
     }
   },
 
@@ -71,7 +78,7 @@ var Router = {
       throw new Error('trigger() takes an absolute path');
     }
 
-    if (useHistory) {
+    if (historyRoot) {
       window.history.pushState({}, document.title, route);
     } else {
       window.location.hash = route;

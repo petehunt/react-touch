@@ -11,4 +11,4 @@ ReactTouch.start(RootPage, document.getElementById('react-root'), {
   '/glass': 'glass',
   '/viewer': 'viewer',
   '/': 'home'
-}, true);
+});
