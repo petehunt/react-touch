@@ -2,10 +2,8 @@
 
 var React = require('React');
 
-var GlassViewport = require('./GlassViewport');
-var StyleKeys = require('../framework/environment/StyleKeys');
-
-require('./GlassContainer.css');
+var FrostedGlassViewport = require('./helpers/FrostedGlassViewport');
+var StyleKeys = require('../../environment/StyleKeys');
 
 function shallowCopy(x) {
   var y = {};
@@ -57,7 +55,7 @@ var GlassContainer = React.createClass({
 
   render: function() {
     var viewports = [
-      <GlassViewport
+      <FrostedGlassViewport
         key="content"
         glassContent={this.props.children}
         left={this.props.content.left}
@@ -82,7 +80,7 @@ var GlassContainer = React.createClass({
       clonedChildren.props.style[StyleKeys.FILTER] = 'blur(5px)';
 
       viewports.push(
-        <GlassViewport
+        <FrostedGlassViewport
           key={key}
           glassContent={clonedChildren}
           left={overlay.left}
@@ -91,15 +89,16 @@ var GlassContainer = React.createClass({
           height={overlay.height}
           style={overlay.style}>
           {overlay.children}
-        </GlassViewport>
+        </FrostedGlassViewport>
       );
     }
 
-    return (
-      <div className="GlassContainer" style={this.props.style}>
-        {viewports}
-      </div>
-    );
+    var newProps = shallowCopy(this.props);
+    newProps.style = newProps.style || {};
+    newProps.style.position = newProps.style.position || 'relative';
+    newProps.style.overflow = 'hidden';
+
+    return React.DOM.div(newProps, viewports);
   }
 });
 

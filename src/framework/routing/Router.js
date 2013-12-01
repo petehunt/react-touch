@@ -26,7 +26,11 @@ function getCurrentRouteOnClient() {
   if (historyRoot) {
     return window.location.pathname;
   } else {
-    return window.location.hash.slice(1);
+    var fragment = window.location.hash.slice(1);
+    if (fragment.length === 0) {
+      fragment = '/';
+    }
+    return fragment;
   }
 }
 

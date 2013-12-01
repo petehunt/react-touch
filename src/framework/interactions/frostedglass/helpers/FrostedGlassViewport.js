@@ -3,9 +3,9 @@
 var React = require('React');
 
 var TouchableArea =
-  require('../framework/primitives/TouchableArea');
+  require('../../../primitives/TouchableArea');
 
-var GlassViewport = React.createClass({
+var FrostedGlassViewport = React.createClass({
   getDefaultProps: function() {
     return {glassStyle: {}};
   },
@@ -48,4 +48,4 @@ var GlassViewport = React.createClass({
   }
 });
 
-module.exports = GlassViewport;
+module.exports = FrostedGlassViewport;

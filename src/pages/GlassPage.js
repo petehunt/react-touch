@@ -5,7 +5,8 @@ var React = require('React');
 // Implicit require of Scroller from Zynga
 
 var AnimatableContainer = require('../framework/primitives/AnimatableContainer');
-var GlassContainer = require('../components/GlassContainer');
+var FrostedGlassContainer =
+  require('../framework/interactions/frostedglass/FrostedGlassContainer');
 var GlassContent = require('../components/GlassContent');
 var Header = require('../components/Header');
 var Layout = require('../layout/Layout');
@@ -78,7 +79,8 @@ var GlassPage = React.createClass({
     };
 
     return (
-      <GlassContainer
+      <FrostedGlassContainer
+        className="GlassPage-container"
         style={{height: maxHeight}}
         overlays={overlays}
         content={contentBox}
@@ -86,7 +88,7 @@ var GlassPage = React.createClass({
         <AnimatableContainer translate={{y: -this.state.scrollTop}} ref="content">
           <GlassContent />
         </AnimatableContainer>
-      </GlassContainer>
+      </FrostedGlassContainer>
     );
   }
 });

@@ -272,7 +272,11 @@
 	  if (historyRoot) {
 	    return window.location.pathname;
 	  } else {
-	    return window.location.hash.slice(1);
+	    var fragment = window.location.hash.slice(1);
+	    if (fragment.length === 0) {
+	      fragment = '/';
+	    }
+	    return fragment;
 	  }
 	}
 
@@ -1086,7 +1090,8 @@
 	// Implicit require of Scroller from Zynga
 
 	var AnimatableContainer = require(32);
-	var GlassContainer = require(33);
+	var FrostedGlassContainer =
+	  require(183);
 	var GlassContent = require(34);
 	var Header = require(23);
 	var Layout = require(10);
@@ -1159,8 +1164,9 @@
 	    };
 
 	    return (
-	      GlassContainer(
-	        {style:{height: maxHeight},
+	      FrostedGlassContainer(
+	        {className:"GlassPage-container",
+	        style:{height: maxHeight},
 	        overlays:overlays,
 	        content:contentBox,
 	        scroller:this.scroller}, 
@@ -2787,118 +2793,6 @@
 	});
 
 	module.exports = AnimatableContainer;
-
-/***/ },
-
-/***/ 33:
-/***/ function(module, exports, require) {
-
-	/** @jsx React.DOM */
-
-	var React = require(4);
-
-	var GlassViewport = require(75);
-	var StyleKeys = require(35);
-
-	require(76);
-
-	function shallowCopy(x) {
-	  var y = {};
-	  for (var z in x) {
-	    if (!x.hasOwnProperty(z)) {
-	      continue;
-	    }
-	    y[z] = x[z];
-	  }
-	  return y;
-	}
-
-	function cloneChildren(children) {
-	  if (React.isValidComponent(children)) {
-	    return cloneComponent(children);
-	  } else if (Array.isArray(children)) {
-	    return children.map(cloneComponent);
-	  } else if (!children) {
-	    return null;
-	  } else {
-	    var r = {};
-	    for (var k in children) {
-	      if (!children.hasOwnProperty(k)) {
-	        continue;
-	      }
-	      r[k] = cloneComponent(children[k]);
-	    }
-	    return r;
-	  }
-	}
-
-	function cloneComponent(component) {
-	  if (!React.isValidComponent(component)) {
-	    // string or something
-	    return component;
-	  }
-	  var newInstance = new component.constructor();
-	  var newChildren = cloneChildren(component.props.children);
-	  var newProps = shallowCopy(component.props);
-	  delete newProps.children;
-	  newInstance.construct(newProps, newChildren);
-	  return newInstance;
-	}
-
-	var GlassContainer = React.createClass({displayName: 'GlassContainer',
-	  getDefaultProps: function() {
-	    return {style: {}, overlays: {}};
-	  },
-
-	  render: function() {
-	    var viewports = [
-	      GlassViewport(
-	        {key:"content",
-	        glassContent:this.props.children,
-	        left:this.props.content.left,
-	        top:this.props.content.top,
-	        width:this.props.content.width,
-	        height:this.props.content.height,
-	        style:this.props.content.style,
-	        scroller:this.props.scroller}
-	      )
-	    ];
-
-	    for (var key in this.props.overlays) {
-	      var overlay = this.props.overlays[key];
-
-	      // TODO: this is somewhat of an anti-pattern: cloneChildren() should create the
-	      // children with the correct props. But I'm too lazy to build the correct deep
-	      // merger. And this isn't that bad since this component owns the props anyway.
-	      var clonedChildren = cloneChildren(this.props.children);
-
-	      clonedChildren.props = shallowCopy(clonedChildren.props);
-	      clonedChildren.props.style = shallowCopy(clonedChildren.props.style || {});
-	      clonedChildren.props.style[StyleKeys.FILTER] = 'blur(5px)';
-
-	      viewports.push(
-	        GlassViewport(
-	          {key:key,
-	          glassContent:clonedChildren,
-	          left:overlay.left,
-	          top:overlay.top,
-	          width:overlay.width,
-	          height:overlay.height,
-	          style:overlay.style}, 
-	          overlay.children
-	        )
-	      );
-	    }
-
-	    return (
-	      React.DOM.div( {className:"GlassContainer", style:this.props.style}, 
-	        viewports
-	      )
-	    );
-	  }
-	});
-
-	module.exports = GlassContainer;
 
 /***/ },
 
@@ -8146,7 +8040,7 @@
 /***/ function(module, exports, require) {
 
 	module.exports =
-		".GlassPage-header {\n  background: rgba(257, 257, 257, 0.3);\n  line-height: 50px;\n  text-align: center;\n}\n";
+		".GlassPage-header {\n  background: rgba(257, 257, 257, 0.3);\n  line-height: 50px;\n  text-align: center;\n}\n\n.GlassPage-container {\n  background: white;\n  border: 1px solid rgba(10, 10, 10, 0.1);\n  width: 100%;\n}";
 
 /***/ },
 
@@ -8216,85 +8110,6 @@
 	});
 
 	module.exports = StaticContainer;
-
-/***/ },
-
-/***/ 75:
-/***/ function(module, exports, require) {
-
-	/** @jsx React.DOM */
-
-	var React = require(4);
-
-	var TouchableArea =
-	  require(82);
-
-	var GlassViewport = React.createClass({displayName: 'GlassViewport',
-	  getDefaultProps: function() {
-	    return {glassStyle: {}};
-	  },
-
-	  render: function() {
-	    var style = {
-	      position: 'absolute',
-	      left: this.props.left,
-	      top: this.props.top,
-	      width: this.props.width,
-	      height: this.props.height,
-	      overflow: 'hidden'
-	    };
-
-	    var glassStyle = this.props.glassStyle || {};
-	    glassStyle.position = 'absolute';
-	    // TODO: this won't animate well. Not sure if compositing will
-	    // make things better or worse...
-	    glassStyle.left = -this.props.left;
-	    glassStyle.top = -this.props.top;
-
-	    var contentStyle = {
-	      bottom: 0,
-	      left: 0,
-	      position: 'absolute',
-	      right: 0,
-	      top: 0
-	    };
-
-	    return this.transferPropsTo(
-	      TouchableArea( {style:style}, 
-	        React.DOM.div( {style:glassStyle}, 
-	          this.props.glassContent
-	        ),
-	        React.DOM.div( {style:contentStyle}, 
-	          this.props.children
-	        )
-	      )
-	    );
-	  }
-	});
-
-	module.exports = GlassViewport;
-
-/***/ },
-
-/***/ 76:
-/***/ function(module, exports, require) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	var dispose = require(87)
-		// The css code:
-		(require(77))
-	if(false) {
-		module.hot.accept();
-		module.hot.dispose(dispose);
-	}
-
-/***/ },
-
-/***/ 77:
-/***/ function(module, exports, require) {
-
-	module.exports =
-		".GlassContainer {\n  background: white;\n  border: 1px solid rgba(10, 10, 10, 0.1);\n  overflow: hidden;\n  position: relative;\n  width: 100%;\n}";
 
 /***/ },
 
@@ -25987,6 +25802,174 @@
 
 	module.exports = getMarkupWrap;
 
+
+/***/ },
+
+/***/ 183:
+/***/ function(module, exports, require) {
+
+	/** @jsx React.DOM */
+
+	var React = require(4);
+
+	var FrostedGlassViewport = require(184);
+	var StyleKeys = require(35);
+
+	function shallowCopy(x) {
+	  var y = {};
+	  for (var z in x) {
+	    if (!x.hasOwnProperty(z)) {
+	      continue;
+	    }
+	    y[z] = x[z];
+	  }
+	  return y;
+	}
+
+	function cloneChildren(children) {
+	  if (React.isValidComponent(children)) {
+	    return cloneComponent(children);
+	  } else if (Array.isArray(children)) {
+	    return children.map(cloneComponent);
+	  } else if (!children) {
+	    return null;
+	  } else {
+	    var r = {};
+	    for (var k in children) {
+	      if (!children.hasOwnProperty(k)) {
+	        continue;
+	      }
+	      r[k] = cloneComponent(children[k]);
+	    }
+	    return r;
+	  }
+	}
+
+	function cloneComponent(component) {
+	  if (!React.isValidComponent(component)) {
+	    // string or something
+	    return component;
+	  }
+	  var newInstance = new component.constructor();
+	  var newChildren = cloneChildren(component.props.children);
+	  var newProps = shallowCopy(component.props);
+	  delete newProps.children;
+	  newInstance.construct(newProps, newChildren);
+	  return newInstance;
+	}
+
+	var GlassContainer = React.createClass({displayName: 'GlassContainer',
+	  getDefaultProps: function() {
+	    return {style: {}, overlays: {}};
+	  },
+
+	  render: function() {
+	    var viewports = [
+	      FrostedGlassViewport(
+	        {key:"content",
+	        glassContent:this.props.children,
+	        left:this.props.content.left,
+	        top:this.props.content.top,
+	        width:this.props.content.width,
+	        height:this.props.content.height,
+	        style:this.props.content.style,
+	        scroller:this.props.scroller}
+	      )
+	    ];
+
+	    for (var key in this.props.overlays) {
+	      var overlay = this.props.overlays[key];
+
+	      // TODO: this is somewhat of an anti-pattern: cloneChildren() should create the
+	      // children with the correct props. But I'm too lazy to build the correct deep
+	      // merger. And this isn't that bad since this component owns the props anyway.
+	      var clonedChildren = cloneChildren(this.props.children);
+
+	      clonedChildren.props = shallowCopy(clonedChildren.props);
+	      clonedChildren.props.style = shallowCopy(clonedChildren.props.style || {});
+	      clonedChildren.props.style[StyleKeys.FILTER] = 'blur(5px)';
+
+	      viewports.push(
+	        FrostedGlassViewport(
+	          {key:key,
+	          glassContent:clonedChildren,
+	          left:overlay.left,
+	          top:overlay.top,
+	          width:overlay.width,
+	          height:overlay.height,
+	          style:overlay.style}, 
+	          overlay.children
+	        )
+	      );
+	    }
+
+	    var newProps = shallowCopy(this.props);
+	    newProps.style = newProps.style || {};
+	    newProps.style.position = newProps.style.position || 'relative';
+	    newProps.style.overflow = 'hidden';
+
+	    return React.DOM.div(newProps, viewports);
+	  }
+	});
+
+	module.exports = GlassContainer;
+
+/***/ },
+
+/***/ 184:
+/***/ function(module, exports, require) {
+
+	/** @jsx React.DOM */
+
+	var React = require(4);
+
+	var TouchableArea =
+	  require(82);
+
+	var FrostedGlassViewport = React.createClass({displayName: 'FrostedGlassViewport',
+	  getDefaultProps: function() {
+	    return {glassStyle: {}};
+	  },
+
+	  render: function() {
+	    var style = {
+	      position: 'absolute',
+	      left: this.props.left,
+	      top: this.props.top,
+	      width: this.props.width,
+	      height: this.props.height,
+	      overflow: 'hidden'
+	    };
+
+	    var glassStyle = this.props.glassStyle || {};
+	    glassStyle.position = 'absolute';
+	    // TODO: this won't animate well. Not sure if compositing will
+	    // make things better or worse...
+	    glassStyle.left = -this.props.left;
+	    glassStyle.top = -this.props.top;
+
+	    var contentStyle = {
+	      bottom: 0,
+	      left: 0,
+	      position: 'absolute',
+	      right: 0,
+	      top: 0
+	    };
+
+	    return this.transferPropsTo(
+	      TouchableArea( {style:style}, 
+	        React.DOM.div( {style:glassStyle}, 
+	          this.props.glassContent
+	        ),
+	        React.DOM.div( {style:contentStyle}, 
+	          this.props.children
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = FrostedGlassViewport;
 
 /***/ }
 /******/ })
