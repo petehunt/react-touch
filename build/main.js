@@ -25893,6 +25893,7 @@
 	var componentClass = null;
 	var domNode = null;
 	var routes = null;
+	var useHistory = false;
 
 	function getComponentForRoute(route) {
 	  for (var regexSource in routes) {
@@ -25912,7 +25913,11 @@
 	}
 
 	function getCurrentRouteOnClient() {
-	  return window.location.pathname;
+	  if (useHistory) {
+	    return window.location.pathname;
+	  } else {
+	    return '/' + window.location.hash.slice(1);
+	  }
 	}
 
 	function renderRouteOnClient() {
@@ -25923,7 +25928,7 @@
 	}
 
 	var Router = {
-	  start: function(componentClass_, domNode_, routes_) {
+	  start: function(componentClass_, domNode_, routes_, useHistory_) {
 	    if (componentClass) {
 	      throw new Error('Already started Router');
 	    }
@@ -25931,14 +25936,23 @@
 	    componentClass = componentClass_;
 	    domNode = domNode_;
 	    routes = routes_;
+	    useHistory = useHistory_ && window.history;
 
-	    window.addEventListener('popstate', renderRouteOnClient, false);
+	    if (useHistory) {
+	      window.addEventListener('popstate', renderRouteOnClient, false);
+	    } else {
+	      window.addEventListener('hashchange', renderRouteOnClient, false);
+	    }
 
 	    renderRouteOnClient();
 	  },
 
 	  trigger: function(route) {
-	    window.history.pushState({}, document.title, route);
+	    if (useHistory) {
+	      window.history.pushState({}, document.title, route);
+	    } else {
+	      window.location.hash = route;
+	    }
 	    renderRouteOnClient();
 	  },
 
