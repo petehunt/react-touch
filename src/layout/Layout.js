@@ -3,7 +3,6 @@
 var React = require('React');
 
 var App = require('../framework/primitives/App');
-var FastLink = require('../components/FastLink');
 var RoutedLink = require('../framework/routing/RoutedLink');
 var Header = require('../components/Header');
 var LeftNavContainer = require('../framework/interactions/leftnav/LeftNavContainer');

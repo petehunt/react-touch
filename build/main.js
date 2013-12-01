@@ -985,7 +985,6 @@
 	var React = require(4);
 
 	var App = require(38);
-	var FastLink = require(22);
 	var RoutedLink = require(39);
 	var Header = require(23);
 	var LeftNavContainer = require(40);
@@ -1080,7 +1079,6 @@
 	// Implicit require of Scroller from Zynga
 
 	var AnimatableContainer = require(32);
-	var FastLink = require(22);
 	var GlassContainer = require(33);
 	var GlassContent = require(34);
 	var Header = require(23);
@@ -1721,36 +1719,6 @@
 	};
 
 	module.exports = FetchingMixin;
-
-/***/ },
-
-/***/ 22:
-/***/ function(module, exports, require) {
-
-	/** @jsx React.DOM */
-
-	var React = require(4);
-	var Parse = require(136).Parse;
-
-	var FastLink = React.createClass({displayName: 'FastLink',
-	  handleTap: function(e) {
-	    Parse.history.navigate(this.props.href, {trigger: true});
-	    e.preventDefault();
-	    if (this.props.onClick) {
-	      this.props.onClick();
-	    }
-	  },
-
-	  render: function() {
-	    return this.transferPropsTo(
-	      React.DOM.a( {onTouchTap:this.handleTap}, 
-	        this.props.children
-	      )
-	    );
-	  }
-	});
-
-	module.exports = FastLink;
 
 /***/ },
 
