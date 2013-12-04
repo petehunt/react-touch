@@ -1,8 +1,0 @@
-.ImageCardContainer {
-   backface-visibility: hidden;
-   -webkit-backface-visibility: hidden;
-   -moz-backface-visibility: hidden;
-   left: 0;
-   position: absolute;
-   top: 0;
-}

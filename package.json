@@ -1,24 +1,30 @@
 {
-  "name": "ReactHack",
-  "version": "0.0.2",
-  "description": "Get started with building React apps",
-  "repository": "",
+  "name": "react-touch",
+  "version": "0.0.1",
+  "description": "React components for touch apps",
+  "main": "index.js",
   "dependencies": {
-    "parse": "petehunt/parsesdk-isomorphic",
-    "React": "petehunt/react-core",
-    "ReactHack": "petehunt/reacthack-core",
-    "showdown": "petehunt/showdown"
+    "react-core": "http://petehunt.net/react/react-core-0.5.1.tar.gz"
   },
   "devDependencies": {
-    "jsx-loader": "petehunt/jsx-loader",
-    "webpack": "~0.11.0",
-    "url-loader": "~0.5.1",
-    "css-loader": "~0.6.2",
-    "style-loader": "~0.6.0"
+    "browserify": "~2.36.0",
+    "reactify": "~0.4.0",
+    "uglifyjs": "~2.3.6",
+    "watchify": "~0.4.1"
+  },
+  "peerDependencies": {
+    "node-jsx": "petehunt/node-jsx"
   },
   "scripts": {
-    "start": "webpack --watch --debug src/main.js build/main.js"
+    "start": "watchify -o browser-bundle.js -d .",
+    "build": "NODE_ENV=production browserify . | uglifyjs -cm > browser-bundle.min.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Pete Hunt",
-  "license": "Apache 2"
+  "license": "Apache 2",
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
+  }
 }
