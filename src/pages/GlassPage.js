@@ -1,16 +1,16 @@
 /** @jsx React.DOM */
 
-var React = require('React');
+var React = require('react');
 
 // Implicit require of Scroller from Zynga
 
-var AnimatableContainer = require('../framework/primitives/AnimatableContainer');
+var AnimatableContainer = require('react-touch/lib/primitives/AnimatableContainer');
 var FrostedGlassContainer =
-  require('../framework/interactions/frostedglass/FrostedGlassContainer');
+  require('react-touch/lib/interactions/frostedglass/FrostedGlassContainer');
 var GlassContent = require('../components/GlassContent');
 var Header = require('../components/Header');
 var Layout = require('../layout/Layout');
-var StyleKeys = require('../framework/environment/StyleKeys');
+var StyleKeys = require('react-touch/lib/environment/StyleKeys');
 
 require('./GlassPage.css');
 

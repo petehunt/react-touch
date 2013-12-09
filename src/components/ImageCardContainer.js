@@ -1,9 +1,9 @@
 /** @jsx React.DOM */
 
-var AnimatableContainer = require('../framework/primitives/AnimatableContainer');
+var AnimatableContainer = require('react-touch/lib/primitives/AnimatableContainer');
 var EasingFunctions = require('../math/EasingFunctions');
 var ImageCard = require('./ImageCard');
-var React = require('React');
+var React = require('react');
 
 require('./ImageCardContainer.css');
 

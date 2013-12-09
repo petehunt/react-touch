@@ -2,10 +2,10 @@
 
 // Implicit require of Scroller from Zynga
 var ImageCardContainer = require('./ImageCardContainer');
-var React = require('React');
+var React = require('react');
 
 var TouchableArea =
-  require('../framework/primitives/TouchableArea');
+  require('react-touch/lib/primitives/TouchableArea');
 
 require('./Viewer.css');
 

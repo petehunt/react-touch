@@ -8,5 +8,8 @@ module.exports = {
       { test: /\.js$/, loader: "jsx-loader" }
     ],
     noParse: /parse-latest.js/
-  }
+  },
+  define: {
+    'process.env.NODE_ENV': JSON.stringify('production')
+  },
 };

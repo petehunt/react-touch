@@ -1,9 +1,9 @@
 /** @jsx React.DOM */
 
-var React = require('React');
+var React = require('react');
 
 var SimpleScroller =
-  require('../framework/interactions/simplescroller/SimpleScroller');
+  require('react-touch/lib/interactions/simplescroller/SimpleScroller');
 
 require('./ScrollPage.css');
 

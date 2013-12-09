@@ -1,11 +1,11 @@
 /** @jsx React.DOM */
 
-var React = require('React');
+var React = require('react');
 
-var App = require('../framework/primitives/App');
-var RoutedLink = require('../framework/routing/RoutedLink');
+var App = require('react-touch/lib/primitives/App');
+var RoutedLink = require('react-touch/lib/routing/RoutedLink');
 var Header = require('../components/Header');
-var LeftNavContainer = require('../framework/interactions/leftnav/LeftNavContainer');
+var LeftNavContainer = require('react-touch/lib/interactions/leftnav/LeftNavContainer');
 
 require('./Layout.css');
 

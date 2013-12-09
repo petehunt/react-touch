@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var React = require('React');
+var React = require('react');
 
 var Layout = require('../layout/Layout');
 var HomePage = require('../pages/HomePage');
