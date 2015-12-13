@@ -1,5 +1,7 @@
 # React touch demos
 
+![unmaintained](http://img.shields.io/badge/status-unmaintained-red.png)
+
 This demo uses [ReactHack](http://github.com/petehunt/ReactHack) to build a high-performance, lazy-loading 3d intertial touch app targeted at the iPhone 5. It really shows off what web technologies can do these days.
 
 ## Software being used
